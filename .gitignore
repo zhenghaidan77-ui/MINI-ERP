@@ -1,0 +1,17 @@
+# 대용량 바이너리 및 포터블 런타임 제외
+*.zip
+node-v24.18.0-win-x64/
+python-3.12/
+git/
+
+# Node / Next.js / Python 종속성 및 빌드 파일 제외
+node_modules/
+.next/
+dist/
+__pycache__/
+*.pyc
+.env
+.env.local
+
+# 임시 테스트 바이너리
+tts_test.mp3
