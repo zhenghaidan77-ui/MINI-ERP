@@ -1,0 +1,634 @@
+﻿[
+    {
+        "Name":  "정품 하이디라오 스파이시 훠궈 매운 찍먹 소스 땅콩양념소스, 3개, 120g",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  0,
+        "AOV":  0
+    },
+    {
+        "Name":  "하이디라오 마라샹궈 소스 대용량 1Kg, 1개",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  0,
+        "AOV":  0
+    },
+    {
+        "Name":  "하이디라오 마라샹궈 볶음요리 기본소스, 220g, 10개",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  0,
+        "AOV":  0
+    },
+    {
+        "Name":  "해천 해산물용 간장, 1.75L, 2개",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  0,
+        "AOV":  0
+    },
+    {
+        "Name":  "[한정특가1+1] 미미각 마라훠궈 소스, 1개, 500g",
+        "CVR":  12.5,
+        "Revenue":  13790,
+        "Orders":  1,
+        "Traffic":  8,
+        "AOV":  13790
+    },
+    {
+        "Name":  "[한정특가1+1] 미미각 마라훠궈 소스, 3개, 500g",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  2,
+        "AOV":  0
+    },
+    {
+        "Name":  "미미각 모모 자른 푸주 건푸주, 3개, 500g",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  2,
+        "AOV":  0
+    },
+    {
+        "Name":  "미미각 모모 자른 푸주 건푸주, 5개, 500g",
+        "CVR":  8.33,
+        "Revenue":  21600,
+        "Orders":  1,
+        "Traffic":  12,
+        "AOV":  21600
+    },
+    {
+        "Name":  "옛날 넓은 고구마 당면 중국식 훠궈 당면, 300g, 2개",
+        "CVR":  2.27,
+        "Revenue":  43200,
+        "Orders":  4,
+        "Traffic":  176,
+        "AOV":  10800
+    },
+    {
+        "Name":  "옛날 넓은 고구마 당면 중국식 훠궈 당면, 3개, 300g",
+        "CVR":  13.33,
+        "Revenue":  26040,
+        "Orders":  2,
+        "Traffic":  15,
+        "AOV":  13020
+    },
+    {
+        "Name":  "쏸라펀 중국 마라누들 컵라면, 6개",
+        "CVR":  3.61,
+        "Revenue":  137400,
+        "Orders":  10,
+        "Traffic":  277,
+        "AOV":  13740
+    },
+    {
+        "Name":  "쏸라펀 중국 마라누들 컵라면, 10개",
+        "CVR":  3.57,
+        "Revenue":  22060,
+        "Orders":  1,
+        "Traffic":  28,
+        "AOV":  22060
+    },
+    {
+        "Name":  "푸단테 자른 푸주 건유바 업소용 대용량, 3개, 1kg",
+        "CVR":  20,
+        "Revenue":  28480,
+        "Orders":  1,
+        "Traffic":  5,
+        "AOV":  28480
+    },
+    {
+        "Name":  "푸단테 자른 푸주 건유바 업소용 대용량, 6개, 1kg",
+        "CVR":  40,
+        "Revenue":  95920,
+        "Orders":  2,
+        "Traffic":  5,
+        "AOV":  47960
+    },
+    {
+        "Name":  "푸단테 자른 푸주 건유바 업소용 대용량, 1개, 1kg",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  10,
+        "AOV":  0
+    },
+    {
+        "Name":  "푸단테 자른 푸주 건유바 업소용 대용량, 500g, 6개",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  5,
+        "AOV":  0
+    },
+    {
+        "Name":  "푸단테 자른 푸주 건유바 업소용 대용량, 1kg, 5개",
+        "CVR":  33.33,
+        "Revenue":  43240,
+        "Orders":  1,
+        "Traffic":  3,
+        "AOV":  43240
+    },
+    {
+        "Name":  "미미각 해천 프리미엄 굴소스 중식 필수 양념 감칠맛 핵심소스, 3개, 620g",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  4,
+        "AOV":  0
+    },
+    {
+        "Name":  "해천 시그니처 굴소스 튜브형, 2개, 620g",
+        "CVR":  20.16,
+        "Revenue":  861900,
+        "Orders":  102,
+        "Traffic":  506,
+        "AOV":  8450
+    },
+    {
+        "Name":  "해천 시그니처 굴소스 튜브형, 1개, 620g",
+        "CVR":  66.67,
+        "Revenue":  22360,
+        "Orders":  4,
+        "Traffic":  6,
+        "AOV":  5590
+    },
+    {
+        "Name":  "태태락 치킨파우더, 1kg, 2개",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  16,
+        "AOV":  0
+    },
+    {
+        "Name":  "푸단테 유기농 죽순 뾰족 야생 삶은 죽순 홀 햇죽순, 3개, 1kg",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  1,
+        "AOV":  0
+    },
+    {
+        "Name":  "푸단테 유기농 죽순 뾰족 야생 삶은 죽순 홀 햇죽순, 5개, 1kg",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  15,
+        "AOV":  0
+    },
+    {
+        "Name":  "미미각 마라탕 소스, 500g, 4개",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  0,
+        "AOV":  0
+    },
+    {
+        "Name":  "미미각 마라샹궈 소스 마라맛 볶음소스, 2개, 500g",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  4,
+        "AOV":  0
+    },
+    {
+        "Name":  "미미각 마라샹궈 소스 마라맛 볶음소스, 3개, 110g",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  2,
+        "AOV":  0
+    },
+    {
+        "Name":  "미미각 마라샹궈 소스 마라맛 볶음소스, 110g, 5개",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  511,
+        "AOV":  0
+    },
+    {
+        "Name":  "미미각 마라샹궈 소스 마라맛 볶음소스, 10개, 500g",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  5,
+        "AOV":  0
+    },
+    {
+        "Name":  "[임박초특가 1+1] 마라 양념소스, 110g, 1개",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  5,
+        "AOV":  0
+    },
+    {
+        "Name":  "[임박초특가 1+1] 마라 양념소스, 110g, 5개",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  2,
+        "AOV":  0
+    },
+    {
+        "Name":  "[한정특가1+1] 미미각 마라훠궈 소스, 1개, 500g",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  2,
+        "AOV":  0
+    },
+    {
+        "Name":  "[임박초특가 1+1] 미미각 마라훠궈 소스, 1개, 110g",
+        "CVR":  20,
+        "Revenue":  4860,
+        "Orders":  1,
+        "Traffic":  5,
+        "AOV":  4860
+    },
+    {
+        "Name":  "[한정특가1+1] 미미각 마라훠궈 소스, 5개, 500g",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  2,
+        "AOV":  0
+    },
+    {
+        "Name":  "호인가 마라훠궈소스 마라양념소스, 240g, 2개",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  6,
+        "AOV":  0
+    },
+    {
+        "Name":  "호인가 마라훠궈소스 마라양념소스, 20개, 240g",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  1,
+        "AOV":  0
+    },
+    {
+        "Name":  "호인가 마라탕 소스, 10개, 240g",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  5,
+        "AOV":  0
+    },
+    {
+        "Name":  "호인가 마라탕 소스, 4개",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  6,
+        "AOV":  0
+    },
+    {
+        "Name":  "호인가 마라샹궈소스, 2개, 240g",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  37,
+        "AOV":  0
+    },
+    {
+        "Name":  "미미각 마라샹궈 소스 마라맛 볶음소스, 1개, 500g",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  2,
+        "AOV":  0
+    },
+    {
+        "Name":  "나초칩스 454g, 2개",
+        "CVR":  15,
+        "Revenue":  42510,
+        "Orders":  3,
+        "Traffic":  20,
+        "AOV":  14170
+    },
+    {
+        "Name":  "나초칩스 454g, 6개",
+        "CVR":  1.15,
+        "Revenue":  39300,
+        "Orders":  1,
+        "Traffic":  87,
+        "AOV":  39300
+    },
+    {
+        "Name":  "나초칩스 454g, 3개",
+        "CVR":  3.64,
+        "Revenue":  40800,
+        "Orders":  2,
+        "Traffic":  55,
+        "AOV":  20400
+    },
+    {
+        "Name":  "나초칩스 454g, 1개",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  14,
+        "AOV":  0
+    },
+    {
+        "Name":  "뉴진면 마라탕사리 국내생산 HACCP샤브면 떡당면 남사부, 400g, 1개",
+        "CVR":  7.27,
+        "Revenue":  75140,
+        "Orders":  12,
+        "Traffic":  165,
+        "AOV":  6261.666666666667
+    },
+    {
+        "Name":  "나초칩스 454g, 1개",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  0,
+        "AOV":  0
+    },
+    {
+        "Name":  "뉴진면 마라탕사리 국내생산 HACCP샤브면 떡당면 남사부, 400g, 5개",
+        "CVR":  6.25,
+        "Revenue":  35200,
+        "Orders":  2,
+        "Traffic":  32,
+        "AOV":  17600
+    },
+    {
+        "Name":  "뉴진면 마라탕사리 국내생산 HACCP샤브면 떡당면 남사부, 400g, 2개",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  1,
+        "AOV":  0
+    },
+    {
+        "Name":  "호영 일자 분모자 500g, 3개",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  0,
+        "AOV":  0
+    },
+    {
+        "Name":  "푸른식품 장어구이양념 매운맛, 50g, 50개",
+        "CVR":  4,
+        "Revenue":  14890,
+        "Orders":  1,
+        "Traffic":  25,
+        "AOV":  14890
+    },
+    {
+        "Name":  "푸른식품 장어구이 소스 매운 맛, 50g, 20개",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  21,
+        "AOV":  0
+    },
+    {
+        "Name":  "푸른식품 장어구이 소스 매운 맛, 50g, 10개",
+        "CVR":  9.09,
+        "Revenue":  5480,
+        "Orders":  1,
+        "Traffic":  11,
+        "AOV":  5480
+    },
+    {
+        "Name":  "푸른식품 장어구이 순한맛 소스, 50g, 20개",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  6,
+        "AOV":  0
+    },
+    {
+        "Name":  "푸른식품 장어구이 순한맛 소스, 50g, 50개",
+        "CVR":  5.45,
+        "Revenue":  90840,
+        "Orders":  6,
+        "Traffic":  110,
+        "AOV":  15140
+    },
+    {
+        "Name":  "국내생산 에어컨 실외기 알루미늄 커버 1+1, 1070x450, 은색",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  1,
+        "AOV":  0
+    },
+    {
+        "Name":  "(배터짐) 중국요리 동구일품선간장 중국간장 일품선간장 (일요일\u0026당일발송), 1개, 1.2L",
+        "CVR":  4,
+        "Revenue":  -8920,
+        "Orders":  -1,
+        "Traffic":  25,
+        "AOV":  0
+    },
+    {
+        "Name":  "(배터짐) 중국요리 동구일품선간장 중국간장 일품선간장 (일요일\u0026당일발송), 6개, 1.2L",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  11,
+        "AOV":  0
+    },
+    {
+        "Name":  "미미각 실곤약 말이 저칼로리 다이어트 스키야키, 1개, 1kg",
+        "CVR":  8,
+        "Revenue":  27000,
+        "Orders":  2,
+        "Traffic":  25,
+        "AOV":  13500
+    },
+    {
+        "Name":  "야생 삶은 죽순 +호인가 마라샹궈 소스 세트, 1개, 1.24kg",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  2,
+        "AOV":  0
+    },
+    {
+        "Name":  "옛날 넓은 고구마 당면 중국식 훠궈 당면+호인가 마라훠궈 소스 세트, 1개, 540g",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  2,
+        "AOV":  0
+    },
+    {
+        "Name":  "옛날 넓은 고구마 당면 중국식 훠궈 당면+호인가 마라훠궈 소스 세트, 1개, 540g",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  2,
+        "AOV":  0
+    },
+    {
+        "Name":  "게알맛 잠두콩 스낵, 208g, 10개",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  0,
+        "AOV":  0
+    },
+    {
+        "Name":  "비타민c 12가지맛 캔디, 4개, 200g",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  1,
+        "AOV":  0
+    },
+    {
+        "Name":  "비타민c 12가지맛 캔디, 200g, 5개",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  1,
+        "AOV":  0
+    },
+    {
+        "Name":  "무설탕 12가지맛 미니 비타민c 캔디, 3개, 500g",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  1,
+        "AOV":  0
+    },
+    {
+        "Name":  "무설탕 12가지맛 비타팝스 비타민c 캔디 1kg, 1개",
+        "CVR":  3.19,
+        "Revenue":  72000,
+        "Orders":  3,
+        "Traffic":  94,
+        "AOV":  24000
+    },
+    {
+        "Name":  "해조궁 어포튀각, 3개, 90g",
+        "CVR":  33.33,
+        "Revenue":  12500,
+        "Orders":  1,
+        "Traffic":  3,
+        "AOV":  12500
+    },
+    {
+        "Name":  "해조궁 어포튀각, 6개, 90g",
+        "CVR":  14.29,
+        "Revenue":  22500,
+        "Orders":  1,
+        "Traffic":  7,
+        "AOV":  22500
+    },
+    {
+        "Name":  "푸른식품 장어구이양념 매운맛, 100개, 50g",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  2,
+        "AOV":  0
+    },
+    {
+        "Name":  "[한정특가] 미미각 마라훠궈 소스, 1kg, 4개",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  2,
+        "AOV":  0
+    },
+    {
+        "Name":  "해피타임 초코포키, 20개, 20g",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  13,
+        "AOV":  0
+    },
+    {
+        "Name":  "디디안 소다 크래커 오리지널, 1개, 450g",
+        "CVR":  20,
+        "Revenue":  7500,
+        "Orders":  1,
+        "Traffic":  5,
+        "AOV":  7500
+    },
+    {
+        "Name":  "디디안 소다 크래커 오리지널, 5개, 450g",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  3,
+        "AOV":  0
+    },
+    {
+        "Name":  "디디안 소다 크래커 오리지널, 3개, 450g",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  1,
+        "AOV":  0
+    },
+    {
+        "Name":  "디디안 소다 크래커 양파맛, 3개, 450g",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  1,
+        "AOV":  0
+    },
+    {
+        "Name":  "디디안 소다 크래커 양파맛, 5개, 450g",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  1,
+        "AOV":  0
+    },
+    {
+        "Name":  "디디안 소다 크래커 양파맛, 1개, 450g",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  1,
+        "AOV":  0
+    },
+    {
+        "Name":  "디디안 소다 크래커 커피맛, 450g, 1개",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  6,
+        "AOV":  0
+    },
+    {
+        "Name":  "디디안 소다 크래커 커피맛, 450g, 3개",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  1,
+        "AOV":  0
+    },
+    {
+        "Name":  "디디안 소다 크래커 커피맛, 450g, 5개",
+        "CVR":  0,
+        "Revenue":  0,
+        "Orders":  0,
+        "Traffic":  5,
+        "AOV":  0
+    }
+]
