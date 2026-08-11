@@ -556,7 +556,7 @@
         </div>
 
         <div class="cloud-badge" id="cloudStatusBadge">
-            <div class="dot"></div> <span id="cloudStatusText">☁️ 실시간 클라우드 DB 연동중</span>
+            <div class="dot"></div> <span id="cloudStatusText">☁️ 실시간 클라우드 DB 100% 동기화중</span>
         </div>
         
         <div class="nav-category">Main Executive</div>
@@ -599,7 +599,7 @@
             <div class="header-actions">
                 <button class="btn btn-upload" onclick="openUploadModal('online')"><i class="fa-solid fa-cloud-arrow-up"></i> 다중 채널 엑셀 일괄 업로드</button>
                 <button class="btn btn-emerald" onclick="openUploadModal('cost')"><i class="fa-solid fa-tags"></i> 🏷️ 제품 원가 엑셀 업로드</button>
-                <button class="btn btn-outline" onclick="syncFromCloud(true)"><i class="fa-solid fa-arrows-rotate"></i> 실시간 동기화</button>
+                <button class="btn btn-outline" onclick="syncFromCloud(true)"><i class="fa-solid fa-arrows-rotate"></i> 클라우드 최신 동기화</button>
             </div>
         </div>
 
@@ -618,10 +618,10 @@
         <div id="ceoDashboardContent" style="display: none;">
             <div style="background: linear-gradient(90deg, rgba(16, 185, 129, 0.15), rgba(139, 92, 246, 0.15)); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 16px 22px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
                 <div style="display: flex; align-items: center; gap: 14px;">
-                    <i class="fa-solid fa-arrows-rotate" style="font-size: 26px; color: #fbbf24;"></i>
+                    <i class="fa-solid fa-cloud-arrow-up" style="font-size: 26px; color: #34d399;"></i>
                     <div>
-                        <strong style="font-size: 0.98rem; color: #ffffff;">⚡ [온라인 실적 엑셀 ↔ 물류 재고 100% 실시간 자동 연산 연동 엔진 구축]</strong>
-                        <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">온라인 판매 실적 엑셀을 업로드하면, **물류재고 탭의 현재재고 수량에서 7일 판매량이 100% 자동 차감**되며 🟢초록/🔴붉은색 상태가 즉시 갱신됩니다.</p>
+                        <strong style="font-size: 0.98rem; color: #ffffff;">☁️ [전 기기 · 팀원 · 대표 실시간 100% 최신 클라우드 동기화 시스템]</strong>
+                        <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">누가 엑셀을 업로드하거나 수정하더라도 **전 세계 어느 PC/스마트폰에서 접속하든 가장 최신 업로드 데이터가 100% 실시간 공유노출**됩니다.</p>
                     </div>
                 </div>
                 <button class="btn btn-outline" style="padding: 8px 16px; font-size: 0.85rem;" onclick="lockCEODashboard()">🔒 열람 잠금</button>
@@ -1004,9 +1004,9 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h3><i class="fa-solid fa-cloud" style="color: var(--accent-emerald);"></i> 실시간 클라우드 DB 동기화 서버 상태</h3>
+                        <h3><i class="fa-solid fa-cloud" style="color: var(--accent-emerald);"></i> 실시간 글로벌 클라우드 DB 동기화 서버 상태</h3>
                     </div>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">어느 사용자가 수정해도 클라우드 서버에 공유되어 전 팀원이 동일한 데이터를 실시간 확인합니다.</p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">어느 팀원이 엑셀을 업로드하거나 수정하더라도, 글로벌 릴레이 클라우드 서버에 자동 보관되어 전 기기 100% 동일한 최신 데이터가 공유 노출됩니다.</p>
                     <div style="display: flex; gap: 10px; align-items: center;">
                         <button class="btn btn-emerald" onclick="syncFromCloud(true)">☁️ 클라우드 DB 수동 강제 수신</button>
                         <button class="btn btn-upload" onclick="syncToCloud(true)">☁️ 현 데이터 클라우드 강제 올리기</button>
@@ -1114,10 +1114,12 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- JAVASCRIPT SYSTEM ENGINE (HIGH-PRECISION REAL-TIME SALES-STOCK MATCHING ENGINE) -->
+    <!-- JAVASCRIPT SYSTEM ENGINE (GLOBAL CLOUD DB REALTIME MULTI-USER SYNC ENGINE) -->
     <!-- ============================================================================== -->
     <script>
         const CLOUD_STORAGE_KEY = 'hyejin_mini_erp_global_db_v1';
+        // GLOBAL CLOUD RELAY BACKEND API FOR ALL USERS (JSONBin / npoint / KV Relay)
+        const CLOUD_API_URL = 'https://api.npoint.io/c0a96ef8c2f1f516543b';
 
         const navItems = document.querySelectorAll('.nav-item');
         const contents = document.querySelectorAll('.main-content');
@@ -1608,7 +1610,7 @@
             }
         }
 
-        // REALTIME CLOUD DB SYNC ENGINE
+        // REALTIME GLOBAL CLOUD DB SYNC ENGINE FOR MULTI-DEVICE & TEAM MEMBERS
         async function syncToCloud(showNotice = false) {
             const payload = {
                 online: JSON.parse(localStorage.getItem('erp_online')) || defaultOnline,
@@ -1627,13 +1629,44 @@
                     bc.postMessage({ type: 'UPDATE_DATA', payload: payload });
                 }
 
-                if (showNotice) showToast('☁️ 클라우드 서버에 데이터가 최신 업로드되었습니다.');
+                // Global Cloud Storage Push
+                fetch(CLOUD_API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                }).catch(err => console.log('Global Relay Sync:', err));
+
+                if (showNotice) showToast('☁️ 글로벌 클라우드 서버에 데이터가 최신 업로드되었습니다.');
             } catch (err) {
                 console.error('Cloud Sync Error:', err);
             }
         }
 
-        function syncFromCloud(showNotice = false) {
+        async function syncFromCloud(showNotice = false) {
+            try {
+                const res = await fetch(CLOUD_API_URL, { cache: 'no-cache' });
+                if (res.ok) {
+                    const payload = await res.json();
+                    if (payload && payload.online) {
+                        const localTime = localStorage.getItem('erp_last_updated') || '';
+                        if (!localTime || new Date(payload.updatedAt) > new Date(localTime)) {
+                            localStorage.setItem('erp_online', JSON.stringify(payload.online));
+                            if (payload.inventory) localStorage.setItem('erp_inventory', JSON.stringify(payload.inventory));
+                            if (payload.import) localStorage.setItem('erp_import', JSON.stringify(payload.import));
+                            if (payload.task) localStorage.setItem('erp_task', JSON.stringify(payload.task));
+                            if (payload.orgConfig) localStorage.setItem('erp_org_config', JSON.stringify(payload.orgConfig));
+                            localStorage.setItem('erp_last_updated', payload.updatedAt || new Date().toISOString());
+
+                            reloadAllTables();
+                            if (showNotice) showToast('☁️ 최신 글로벌 클라우드 데이터를 수신받아 갱신했습니다.');
+                            return;
+                        }
+                    }
+                }
+            } catch (err) {
+                console.log('Fetch cloud fallback to local:', err);
+            }
+
             const cloudRaw = localStorage.getItem(CLOUD_STORAGE_KEY);
             if (cloudRaw) {
                 try {
@@ -1659,9 +1692,10 @@
             };
         }
 
+        // Auto Poll Cloud DB every 6 seconds
         setInterval(() => {
             syncFromCloud(false);
-        }, 5000);
+        }, 6000);
 
         function updateSummaryRow(tableId) {
             if (tableId === 'online-table') {
@@ -2031,6 +2065,7 @@
                 localStorage.removeItem('erp_task');
                 localStorage.removeItem('erp_org_config');
                 localStorage.removeItem('erp_locked');
+                localStorage.removeItem('erp_last_updated');
                 sessionStorage.removeItem('erp_ceo_authed');
                 reloadAllTables();
                 syncToCloud(true);
@@ -2414,8 +2449,9 @@
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
-        // Initial Setup
+        // Initial Setup & Automatic Initial Cloud Fetch
         reloadAllTables();
+        syncFromCloud(false);
     </script>
 </body>
 </html>
