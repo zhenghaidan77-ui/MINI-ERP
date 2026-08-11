@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>자택근무 통제센터 (Mini ERP) - 쇼핑몰별 TOP 3 / WORST 10 분석 SCM ERP</title>
+    <title>자택근무 통제센터 (Mini ERP) - 채널별 잘 팔리는 제품 대시보드</title>
     <!-- Pretendard & FontAwesome & Chart.js & SheetJS(XLSX) -->
     <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -433,21 +433,21 @@
         /* Ranking Card Styles */
         .rank-btn {
             background: rgba(255,255,255,0.06); border: 1px solid var(--card-border);
-            color: var(--text-muted); padding: 6px 14px; border-radius: 20px;
-            font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
+            color: var(--text-muted); padding: 8px 16px; border-radius: 20px;
+            font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
         }
-        .rank-btn:hover { background: rgba(255,255,255,0.12); color: white; }
-        .rank-btn.active { background: var(--accent-purple); color: white; border-color: var(--accent-purple); font-weight: 700; }
+        .rank-btn:hover { background: rgba(255,255,255,0.15); color: white; }
+        .rank-btn.active { background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue)); color: white; border-color: transparent; font-weight: 700; box-shadow: 0 4px 12px rgba(139,92,246,0.3); }
 
         .rank-badge-top {
             display: inline-flex; align-items: center; justify-content: center;
-            width: 24px; height: 24px; border-radius: 50%; font-weight: 800; font-size: 0.8rem;
-            color: white; margin-right: 8px;
+            width: 28px; height: 28px; border-radius: 50%; font-weight: 800; font-size: 0.85rem;
+            color: white; margin-right: 12px; flex-shrink: 0;
         }
-        .top-1 { background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 0 8px rgba(245,158,11,0.5); }
+        .top-1 { background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 0 12px rgba(245,158,11,0.6); }
         .top-2 { background: linear-gradient(135deg, #94a3b8, #64748b); }
         .top-3 { background: linear-gradient(135deg, #b45309, #78350f); }
-        .worst-badge { background: rgba(244,63,94,0.2); color: #f87171; border: 1px solid rgba(244,63,94,0.4); border-radius: 4px; padding: 2px 6px; font-size: 0.75rem; font-weight: 700; margin-right: 6px; }
+        .worst-badge { background: rgba(244,63,94,0.2); color: #f87171; border: 1px solid rgba(244,63,94,0.4); border-radius: 4px; padding: 2px 8px; font-size: 0.78rem; font-weight: 700; margin-right: 8px; flex-shrink: 0; }
 
         /* Upload & Admin Modal Styling */
         .modal-overlay {
@@ -520,7 +520,7 @@
 </head>
 <body>
 
-    <!-- Sidebar -->
+    <!-- Sidebar Nav -->
     <div class="sidebar">
         <div class="logo">
             <i class="fa-solid fa-bolt"></i> 미니 ERP 통제센터
@@ -559,13 +559,13 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- 1. 대표 보고용 대시보드 (CEO EXECUTIVE OVERVIEW) -->
+    <!-- 1. 대표 보고용 대시보드 (MAIN DASHBOARD & BEST/WORST RANKING CENTER) -->
     <!-- ============================================================================== -->
     <div id="ceo-report" class="main-content active">
         <div class="header">
             <div>
                 <h1><i class="fa-solid fa-crown" style="color: #fbbf24;"></i> 대표 보고용 통합 실적 리포트</h1>
-                <p>온라인 엑셀 원본연동 + 물류 재고 상품명+중량 취합 & 쇼핑몰별 TOP 3 / WORST 10 분석</p>
+                <p>쇼핑몰별 잘 팔리는 베스트 (TOP 3) & 부진 (WORST 10) 제품 실시간 연동 대시보드</p>
             </div>
             <div class="header-actions">
                 <button class="btn btn-upload" onclick="openUploadModal()"><i class="fa-solid fa-cloud-arrow-up"></i> 다중 채널 엑셀 일괄 업로드</button>
@@ -576,10 +576,10 @@
 
         <div style="background: linear-gradient(90deg, rgba(16, 185, 129, 0.15), rgba(139, 92, 246, 0.15)); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 16px 22px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
             <div style="display: flex; align-items: center; gap: 14px;">
-                <i class="fa-solid fa-chart-pie" style="font-size: 26px; color: #34d399;"></i>
+                <i class="fa-solid fa-fire" style="font-size: 26px; color: #fbbf24;"></i>
                 <div>
-                    <strong style="font-size: 0.98rem; color: #ffffff;">⚡ 데이터 연동: 온라인(엑셀 원본연동) | 물류(상품명+중량 취합) | 쇼핑몰별 TOP3 / WORST10 분석</strong>
-                    <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">업로드하신 데이터 기반으로 쇼핑몰별 효자 상품 1~3위와 판매 부진 1~10위가 자동 계산되어 한눈에 보입니다.</p>
+                    <strong style="font-size: 0.98rem; color: #ffffff;">⚡ 대시보드 메인 구축: [쇼핑몰별 잘 팔리는 베스트 TOP 3 & 부진 WORST 10] 실시간 분석연동</strong>
+                    <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">쿠팡, 네이버 스마트스토어 등 업로드한 엑셀 기반으로 **잘 팔리는 효자 상품과 부진 상품 수량/금액이 한눈에 출력**됩니다.</p>
                 </div>
             </div>
             <button class="btn btn-emerald" style="padding: 8px 16px; font-size: 0.85rem;" onclick="syncFromCloud(true)">지금 강제 동기화</button>
@@ -610,58 +610,62 @@
         </div>
 
         <!-- ============================================================================== -->
-        <!-- NEW: 쇼핑몰별 판매 1~3위 (TOP 3) & 부진 1~10위 (WORST 10) 한눈에 보는 분석 센터 -->
+        <!-- MAIN DASHBOARD CARD: 쇼핑몰별 잘 팔리는 제품 TOP 3 & 부진 WORST 10 분석 센터 -->
         <!-- ============================================================================== -->
-        <div class="card grid-full" style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9)); border: 1px solid rgba(139, 92, 246, 0.3);">
-            <div class="card-header" style="margin-bottom: 16px;">
-                <h3><i class="fa-solid fa-trophy" style="color: #fbbf24;"></i> 쇼핑몰별 판매 Top 3 & 부진 Worst 10 종합 분석 센터</h3>
+        <div class="card grid-full" style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95)); border: 1px solid rgba(139, 92, 246, 0.4); box-shadow: 0 12px 32px rgba(0,0,0,0.4); margin-bottom: 28px;">
+            <div class="card-header" style="margin-bottom: 18px; border-bottom: 1px solid var(--card-border); padding-bottom: 14px;">
+                <div>
+                    <h3 style="font-size: 1.25rem; font-weight: 800; color: #ffffff;">
+                        <i class="fa-solid fa-trophy" style="color: #fbbf24;"></i> 쇼핑몰별 잘 팔리는 베스트 (TOP 3) & 부진 (WORST 10) 실시간 분석 대시보드
+                    </h3>
+                    <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 4px;">쇼핑몰 탭을 클릭하시면 업로드한 데이터를 기반으로 **상품명, 중량, 옵션, 판매수량, 판매금액**이 자동 연동 계산되어 출력됩니다.</p>
+                </div>
                 <div style="display: flex; gap: 8px;">
-                    <button class="rank-btn active" onclick="switchChannelRank('ALL', this)">전체 통합</button>
-                    <button class="rank-btn" onclick="switchChannelRank('쿠팡', this)">쿠팡</button>
-                    <button class="rank-btn" onclick="switchChannelRank('네이버', this)">네이버 스마트스토어</button>
-                    <button class="rank-btn" onclick="switchChannelRank('기타', this)">자사몰/기타</button>
+                    <button class="rank-btn active" onclick="switchChannelRank('ALL', this)"><i class="fa-solid fa-globe"></i> 전체 쇼핑몰 통합</button>
+                    <button class="rank-btn" onclick="switchChannelRank('쿠팡', this)"><i class="fa-solid fa-rocket" style="color:#ef4444;"></i> 쿠팡</button>
+                    <button class="rank-btn" onclick="switchChannelRank('네이버', this)"><i class="fa-solid fa-store" style="color:#10b981;"></i> 네이버 스마트스토어</button>
+                    <button class="rank-btn" onclick="switchChannelRank('자사몰', this)"><i class="fa-solid fa-cart-shopping" style="color:#3b82f6;"></i> 자사몰/기타</button>
                 </div>
             </div>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">업로드하신 엑셀 데이터를 바탕으로 **상품명, 중량, 옵션, 판매수량, 판매금액**이 자동 연동 계산되어 한눈에 결과만 출력됩니다.</p>
 
             <div class="grid-2">
-                <!-- TOP 1~3위 베스트 상품 -->
-                <div style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 14px; border: 1px solid rgba(245, 158, 11, 0.3);">
-                    <h4 style="color: #fbbf24; margin-bottom: 14px; font-size: 1rem; display: flex; align-items: center; gap: 8px;">
-                        <i class="fa-solid fa-crown"></i> 🏆 쇼핑몰별 판매 BEST 1 ~ 3위
+                <!-- TOP 1~3위 잘 팔리는 제품 -->
+                <div style="background: rgba(15, 23, 42, 0.7); padding: 22px; border-radius: 14px; border: 1px solid rgba(245, 158, 11, 0.4);">
+                    <h4 style="color: #fbbf24; margin-bottom: 16px; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(245, 158, 11, 0.2); padding-bottom: 10px;">
+                        <i class="fa-solid fa-crown"></i> 🏆 쇼핑몰별 매출/판매량 1 ~ 3위 (BEST 효자 상품)
                     </h4>
-                    <div id="topRankContainer" style="display: flex; flex-direction: column; gap: 10px;">
-                        <!-- JS Dynamic Output -->
+                    <div id="topRankContainer" style="display: flex; flex-direction: column; gap: 12px;">
+                        <!-- JS Dynamic Ranking Output -->
                     </div>
                 </div>
 
-                <!-- WORST 1~10위 부진 상품 -->
-                <div style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 14px; border: 1px solid rgba(244, 63, 94, 0.3);">
-                    <h4 style="color: #f87171; margin-bottom: 14px; font-size: 1rem; display: flex; align-items: center; gap: 8px;">
-                        <i class="fa-solid fa-triangle-exclamation"></i> ⚠️ 쇼핑몰별 판매 부진 WORST 1 ~ 10위
+                <!-- WORST 1~10위 부진 제품 -->
+                <div style="background: rgba(15, 23, 42, 0.7); padding: 22px; border-radius: 14px; border: 1px solid rgba(244, 63, 94, 0.4);">
+                    <h4 style="color: #f87171; margin-bottom: 16px; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(244, 63, 94, 0.2); padding-bottom: 10px;">
+                        <i class="fa-solid fa-triangle-exclamation"></i> ⚠️ 쇼핑몰별 판매 부진 1 ~ 10위 (WORST 관측 품목)
                     </h4>
-                    <div id="worstRankContainer" style="display: flex; flex-direction: column; gap: 8px; max-height: 320px; overflow-y: auto; padding-right: 4px;">
-                        <!-- JS Dynamic Output -->
+                    <div id="worstRankContainer" style="display: flex; flex-direction: column; gap: 8px; max-height: 360px; overflow-y: auto; padding-right: 6px;">
+                        <!-- JS Dynamic Ranking Output -->
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 실시간 시각화 차트 -->
+        <!-- 실시간 시각화 차트 대시보드 -->
         <div class="grid-2">
             <div class="card">
                 <div class="card-header">
-                    <h3><i class="fa-solid fa-chart-bar" style="color: var(--accent-purple);"></i> 상위 품목별 매출 현황</h3>
+                    <h3><i class="fa-solid fa-chart-bar" style="color: var(--accent-purple);"></i> 상위 품목별 매출 및 판매 수량 현황</h3>
                 </div>
-                <div style="height: 240px; position: relative;">
+                <div style="height: 250px; position: relative;">
                     <canvas id="salesChart"></canvas>
                 </div>
             </div>
             <div class="card">
                 <div class="card-header">
-                    <h3><i class="fa-solid fa-chart-pie" style="color: var(--accent-emerald);"></i> 판매 채널별 매출 점유율</h3>
+                    <h3><i class="fa-solid fa-chart-pie" style="color: var(--accent-emerald);"></i> 판매 채널별 매출 점유율 분석</h3>
                 </div>
-                <div style="height: 240px; position: relative;">
+                <div style="height: 250px; position: relative;">
                     <canvas id="channelChart"></canvas>
                 </div>
             </div>
@@ -717,7 +721,7 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- 3. 온라인 주간 운영 현황 (엑셀 원본 연동 그대로 노출) -->
+    <!-- 3. 온라인 주간 운영 현황 (엑셀 원본 연동) -->
     <!-- ============================================================================== -->
     <div id="online" class="main-content">
         <div class="header">
@@ -1000,7 +1004,7 @@
     <div id="uploadModal" class="modal-overlay">
         <div class="modal-card">
             <h3><i class="fa-solid fa-layer-group" style="color: #fbbf24;"></i> 다중 채널 엑셀 일괄 업로드 & 자동 분석</h3>
-            <p>쿠팡, 네이버 엑셀 올리시면 <b>온라인 실적(원본연동), 물류재고(상품명+중량 취합), 쇼핑몰별 TOP3 / WORST10 분석</b>이 한 번에 자동 처리됩니다.</p>
+            <p>쿠팡, 네이버 엑셀 올리시면 <b>온라인 실적(원본연동), 물류재고(상품명+중량 취합), 쇼핑몰별 TOP3 / WORST10 분석 대시보드</b>가 자동 처리됩니다.</p>
             <div class="file-select-options">
                 <div>
                     <label style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; display: block;">업로드 대상 영역</label>
@@ -1039,7 +1043,7 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- JAVASCRIPT SYSTEM ENGINE (ORIGINAL ONLINE + ITEM+WEIGHT INVENTORY + RANKING) -->
+    <!-- JAVASCRIPT SYSTEM ENGINE (FULL REALTIME DASHBOARD & RANKING ENGINE) -->
     <!-- ============================================================================== -->
     <script>
         const CLOUD_STORAGE_KEY = 'hyejin_mini_erp_global_db_v1';
@@ -1105,7 +1109,7 @@
             return match ? match[0].toLowerCase() : '';
         }
 
-        // Clean Base Title (remove bracket tags and comma details)
+        // Clean Base Title
         function cleanBaseTitle(name) {
             let str = String(name || '');
             str = str.replace(/\[.*?\]/g, '').replace(/\{.*?\}/g, '');
@@ -1445,7 +1449,7 @@
         }
 
         // ==============================================================================
-        // NEW: CHANNEL RANKING CALCULATOR (TOP 3 & WORST 10)
+        // MAIN DASHBOARD RANKING RENDERER (TOP 3 BEST & WORST 10)
         // ==============================================================================
         function switchChannelRank(channelFilter, btnEl) {
             document.querySelectorAll('.rank-btn').forEach(b => b.classList.remove('active'));
@@ -1489,23 +1493,23 @@
             topBox.innerHTML = '';
             const top3List = topSorted.slice(0, 3);
             if (top3List.length === 0) {
-                topBox.innerHTML = `<div style="font-size:0.85rem; color:var(--text-muted);">해당 쇼핑몰 데이터가 없습니다.</div>`;
+                topBox.innerHTML = `<div style="font-size:0.88rem; color:var(--text-muted); padding:10px;">해당 쇼핑몰 데이터가 없습니다.</div>`;
             } else {
                 top3List.forEach((item, idx) => {
                     const badgeClass = idx === 0 ? 'top-1' : (idx === 1 ? 'top-2' : 'top-3');
                     const rankDiv = document.createElement('div');
-                    rankDiv.style.cssText = 'display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.04); padding:10px 14px; border-radius:8px;';
+                    rankDiv.style.cssText = 'display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.05); padding:12px 16px; border-radius:10px; border:1px solid rgba(255,255,255,0.06);';
                     rankDiv.innerHTML = `
                         <div style="display:flex; align-items:center; overflow:hidden;">
                             <span class="rank-badge-top ${badgeClass}">${idx + 1}</span>
-                            <div style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:260px;">
-                                <strong style="font-size:0.9rem; color:white;">${item.rawItem}</strong>
-                                <div style="font-size:0.75rem; color:var(--text-muted);">${item.channel}</div>
+                            <div style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:280px;">
+                                <strong style="font-size:0.95rem; color:white;">${item.rawItem}</strong>
+                                <div style="font-size:0.78rem; color:var(--text-muted); margin-top:2px;"><span class="channel-tag tag-multi">${item.channel}</span></div>
                             </div>
                         </div>
                         <div style="text-align:right;">
-                            <b style="color:#fbbf24; font-size:0.95rem;">${item.revenue.toLocaleString()} 원</b>
-                            <div style="font-size:0.78rem; color:#34d399;">판매 ${item.sales.toLocaleString()}개</div>
+                            <b style="color:#fbbf24; font-size:1.05rem;">${item.revenue.toLocaleString()} 원</b>
+                            <div style="font-size:0.8rem; color:#34d399; font-weight:700;">판매 ${item.sales.toLocaleString()}개</div>
                         </div>
                     `;
                     topBox.appendChild(rankDiv);
@@ -1516,19 +1520,19 @@
             worstBox.innerHTML = '';
             const worst10List = worstSorted.slice(0, 10);
             if (worst10List.length === 0) {
-                worstBox.innerHTML = `<div style="font-size:0.85rem; color:var(--text-muted);">해당 쇼핑몰 데이터가 없습니다.</div>`;
+                worstBox.innerHTML = `<div style="font-size:0.88rem; color:var(--text-muted); padding:10px;">해당 쇼핑몰 데이터가 없습니다.</div>`;
             } else {
                 worst10List.forEach((item, idx) => {
                     const rankDiv = document.createElement('div');
-                    rankDiv.style.cssText = 'display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.02); padding:8px 12px; border-radius:6px; font-size:0.85rem;';
+                    rankDiv.style.cssText = 'display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.03); padding:9px 14px; border-radius:8px; font-size:0.88rem; border:1px solid rgba(255,255,255,0.04);';
                     rankDiv.innerHTML = `
                         <div style="display:flex; align-items:center; overflow:hidden;">
                             <span class="worst-badge">${idx + 1}위</span>
-                            <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:240px; color:#e2e8f0;">${item.rawItem}</span>
+                            <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:250px; color:#e2e8f0; font-weight:500;">${item.rawItem}</span>
                         </div>
-                        <div style="text-align:right; display:flex; gap:12px; align-items:center;">
+                        <div style="text-align:right; display:flex; gap:14px; align-items:center;">
                             <span style="color:#f87171; font-weight:700;">${item.revenue.toLocaleString()} 원</span>
-                            <span style="color:var(--text-muted); font-size:0.78rem;">(${item.sales}개)</span>
+                            <span style="color:var(--text-muted); font-size:0.8rem;">(${item.sales}개)</span>
                         </div>
                     `;
                     worstBox.appendChild(rankDiv);
@@ -1540,7 +1544,6 @@
             const onlineData = JSON.parse(localStorage.getItem('erp_online')) || defaultOnline;
             const inventoryData = JSON.parse(localStorage.getItem('erp_inventory')) || defaultInventory;
             const taskData = JSON.parse(localStorage.getItem('erp_task')) || defaultTask;
-            const importData = JSON.parse(localStorage.getItem('erp_import')) || defaultImport;
 
             let totalRev = 0;
             let totalSales = 0;
@@ -1881,9 +1884,9 @@
                 localStorage.setItem('erp_inventory', JSON.stringify(Array.from(invGroupMap.values())));
                 reloadAllTables();
                 syncToCloud(true);
-                statusEl.innerText = `✅ 엑셀 원본 연동 & 상품명+중량 취합 & TOP3 / WORST10 분석 완료!`;
+                statusEl.innerText = `✅ 대시보드 랭킹 & 엑셀 연동 완료!`;
                 setTimeout(closeUploadModal, 1500);
-                showToast('엑셀 업로드 기반 분석 결과가 즉시 연동되었습니다.');
+                showToast('대시보드 메인에 쇼핑몰별 BEST/WORST 랭킹이 연동되었습니다.');
             }
         }
 
