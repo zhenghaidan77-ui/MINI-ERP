@@ -32,7 +32,7 @@
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
-            overflow-x: hidden; /* 페이지 전체가 화면 밖으로 넘치지 않도록 방지 */
+            overflow-x: hidden;
             overflow-y: auto;
         }
 
@@ -134,11 +134,11 @@
 
         .nav-item i { width: 20px; text-align: center; }
 
-        /* Main Content Area - Perfect Fit with Auto Wrapping & Internal Table Horizontal Scroll */
+        /* Main Content Area */
         .main-content {
             margin-left: 270px;
             flex: 1;
-            padding: 30px 36px;
+            padding: 0 36px 36px 36px;
             display: none;
             animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             max-width: calc(100vw - 270px);
@@ -152,16 +152,22 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Responsive Auto-Wrapping Header */
+        /* 📌 STICKY FIXED HEADER (스크롤 내려도 상단에 착! 붙는 헤더 메인 메뉴) */
         .header {
+            position: sticky;
+            top: 0;
+            background: rgba(11, 15, 25, 0.92);
+            backdrop-filter: blur(16px);
+            z-index: 500;
             margin-bottom: 24px;
+            padding: 24px 0 16px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap; /* 버튼들이 화면 크기에 맞춰 잘리지 않고 자동으로 줄바꿈 */
+            flex-wrap: wrap;
             gap: 16px;
             border-bottom: 1px solid var(--card-border);
-            padding-bottom: 18px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
         }
 
         .header h1 {
@@ -179,7 +185,7 @@
             display: flex;
             gap: 8px;
             align-items: center;
-            flex-wrap: wrap; /* 버튼 자동 줄바꿈으로 오른쪽 잘림 100% 방지 */
+            flex-wrap: wrap;
             justify-content: flex-end;
         }
 
@@ -294,12 +300,14 @@
             box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
         }
 
-        /* Table Container - Smooth Horizontal Scroll within Box Only */
+        /* 📌 STICKY FIXED TABLE HEADER (표 내부 세로/가로 스크롤 시 제목 행 고정) */
         .table-container {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
             border-radius: 14px;
-            overflow-x: auto; /* 표 내부에서만 가로 스크롤 생성 */
+            overflow-x: auto;
+            max-height: 72vh; /* 표 내부 세로 스크롤 지원 */
+            overflow-y: auto;
             backdrop-filter: blur(12px);
             margin-bottom: 20px;
             box-shadow: inset 0 0 12px rgba(0,0,0,0.3);
@@ -309,15 +317,17 @@
         table { width: 100%; border-collapse: collapse; white-space: nowrap; font-size: 0.9rem; min-width: 1100px; }
         th, td { padding: 13px 16px; text-align: left; border-bottom: 1px solid var(--card-border); transition: background 0.2s; }
         
+        /* 📌 TH (제목 행) 상단 착! 붙음 STICKY FIXED */
         th {
-            background: rgba(15, 23, 42, 0.85);
-            color: var(--text-muted);
-            font-weight: 600;
-            font-size: 0.84rem;
+            background: #0f172a !important;
+            color: #c4b5fd;
+            font-weight: 800;
+            font-size: 0.86rem;
             letter-spacing: 0.5px;
             position: sticky;
             top: 0;
-            z-index: 10;
+            z-index: 100;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.6);
         }
 
         td { color: var(--text-main); }
@@ -481,12 +491,15 @@
         .search-input:focus, .admin-input:focus { border-color: var(--accent-purple); }
 
         .summary-footer {
-            background: rgba(15, 23, 42, 0.8);
+            background: rgba(15, 23, 42, 0.9);
             border-top: 2px solid var(--accent-purple);
             font-weight: 700;
+            position: sticky;
+            bottom: 0;
+            z-index: 10;
         }
 
-        .summary-footer td { color: #ffffff; font-size: 0.95rem; }
+        .summary-footer td { color: #ffffff; font-size: 0.95rem; background: #0f172a !important; }
 
         /* Ranking Card Styles & Filter Button Wrapping */
         .rank-btn {
@@ -522,7 +535,7 @@
             border-radius: 16px;
             border: 1px solid var(--card-border);
             margin-bottom: 24px;
-            overflow-x: auto; /* 가로 스크롤 가능 */
+            overflow-x: auto;
         }
 
         .org-node-horiz {
@@ -714,7 +727,7 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- 1. 경영진 종합실적 대시보드 (오른쪽 잘림 방지 100% 자동 반응형) -->
+    <!-- 1. 경영진 종합실적 대시보드 (상단 메인 헤더 고정 & 스크롤 지원) -->
     <!-- ============================================================================== -->
     <div id="ceo-report" class="main-content active">
         <div class="header">
@@ -860,7 +873,7 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- 2. 조직 업무 표준 기준표 (SOP) - [왼쪽 ➡️ 오른쪽] 수평 가로 방향 나무 구조 -->
+    <!-- 2. 조직 업무 표준 기준표 (SOP) -->
     <!-- ============================================================================== -->
     <div id="dashboard" class="main-content">
         <div class="header">
@@ -917,7 +930,7 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- 3. 온라인 주간 운영 현황 (버튼 자동줄바꿈 & 표 내부 100% 스크롤 조망) -->
+    <!-- 3. 온라인 주간 운영 현황 (📌 상단 헤더 & 📌 표 제목 행 이중 고정 완료) -->
     <!-- ============================================================================== -->
     <div id="online" class="main-content">
         <div class="header">
@@ -937,7 +950,7 @@
 
         <div class="filter-bar">
             <input type="text" class="search-input" placeholder="🔍 상품명/옵션/채널 검색..." onkeyup="filterTable('online-table', this.value)">
-            <span style="font-size: 0.85rem; color: #c4b5fd; font-weight: 600;">* ↔️ [표 좌우 슬라이드/스크롤]: 마우스 휠이나 하단 스크롤바를 이동하시면 오른쪽 항목(순이익, ROAS)까지 100% 확인하실 수 있습니다.</span>
+            <span style="font-size: 0.85rem; color: #c4b5fd; font-weight: 700;">📌 [상단 메뉴 & 표 제목 고정 완료]: 아래로 아무리 스크롤하더라도 표 제목(판매채널, 원가, ROAS, 순이익)이 상단에 고정되어 내용을 한눈에 확인하실 수 있습니다.</span>
         </div>
 
         <div class="table-container">
@@ -975,7 +988,7 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- 4. 물류 재고/발주 (온라인 7일 판매량 실시간 100% 자동 연동 차감) -->
+    <!-- 4. 물류 재고/발주 (상단 헤더 & 표 제목 고정) -->
     <!-- ============================================================================== -->
     <div id="inventory" class="main-content">
         <div class="header">
@@ -1015,7 +1028,7 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- 5. 수입 진행 현황 -->
+    <!-- 5. 수입 진행 현황 (상단 헤더 & 표 제목 고정) -->
     <!-- ============================================================================== -->
     <div id="import" class="main-content">
         <div class="header">
@@ -2557,7 +2570,7 @@
             const csvFile = new Blob(["\ufeff" + csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
             const downloadLink = document.createElement('a');
             downloadLink.download = filename;
-            downloadLink.href = window.URL.click ? downloadLink.href : window.URL.createObjectURL(csvFile);
+            downloadLink.href = window.URL.createObjectURL(csvFile);
             downloadLink.click();
         }
 
