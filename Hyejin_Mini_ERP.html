@@ -32,8 +32,7 @@
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
-            overflow-x: hidden;
-            overflow-y: auto;
+            background-attachment: fixed;
         }
 
         /* Custom Modern Scrollbar Style for Horizontal & Vertical Navigation */
@@ -156,18 +155,18 @@
         .header {
             position: sticky;
             top: 0;
-            background: rgba(11, 15, 25, 0.92);
+            background: #0b0f19;
             backdrop-filter: blur(16px);
             z-index: 500;
-            margin-bottom: 24px;
-            padding: 24px 0 16px 0;
+            margin-bottom: 20px;
+            padding: 20px 0 16px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 16px;
             border-bottom: 1px solid var(--card-border);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
         }
 
         .header h1 {
@@ -300,14 +299,12 @@
             box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
         }
 
-        /* 📌 STICKY FIXED TABLE HEADER (표 내부 세로/가로 스크롤 시 제목 행 고정) */
+        /* 📌 STICKY FIXED TABLE CONTAINER & TH (표 제목 행 헤더 아래 2단 고정) */
         .table-container {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
             border-radius: 14px;
             overflow-x: auto;
-            max-height: 72vh; /* 표 내부 세로 스크롤 지원 */
-            overflow-y: auto;
             backdrop-filter: blur(12px);
             margin-bottom: 20px;
             box-shadow: inset 0 0 12px rgba(0,0,0,0.3);
@@ -317,7 +314,7 @@
         table { width: 100%; border-collapse: collapse; white-space: nowrap; font-size: 0.9rem; min-width: 1100px; }
         th, td { padding: 13px 16px; text-align: left; border-bottom: 1px solid var(--card-border); transition: background 0.2s; }
         
-        /* 📌 TH (제목 행) 상단 착! 붙음 STICKY FIXED */
+        /* 📌 TH (제목 행) 상단 메인 헤더 바로 아래 착! 붙음 STICKY FIXED */
         th {
             background: #0f172a !important;
             color: #c4b5fd;
@@ -325,9 +322,9 @@
             font-size: 0.86rem;
             letter-spacing: 0.5px;
             position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.6);
+            top: 76px;
+            z-index: 400;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
         }
 
         td { color: var(--text-main); }
