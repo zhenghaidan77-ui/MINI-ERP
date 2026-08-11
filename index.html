@@ -583,10 +583,10 @@
 
         <div style="background: linear-gradient(90deg, rgba(16, 185, 129, 0.15), rgba(139, 92, 246, 0.15)); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 16px 22px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
             <div style="display: flex; align-items: center; gap: 14px;">
-                <i class="fa-solid fa-fire" style="font-size: 26px; color: #fbbf24;"></i>
+                <i class="fa-solid fa-filter-circle-xmark" style="font-size: 26px; color: #fbbf24;"></i>
                 <div>
-                    <strong style="font-size: 0.98rem; color: #ffffff;">⚡ 판매 채널 확장: [쿠팡, 네이버, 카카오, G마켓/옥션, 11번가, 토스, 테무 등 전 채널 연동]</strong>
-                    <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">다양한 오픈마켓 엑셀 업로드 시 품절 및 판매중지 상품은 자동 제외되고 해당 채널별 BEST/WORST 랭킹이 추출됩니다.</p>
+                    <strong style="font-size: 0.98rem; color: #ffffff;">⚡ 데이터 정밀 필터링: [노출 제로(0) & 품절/판매중지 상품 자동 제외]</strong>
+                    <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">노출수가 0이거나 품절·판매중지된 제품은 자동 제외되고, **실제 노출 및 판매 중인 활성 상품만 분석**됩니다.</p>
                 </div>
             </div>
             <button class="btn btn-emerald" style="padding: 8px 16px; font-size: 0.85rem;" onclick="syncFromCloud(true)">지금 강제 동기화</button>
@@ -617,7 +617,7 @@
         </div>
 
         <!-- ============================================================================== -->
-        <!-- MAIN DASHBOARD CARD: 확장된 판매 채널별 TOP 3 & WORST 10 분석 센터 -->
+        <!-- MAIN DASHBOARD CARD: 노출제로 및 품절 제외 채널별 TOP 3 & WORST 10 분석 센터 -->
         <!-- ============================================================================== -->
         <div class="card grid-full" style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95)); border: 1px solid rgba(139, 92, 246, 0.4); box-shadow: 0 12px 32px rgba(0,0,0,0.4); margin-bottom: 28px;">
             <div class="card-header" style="margin-bottom: 18px; border-bottom: 1px solid var(--card-border); padding-bottom: 14px; flex-wrap: wrap; gap: 12px;">
@@ -625,7 +625,7 @@
                     <h3 style="font-size: 1.25rem; font-weight: 800; color: #ffffff;">
                         <i class="fa-solid fa-trophy" style="color: #fbbf24;"></i> 쇼핑몰별 잘 팔리는 베스트 (TOP 3) & 부진 (WORST 10) 실시간 분석 대시보드
                     </h3>
-                    <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 4px;">원하시는 쇼핑몰 버튼을 클릭하시면 각 채널별 효자 상품과 부진 상품 수량/금액이 실시간 연동되어 출력됩니다.</p>
+                    <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 4px;">노출 0건 및 품절 제외 후, 클릭하신 채널별 활성 효자 상품과 부진 상품 수량/금액이 실시간 노출됩니다.</p>
                 </div>
                 <div style="display: flex; gap: 6px; flex-wrap: wrap;">
                     <button class="rank-btn active" onclick="switchChannelRank('ALL', this)"><i class="fa-solid fa-globe"></i> 전체</button>
@@ -668,7 +668,7 @@
             <div class="card">
                 <div class="card-header">
                     <h3><i class="fa-solid fa-chart-bar" style="color: var(--accent-purple);"></i> 상위 품목별 매출 및 판매 수량 그래프 현황</h3>
-                    <span class="status-badge badge-green">실시간 데이터 연동됨</span>
+                    <span class="status-badge badge-green">노출 0건/품절 필터링됨</span>
                 </div>
                 <div style="height: 280px; position: relative;">
                     <canvas id="salesChart"></canvas>
@@ -741,7 +741,7 @@
         <div class="header">
             <div>
                 <h1><i class="fa-solid fa-cart-shopping" style="color: var(--accent-purple);"></i> 온라인 주간 실적 현황 (엑셀 원본 연동)</h1>
-                <p>업로드하신 엑셀 원본 기준 <b>상품명, 중량, 옵션 등 세부 데이터가 그대로 연동</b>되며 품절/판매중지 품목은 자동 제외됩니다.</p>
+                <p>업로드하신 엑셀 원본 기준 <b>상품명, 중량, 옵션 데이터가 연동</b>되며 <b>노출 제로(0건) 및 품절/판매중지 품목은 자동 제외</b>됩니다.</p>
             </div>
             <div class="header-actions">
                 <button class="btn btn-upload" onclick="openUploadModal('online')"><i class="fa-solid fa-cloud-arrow-up"></i> 다중 엑셀 일괄 업로드</button>
@@ -1017,8 +1017,8 @@
     <!-- 모달 -->
     <div id="uploadModal" class="modal-overlay">
         <div class="modal-card">
-            <h3><i class="fa-solid fa-layer-group" style="color: #fbbf24;"></i> 다중 채널 엑셀 일괄 업로드 & 자동 필터 분석</h3>
-            <p>쿠팡, 네이버, 카카오, G마켓, 11번가, 토스, 테무 등 엑셀을 올리시면 <b>[품절/판매중지 자동 제외]</b> 후 실적과 5일치 안전재고 및 채널별 BEST/WORST 대시보드가 자동 추출됩니다.</p>
+            <h3><i class="fa-solid fa-layer-group" style="color: #fbbf24;"></i> 다중 채널 엑셀 일괄 업로드 & 노출0/품절 자동 제외</h3>
+            <p>쿠팡, 네이버, 카카오, G마켓 등 엑셀을 올리시면 <b>[노출 0건 및 품절/판매중지 자동 필터링]</b> 후 실적과 5일치 안전재고 및 대시보드가 완벽 집계됩니다.</p>
             <div class="file-select-options">
                 <div>
                     <label style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; display: block;">업로드 대상 영역</label>
@@ -1032,7 +1032,7 @@
                 <div>
                     <label style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; display: block;">다중 파일 합산 처리 방식</label>
                     <select id="uploadMode" class="select-box">
-                        <option value="consolidate">품절 제외 및 중량 취합 (추천)</option>
+                        <option value="consolidate">노출0 및 품절 제외 취합 (추천)</option>
                         <option value="replace">기존 데이터 덮어쓰기</option>
                         <option value="append">기존 데이터 뒤에 개별 추가</option>
                     </select>
@@ -1057,7 +1057,7 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- JAVASCRIPT SYSTEM ENGINE (EXPANDED MULTI-CHANNEL ENGINE) -->
+    <!-- JAVASCRIPT SYSTEM ENGINE (AUTOMATIC IMPRESSION ZERO & SOLD OUT EXCLUSION) -->
     <!-- ============================================================================== -->
     <script>
         const CLOUD_STORAGE_KEY = 'hyejin_mini_erp_global_db_v1';
@@ -1079,7 +1079,7 @@
             });
         });
 
-        // Online Active Products (Multi-channel data)
+        // Default Sample Data (All Active & Valid Products)
         const defaultOnline = [
             {"channel":"쿠팡","item":"미미각 마라샹궈 소스 마라맛 볶음소스, 1개, 500g","sales":"140","revenue":"1440000","adSpend":"180000","inventory":"250","issue":"정상 판매중","action":"쿠팡 타임딜 기획","status":"진행중"},
             {"channel":"쿠팡","item":"[한정수량 특가판매 ] 미미각 마라소스 마라장 업소용, 1kg, 1개","sales":"110","revenue":"1100000","adSpend":"120000","inventory":"180","issue":"인기 품목","action":"추가 생산","status":"완료"},
@@ -1092,7 +1092,6 @@
             {"channel":"자사몰","item":"장어소스 (순한 맛) (50g)","sales":"12","revenue":"96000","adSpend":"10000","inventory":"420","issue":"부진 품목","action":"할인 행사","status":"대기"}
         ];
 
-        // Inventory Data Grouped by Product Name + Weight/Size
         const defaultInventory = [
             {"item":"미미각 마라샹궈 소스 (500g)","supplier":"중국","moq":"20박스","safeStock":"100개 (5일치)","currentStock":"250","orderNeed":"🟢 정상"},
             {"item":"미미각 마라소스 마라장 (1kg)","supplier":"중국","moq":"20박스","safeStock":"100개 (5일치)","currentStock":"300","orderNeed":"🟢 정상"},
@@ -1120,11 +1119,32 @@
         let channelChartInstance = null;
         let activeRankChannel = 'ALL';
 
-        // Check if an item is sold out or discontinued
-        function isDiscontinuedOrSoldOut(statusStr, nameStr) {
+        // COMPREHENSIVE FILTER ENGINE: Exclude Impression Zero AND Sold Out / Discontinued
+        function isInvalidOrZeroOrSoldOut(statusStr, nameStr, impressionVal = null, salesVal = null, revVal = null) {
             const combined = (String(statusStr || '') + ' ' + String(nameStr || '')).toLowerCase();
-            return combined.includes('판매중지') || combined.includes('품절') || combined.includes('일시품절') || 
-                   combined.includes('중단') || combined.includes('discontinued') || combined.includes('out of stock');
+            
+            // 1. Sold Out or Discontinued Check
+            if (combined.includes('판매중지') || combined.includes('품절') || combined.includes('일시품절') || 
+                combined.includes('중단') || combined.includes('discontinued') || combined.includes('out of stock')) {
+                return true;
+            }
+
+            // 2. Impression Zero (노출수 0) Check
+            if (impressionVal !== null && impressionVal !== undefined && impressionVal !== '') {
+                const impNum = parseInt(String(impressionVal).replace(/,/g, '')) || 0;
+                if (impNum <= 0) return true; // Exclude Impression Zero
+            }
+
+            // 3. Complete Zero Activity Check (No Impressions, Sales, or Revenue at all)
+            if (salesVal !== null && revVal !== null) {
+                const sNum = parseInt(String(salesVal).replace(/,/g, '')) || 0;
+                const rNum = parseInt(String(revVal).replace(/,/g, '')) || 0;
+                if (sNum === 0 && rNum === 0 && impressionVal === '0') {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         // Extract Weight/Size (e.g. 500g, 1kg, 240g) from Product String
@@ -1186,7 +1206,7 @@
             };
         }
 
-        // Render Table Function with Multi-channel Badges
+        // Render Table Function
         function renderTable(tableId, storageKey, defaultData, headers) {
             const rawData = JSON.parse(localStorage.getItem(storageKey)) || defaultData;
             const tbody = document.querySelector(`#${tableId} tbody`);
@@ -1197,7 +1217,7 @@
             if (tableId === 'inventory-table') {
                 const consolidatedMap = new Map();
                 rawData.forEach(r => {
-                    if (isDiscontinuedOrSoldOut(r.issue || r.orderNeed, r.item)) return;
+                    if (isInvalidOrZeroOrSoldOut(r.issue || r.orderNeed, r.item)) return;
                     const groupTitle = getItemWithWeightGroupTitle(r.item || '');
                     const key = groupTitle.toLowerCase();
                     const stock = parseInt(String(r.currentStock || '0').replace(/,/g, '')) || 0;
@@ -1478,7 +1498,7 @@
         }
 
         // ==============================================================================
-        // MAIN DASHBOARD RANKING RENDERER (TOP 3 BEST & WORST 10 FOR ALL CHANNELS)
+        // MAIN DASHBOARD RANKING RENDERER (FILTERING IMPRESSION ZERO & SOLD OUT)
         // ==============================================================================
         function switchChannelRank(channelFilter, btnEl) {
             document.querySelectorAll('.rank-btn').forEach(b => b.classList.remove('active'));
@@ -1494,7 +1514,8 @@
 
             if (!topBox || !worstBox) return;
 
-            let activeList = onlineData.filter(r => !isDiscontinuedOrSoldOut(r.issue || r.status, r.item));
+            // Exclude Invalid/Impression Zero/Sold Out items
+            let activeList = onlineData.filter(r => !isInvalidOrZeroOrSoldOut(r.issue || r.status, r.item, r.impression, r.sales, r.revenue));
 
             let filtered = activeList.filter(r => {
                 if (activeRankChannel === 'ALL') return true;
@@ -1521,7 +1542,7 @@
             topBox.innerHTML = '';
             const top3List = topSorted.slice(0, 3);
             if (top3List.length === 0) {
-                topBox.innerHTML = `<div style="font-size:0.88rem; color:var(--text-muted); padding:10px;">해당 쇼핑몰 데이터가 없습니다.</div>`;
+                topBox.innerHTML = `<div style="font-size:0.88rem; color:var(--text-muted); padding:10px;">노출 및 판매 중인 상품 데이터가 없습니다.</div>`;
             } else {
                 top3List.forEach((item, idx) => {
                     const badgeClass = idx === 0 ? 'top-1' : (idx === 1 ? 'top-2' : 'top-3');
@@ -1547,7 +1568,7 @@
             worstBox.innerHTML = '';
             const worst10List = worstSorted.slice(0, 10);
             if (worst10List.length === 0) {
-                worstBox.innerHTML = `<div style="font-size:0.88rem; color:var(--text-muted); padding:10px;">해당 쇼핑몰 데이터가 없습니다.</div>`;
+                worstBox.innerHTML = `<div style="font-size:0.88rem; color:var(--text-muted); padding:10px;">노출 및 판매 중인 관측 상품이 없습니다.</div>`;
             } else {
                 worst10List.forEach((item, idx) => {
                     const rankDiv = document.createElement('div');
@@ -1567,13 +1588,13 @@
             }
         }
 
-        // FULL GRAPH DASHBOARD ENGINE FOR ALL CHANNELS
+        // FULL GRAPH DASHBOARD ENGINE
         function updateDashboardAnalytics() {
             const onlineData = JSON.parse(localStorage.getItem('erp_online')) || defaultOnline;
             const inventoryData = JSON.parse(localStorage.getItem('erp_inventory')) || defaultInventory;
             const taskData = JSON.parse(localStorage.getItem('erp_task')) || defaultTask;
 
-            const activeOnline = onlineData.filter(r => !isDiscontinuedOrSoldOut(r.issue || r.status, r.item));
+            const activeOnline = onlineData.filter(r => !isInvalidOrZeroOrSoldOut(r.issue || r.status, r.item, r.impression, r.sales, r.revenue));
 
             let totalRev = 0;
             let totalSales = 0;
@@ -1805,7 +1826,7 @@
             }
         }
 
-        // Upload Modal & Expanded Multi-channel Auto Detection
+        // Upload Modal & Impression Zero Filter
         function openUploadModal(target = 'online') {
             document.getElementById('uploadTarget').value = target;
             document.getElementById('uploadStatus').style.display = 'none';
@@ -1844,7 +1865,7 @@
             const statusEl = document.getElementById('uploadStatus');
 
             statusEl.style.display = 'block';
-            statusEl.innerText = `⏳ 총 ${fileList.length}개 파일 처리 및 전 채널 분석 중...`;
+            statusEl.innerText = `⏳ 총 ${fileList.length}개 파일 처리 [노출0건 & 품절 필터링] 중...`;
 
             const onlineRowsRaw = [];
 
@@ -1905,15 +1926,18 @@
                             if (!rawItemName) continue;
 
                             const itemStatus = findValue(itemObj, ['상태', '진행상태', '판매상태', 'Status', 'issue']);
-                            
-                            if (isDiscontinuedOrSoldOut(itemStatus, rawItemName)) continue;
-
-                            const parsedChannel = findValue(itemObj, ['판매채널', '채널', '쇼핑몰', 'Channel']) || fileChannel;
-
+                            const impressionVal = findValue(itemObj, ['노출수', '노출 수', '노출량', '노출', 'impression', 'impressions', 'view_count']);
                             const salesQty = findValue(itemObj, ['총 판매량(개)', '판매량', '수량', '판매수량', 'sales_qty', 'Qty']) || '0';
                             const revenueAmt = findValue(itemObj, ['총 매출(원)', '매출액', '총매출', '결제금액', 'revenue', 'Amount']) || '0';
                             const adSpendAmt = findValue(itemObj, ['총 광고비(원)', '광고비', 'ad_spend', 'Ad Spend']) || '0';
                             const stockQty = findValue(itemObj, ['재고 현황', '현재재고', '재고', 'stock', 'Stock']) || '0';
+
+                            // AUTOMATICALLY EXCLUDE BOTH IMPRESSION ZERO & SOLD OUT / DISCONTINUED
+                            if (isInvalidOrZeroOrSoldOut(itemStatus, rawItemName, impressionVal, salesQty, revenueAmt)) {
+                                continue;
+                            }
+
+                            const parsedChannel = findValue(itemObj, ['판매채널', '채널', '쇼핑몰', 'Channel']) || fileChannel;
 
                             onlineRowsRaw.push({
                                 channel: parsedChannel,
@@ -1922,7 +1946,8 @@
                                 revenue: String(revenueAmt),
                                 adSpend: String(adSpendAmt),
                                 inventory: String(stockQty),
-                                issue: itemStatus || '정상 판매중',
+                                impression: String(impressionVal || ''),
+                                issue: itemStatus || '정상 노출/판매중',
                                 action: '프로모션 검토',
                                 status: '진행중'
                             });
@@ -1959,9 +1984,9 @@
                 localStorage.setItem('erp_inventory', JSON.stringify(Array.from(invGroupMap.values())));
                 reloadAllTables();
                 syncToCloud(true);
-                statusEl.innerText = `✅ 다중 확장 채널 연동 완료!`;
+                statusEl.innerText = `✅ [노출0건 & 품절 자동 제외] 완료!`;
                 setTimeout(closeUploadModal, 1500);
-                showToast('G마켓, 옥션, 11번가, 토스, 테무, 카카오쇼핑 등 전 채널 연동이 완료되었습니다.');
+                showToast('노출 0건 및 품절 제외 후 활성 상품만 업데이트되었습니다.');
             }
         }
 
