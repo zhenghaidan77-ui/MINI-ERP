@@ -479,98 +479,95 @@
         .worst-badge { background: rgba(244,63,94,0.2); color: #f87171; border: 1px solid rgba(244,63,94,0.4); border-radius: 4px; padding: 2px 8px; font-size: 0.78rem; font-weight: 700; margin-right: 8px; flex-shrink: 0; }
 
         /* ========================================================================== */
-        /* ELEGANT VISUAL ORG CHART TREE SYSTEM (FIX TEXT COLLAPSE BUG) */
+        /* HORIZONTAL TREE ORG CHART (LEFT TO RIGHT DIRECTION) */
         /* ========================================================================== */
-        .org-chart-wrapper {
+        .org-chart-horiz {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            padding: 30px 20px;
+            justify-content: center;
+            padding: 40px 30px;
             background: rgba(15, 23, 42, 0.5);
             border-radius: 16px;
             border: 1px solid var(--card-border);
             margin-bottom: 28px;
         }
 
-        .org-node {
+        .org-node-horiz {
             background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
             border: 1px solid var(--card-border);
             border-radius: 14px;
-            padding: 20px 28px;
-            text-align: center;
-            min-width: 260px;
+            padding: 22px 28px;
+            min-width: 270px;
             box-shadow: 0 10px 24px rgba(0,0,0,0.35);
-            position: relative;
             transition: all 0.25s ease;
         }
 
-        .org-node:hover {
+        .org-node-horiz:hover {
             transform: translateY(-3px);
             border-color: rgba(139, 92, 246, 0.6);
         }
 
-        .org-node.main-node {
-            border: 2px solid #fbbf24;
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(30, 41, 59, 0.95));
-            box-shadow: 0 0 24px rgba(245, 158, 11, 0.25);
+        .org-node-horiz.main-node {
+            border: 2px solid rgba(139, 92, 246, 0.6);
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.18), rgba(30, 41, 59, 0.95));
+            box-shadow: 0 0 24px rgba(139, 92, 246, 0.25);
         }
 
-        .org-title {
+        .org-title-h {
             font-size: 1.15rem;
             font-weight: 800;
             color: #ffffff;
             margin-bottom: 6px;
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 8px;
         }
 
-        .org-subtitle {
+        .org-subtitle-h {
             font-size: 0.88rem;
             color: #c4b5fd;
             font-weight: 700;
             margin-bottom: 10px;
         }
 
-        .org-desc {
+        .org-desc-h {
             font-size: 0.82rem;
             color: var(--text-muted);
             line-height: 1.5;
             border-top: 1px dashed rgba(255,255,255,0.12);
             padding-top: 10px;
             margin-top: 8px;
-            text-align: center;
         }
 
-        .org-line-v {
-            width: 3px;
-            height: 32px;
-            background: linear-gradient(to bottom, #8b5cf6, #3b82f6);
-            margin: 0 auto;
-        }
-
-        .org-branch {
-            display: flex;
-            gap: 50px;
-            position: relative;
-            margin-top: 0;
-        }
-
-        .org-branch::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 25%;
-            right: 25%;
+        .org-line-h {
+            width: 45px;
             height: 3px;
-            background: #3b82f6;
+            background: linear-gradient(to right, #8b5cf6, #3b82f6);
+            flex-shrink: 0;
         }
 
-        .org-col {
+        .org-branch-v {
             display: flex;
             flex-direction: column;
+            gap: 28px;
+            position: relative;
+            padding-left: 24px;
+            border-left: 3px solid #3b82f6;
+        }
+
+        .org-col-h {
+            display: flex;
             align-items: center;
+            position: relative;
+        }
+
+        .org-col-h::before {
+            content: '';
+            position: absolute;
+            left: -24px;
+            width: 24px;
+            height: 3px;
+            background: #3b82f6;
         }
 
         /* Upload & Admin Modal Styling */
@@ -656,7 +653,7 @@
         
         <div class="nav-category">Main Executive</div>
         <a class="nav-item active" data-target="ceo-report">
-            <i class="fa-solid fa-crown" style="color:#fbbf24;"></i> 경영진 전용 종합대시보드 🔐
+            <i class="fa-solid fa-user-shield" style="color:#fbbf24;"></i> 경영진 전용 종합대시보드 🔐
         </a>
         <a class="nav-item" data-target="dashboard">
             <i class="fa-solid fa-sitemap"></i> 조직 업무 표준 기준표 (SOP)
@@ -688,7 +685,7 @@
     <div id="ceo-report" class="main-content active">
         <div class="header">
             <div>
-                <h1><i class="fa-solid fa-crown" style="color: #fbbf24;"></i> 대표님 · 팀장 전용 종합실적 대시보드 🔐</h1>
+                <h1><i class="fa-solid fa-user-shield" style="color: #fbbf24;"></i> 대표님 · 팀장 전용 종합실적 대시보드 🔐</h1>
                 <p>쇼핑몰별 판매량 1~10위 BEST 효자 상품 & 부진 WORST 10 실시간 모니터링</p>
             </div>
             <div class="header-actions">
@@ -701,7 +698,7 @@
         <!-- 경영진 전용 비밀번호 인증 잠금 폼 -->
         <div id="ceoAuthBox" class="card grid-full" style="max-width: 520px; margin: 40px auto; text-align: center; border: 1px solid rgba(251, 191, 36, 0.5); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
             <i class="fa-solid fa-shield-halved" style="font-size: 50px; color: #fbbf24; margin-bottom: 16px;"></i>
-            <h3 style="justify-content: center; margin-bottom: 10px; color: #ffffff;">👑 대표님 · 팀장 전용 비밀번호 인증</h3>
+            <h3 style="justify-content: center; margin-bottom: 10px; color: #ffffff;">대표님 · 팀장 전용 비밀번호 인증</h3>
             <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 22px; line-height: 1.5;">
                 본 대시보드는 <b>대표님과 팀장 전용 보안 구역</b>입니다.<br/>접근을 위해 비밀번호(핀코드)를 입력해 주세요. (기본 비밀번호: <b>1234</b>)
             </p>
@@ -785,7 +782,7 @@
                     <!-- TOP 1~10위 잘 팔리는 제품 -->
                     <div style="background: rgba(15, 23, 42, 0.7); padding: 22px; border-radius: 14px; border: 1px solid rgba(245, 158, 11, 0.4);">
                         <h4 style="color: #fbbf24; margin-bottom: 16px; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(245, 158, 11, 0.2); padding-bottom: 10px;">
-                            <i class="fa-solid fa-crown"></i> 🏆 쇼핑몰별 매출/판매량 1 ~ 10위 (BEST 효자 상품)
+                            <i class="fa-solid fa-trophy"></i> 🏆 쇼핑몰별 매출/판매량 1 ~ 10위 (BEST 효자 상품)
                         </h4>
                         <div id="topRankContainer" style="display: flex; flex-direction: column; gap: 10px; max-height: 380px; overflow-y: auto; padding-right: 6px;">
                             <!-- JS Dynamic Ranking Output -->
@@ -829,7 +826,7 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- 2. 조직 업무 표준 기준표 (SOP) - 예전 조직도 체계 디자인 100% 완전 원복 -->
+    <!-- 2. 조직 업무 표준 기준표 (SOP) - [왼쪽 ➡️ 오른쪽] 수평 가로 방향 나무 구조 -->
     <!-- ============================================================================== -->
     <div id="dashboard" class="main-content">
         <div class="header">
@@ -845,23 +842,23 @@
         <div class="card grid-full">
             <h3><i class="fa-solid fa-diagram-project" style="color: var(--accent-purple);"></i> 조직 운영 구조 (업무 체계)</h3>
             
-            <div class="org-chart-wrapper">
-                <!-- 상단: 총괄 리더 -->
-                <div class="org-node main-node">
-                    <div class="org-title" id="orgLeaderTitle"><i class="fa-solid fa-crown" style="color:#fbbf24;"></i> 정해단 팀장</div>
-                    <div class="org-subtitle" id="orgLeaderSub">온라인 · 사업운영 총괄</div>
+            <div class="org-chart-horiz">
+                <!-- 1. 왼쪽: 총괄 리더 (정해단 팀장) -->
+                <div class="org-node-horiz main-node">
+                    <div class="org-title-h" id="orgLeaderTitle"><i class="fa-solid fa-user-tie" style="color:#c4b5fd;"></i> 정해단 팀장</div>
+                    <div class="org-subtitle-h" id="orgLeaderSub">온라인 · 사업운영 총괄</div>
                 </div>
 
-                <div class="org-line-v"></div>
+                <!-- 2. 중앙: 왼쪽 -> 오른쪽 연결 라인 -->
+                <div class="org-line-h"></div>
 
-                <!-- 하단: 2개 분기 (김윤미 대리 / 김미경 대리) -->
-                <div class="org-branch">
-                    <div class="org-col">
-                        <div class="org-line-v"></div>
-                        <div class="org-node">
-                            <div class="org-title" id="orgMember1Title"><i class="fa-solid fa-palette" style="color:#c4b5fd;"></i> 김윤미 대리</div>
-                            <div class="org-subtitle" id="orgMember1Sub">온라인 · 디자인 운영</div>
-                            <div class="org-desc" id="orgMember1Desc">
+                <!-- 3. 오른쪽: 2개 수평 분기 (김윤미 대리 / 김미경 대리) -->
+                <div class="org-branch-v">
+                    <div class="org-col-h">
+                        <div class="org-node-horiz">
+                            <div class="org-title-h" id="orgMember1Title"><i class="fa-solid fa-palette" style="color:#c4b5fd;"></i> 김윤미 대리</div>
+                            <div class="org-subtitle-h" id="orgMember1Sub">온라인 · 디자인 운영</div>
+                            <div class="org-desc-h" id="orgMember1Desc">
                                 📌 <b>상품등록 / SNS / 디자인</b><br/>
                                 📌 <b>온라인 기본운영</b><br/>
                                 📌 <b>데이터 관리</b>
@@ -869,12 +866,11 @@
                         </div>
                     </div>
 
-                    <div class="org-col">
-                        <div class="org-line-v"></div>
-                        <div class="org-node">
-                            <div class="org-title" id="orgMember2Title"><i class="fa-solid fa-truck-ramp-box" style="color:#6ee7b7;"></i> 김미경 대리</div>
-                            <div class="org-subtitle" style="color: #6ee7b7;" id="orgMember2Sub">물류 · 발주 운영</div>
-                            <div class="org-desc" id="orgMember2Desc">
+                    <div class="org-col-h">
+                        <div class="org-node-horiz">
+                            <div class="org-title-h" id="orgMember2Title"><i class="fa-solid fa-truck-ramp-box" style="color:#6ee7b7;"></i> 김미경 대리</div>
+                            <div class="org-subtitle-h" style="color: #6ee7b7;" id="orgMember2Sub">물류 · 발주 운영</div>
+                            <div class="org-desc-h" id="orgMember2Desc">
                                 📌 <b>재고 / 발주 / 입출고</b><br/>
                                 📌 <b>택배 / 업체관리</b><br/>
                                 📌 <b>물류관리</b>
@@ -1264,7 +1260,7 @@
                 sessionStorage.setItem('erp_ceo_authed', 'true');
                 document.getElementById('ceoPinInput').value = '';
                 checkCEOAuthAndRender();
-                showToast('👑 대표님 · 팀장 전용 종합 대시보드 열람이 승인되었습니다.');
+                showToast('대표님 · 팀장 전용 종합 대시보드 열람이 승인되었습니다.');
             } else {
                 alert('❌ 비밀번호가 올바르지 않습니다. (기본 비밀번호: 1234)');
             }
@@ -2145,7 +2141,7 @@
             const m2Sub = document.getElementById('orgMember2Sub');
             const m2Desc = document.getElementById('orgMember2Desc');
 
-            if (lTitle) lTitle.innerHTML = `<i class="fa-solid fa-crown" style="color:#fbbf24;"></i> ${c.leaderTitle || '정해단 팀장'}`;
+            if (lTitle) lTitle.innerHTML = `<i class="fa-solid fa-user-tie" style="color:#c4b5fd;"></i> ${c.leaderTitle || '정해단 팀장'}`;
             if (lSub) lSub.innerText = c.leaderSub || '온라인 · 사업운영 총괄';
             if (m1Title) m1Title.innerHTML = `<i class="fa-solid fa-palette" style="color:#c4b5fd;"></i> ${c.m1Title || '김윤미 대리'}`;
             if (m1Sub) m1Sub.innerText = c.m1Sub || '온라인 · 디자인 운영';
