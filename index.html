@@ -547,7 +547,7 @@
 
         <div class="nav-category">Operations</div>
         <a class="nav-item" data-target="online">
-            <i class="fa-solid fa-cart-shopping"></i> 온라인 주간 실적 (엑셀 원본연동)
+            <i class="fa-solid fa-cart-shopping"></i> 온라인 주간 실적 (광고비 엑셀연동)
         </a>
         <a class="nav-item" data-target="inventory">
             <i class="fa-solid fa-boxes-stacked"></i> 물류 재고 & 발주 (7일 판매 기반 5일 안전재고)
@@ -583,10 +583,10 @@
 
         <div style="background: linear-gradient(90deg, rgba(16, 185, 129, 0.15), rgba(139, 92, 246, 0.15)); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 16px 22px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
             <div style="display: flex; align-items: center; gap: 14px;">
-                <i class="fa-solid fa-shield-halved" style="font-size: 26px; color: #fbbf24;"></i>
+                <i class="fa-solid fa-bullhorn" style="font-size: 26px; color: #fbbf24;"></i>
                 <div>
-                    <strong style="font-size: 0.98rem; color: #ffffff;">⚡ [물류재고 5일 안전재고 구축 완비]: 온라인 7일 판매데이터 실시간 연동 연산</strong>
-                    <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">온라인 주간 실적 7일 판매데이터 기반 **5일치 안전재고 수량이 자동 연산**되며, 5일 미만 시 발주 경고가 점등됩니다.</p>
+                    <strong style="font-size: 0.98rem; color: #ffffff;">⚡ [광고비용 엑셀 업로드 연동 완비]: 채널별 광고 집행비용 자동 매칭 및 합산 지원</strong>
+                    <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">광고 보고서 엑셀을 올리시면 **온라인 주간 실적의 총 광고비 항목에 자동 집계**되어 실시간 반영됩니다.</p>
                 </div>
             </div>
             <button class="btn btn-emerald" style="padding: 8px 16px; font-size: 0.85rem;" onclick="syncFromCloud(true)">지금 강제 동기화</button>
@@ -735,16 +735,17 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- 3. 온라인 주간 운영 현황 (엑셀 기재 판매 제품명 그대로 연동) -->
+    <!-- 3. 온라인 주간 운영 현황 (광고비용 엑셀 연동 지원) -->
     <!-- ============================================================================== -->
     <div id="online" class="main-content">
         <div class="header">
             <div>
-                <h1><i class="fa-solid fa-cart-shopping" style="color: var(--accent-purple);"></i> 온라인 주간 실적 현황 (엑셀 기재 판매 제품명 100% 원본 반영)</h1>
-                <p>업로드하신 엑셀 파일에 기재된 <b>[판매 제품명, 중량, 옵션] 명칭이 100% 원본 그대로 반영</b>됩니다.</p>
+                <h1><i class="fa-solid fa-cart-shopping" style="color: var(--accent-purple);"></i> 온라인 주간 실적 현황 (광고비용 엑셀 연동 지원)</h1>
+                <p>실적 엑셀뿐만 아니라 <b>[광고비용 엑셀]을 올리셔도 총 광고비 항목에 자동 반영 및 집계</b>됩니다.</p>
             </div>
             <div class="header-actions">
-                <button class="btn btn-upload" onclick="openUploadModal('online')"><i class="fa-solid fa-cloud-arrow-up"></i> 온라인 엑셀 일괄 업로드</button>
+                <button class="btn btn-upload" onclick="openUploadModal('online')"><i class="fa-solid fa-cloud-arrow-up"></i> 온라인 실적 엑셀 업로드</button>
+                <button class="btn btn-emerald" onclick="openUploadModal('adSpend')"><i class="fa-solid fa-bullhorn"></i> 📢 광고비 엑셀 업로드</button>
                 <button class="btn btn-outline" onclick="addRow('online-table', onlineHeaders)"><i class="fa-solid fa-plus"></i> 행 추가</button>
                 <button class="btn btn-emerald" onclick="exportTableToCSV('online-table', '온라인통합실적관리.csv')"><i class="fa-solid fa-file-excel"></i> 엑셀 다운로드</button>
                 <button class="btn" onclick="saveTable('online-table', 'erp_online')"><i class="fa-solid fa-floppy-disk"></i> 클라우드 저장</button>
@@ -753,7 +754,7 @@
 
         <div class="filter-bar">
             <input type="text" class="search-input" placeholder="🔍 상품명/옵션/채널 검색..." onkeyup="filterTable('online-table', this.value)">
-            <span style="font-size: 0.85rem; color: #c4b5fd; font-weight: 600;">* 온라인 7일 판매량이 수정되면 물류 탭의 <b>'5일치 안전재고 수량'</b>이 실시간 자동 연동 변동됩니다.</span>
+            <span style="font-size: 0.85rem; color: #c4b5fd; font-weight: 600;">* 광고비용 엑셀 업로드 시 각 상품의 <b>총 광고비(원)</b> 열에 실시간 자동 합산 매칭됩니다.</span>
         </div>
 
         <div class="table-container">
@@ -778,7 +779,7 @@
                         <td colspan="2">전 채널 통합 합계 / 요약</td>
                         <td id="sum-online-sales">0</td>
                         <td id="sum-online-revenue">0 원</td>
-                        <td id="sum-online-adspend">0 원</td>
+                        <td id="sum-online-adspend" style="color: #fbbf24;">0 원</td>
                         <td colspan="5">-</td>
                     </tr>
                 </tfoot>
@@ -787,7 +788,7 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- 4. 물류 재고/발주 (온라인 7일 판매데이터 기준 5일 안전재고 구축 완비) -->
+    <!-- 4. 물류 재고/발주 (온라인 7일 판매데이터 기준 5일 안전재고) -->
     <!-- ============================================================================== -->
     <div id="inventory" class="main-content">
         <div class="header">
@@ -1017,13 +1018,14 @@
     <!-- 모달 -->
     <div id="uploadModal" class="modal-overlay">
         <div class="modal-card">
-            <h3><i class="fa-solid fa-layer-group" style="color: #fbbf24;"></i> 다중 엑셀 일괄 업로드 & 안전재고 연동</h3>
-            <p>온라인 판매 엑셀 또는 물류 창고 <b>[재고표 엑셀]</b>을 업로드하시면 <b>[7일 판매 기반 5일치 안전재고]</b>가 실시간 자동 연산 연동됩니다.</p>
+            <h3><i class="fa-solid fa-layer-group" style="color: #fbbf24;"></i> 다중 엑셀 일괄 업로드 & 광고비 연동</h3>
+            <p>온라인 판매 엑셀, <b>[📢 광고비용 엑셀]</b> 또는 창고 <b>[📦 재고표 엑셀]</b>을 업로드하시면 해당 항목에 실시간 자동 집계 매칭됩니다.</p>
             <div class="file-select-options">
                 <div>
                     <label style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; display: block;">업로드 대상 영역</label>
                     <select id="uploadTarget" class="select-box">
                         <option value="online">온라인 주간 실적 (다중채널 원본반영)</option>
+                        <option value="adSpend">📢 광고비용 엑셀 (채널별 광고집행비)</option>
                         <option value="inventory">📦 물류 재고표 (창고 재고 엑셀)</option>
                         <option value="import">수입 진행 현황</option>
                         <option value="json">전체 백업 데이터 (.json)</option>
@@ -1032,7 +1034,7 @@
                 <div>
                     <label style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; display: block;">데이터 처리 방식</label>
                     <select id="uploadMode" class="select-box">
-                        <option value="consolidate">재고표 수량 반영 & 5일 안전재고 (추천)</option>
+                        <option value="consolidate">광고비/실적 매칭 및 취합 (추천)</option>
                         <option value="replace">기존 데이터 덮어쓰기</option>
                         <option value="append">기존 데이터 뒤에 개별 추가</option>
                     </select>
@@ -1041,7 +1043,7 @@
             <div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
                 <i class="fa-solid fa-cloud-arrow-up"></i>
                 <h4>여기에 엑셀 파일(.xlsx, .csv)을 드래그하거나 클릭</h4>
-                <span>온라인 실적 엑셀 또는 창고 재고표 엑셀 복수 선택 가능</span>
+                <span>실적 엑셀, 광고비 엑셀, 재고 엑셀 모두 복수 선택 가능</span>
                 <input type="file" id="fileInput" accept=".xlsx, .xls, .csv, .json" multiple style="display: none;" onchange="handleFileSelect(event)">
             </div>
             <div id="uploadStatus" style="font-size: 0.88rem; color: #34d399; text-align: center; display: none; margin-bottom: 15px; line-height: 1.5;"></div>
@@ -1057,7 +1059,7 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- JAVASCRIPT SYSTEM ENGINE (VERIFIED 7-DAY SALES & 5-DAY SAFETY STOCK BUILD) -->
+    <!-- JAVASCRIPT SYSTEM ENGINE (ADVERTISING COST EXCEL UPLOAD PARSER INTEGRATED) -->
     <!-- ============================================================================== -->
     <script>
         const CLOUD_STORAGE_KEY = 'hyejin_mini_erp_global_db_v1';
@@ -1171,7 +1173,7 @@
             return getItemWithWeightGroupTitle(name).replace(/\s+/g, '').toLowerCase();
         }
 
-        // ACCURATE 7-DAY ONLINE SALES -> 5-DAY SAFETY STOCK CALCULATOR
+        // DYNAMIC SAFETY STOCK CALCULATOR
         function calculateDynamicSCM(itemName, currentStockVal) {
             const onlineData = JSON.parse(localStorage.getItem('erp_online')) || defaultOnline;
             const groupTitle = getItemWithWeightGroupTitle(itemName);
@@ -1185,10 +1187,7 @@
                 }
             });
 
-            // 7-day average daily sales (1일 평균 판매량)
             const dailySales = totalWeeklySales > 0 ? (totalWeeklySales / 7) : 0.0;
-            
-            // 5-day safety stock = Math.ceil(dailySales * 5)
             const safeStock5Days = totalWeeklySales > 0 ? Math.max(Math.ceil(dailySales * 5), 1) : 0;
             
             const currentStockNum = parseInt(String(currentStockVal || '0').replace(/,/g, '')) || 0;
@@ -1259,7 +1258,7 @@
                     td.addEventListener('input', () => {
                         if (tableId === 'inventory-table') {
                             recalculateRowStockStatus(tr);
-                        } else if (tableId === 'online-table' && key === 'sales') {
+                        } else if (tableId === 'online-table' && (key === 'sales' || key === 'adSpend')) {
                             syncOnlineSalesToInventory();
                         }
                     });
@@ -1797,7 +1796,7 @@
             }
         }
 
-        // Upload Modal Engine
+        // Upload Modal Engine: SUPPORT ADVERTISING COST EXCEL PARSING
         function openUploadModal(target = 'online') {
             document.getElementById('uploadTarget').value = target;
             document.getElementById('uploadStatus').style.display = 'none';
@@ -1837,10 +1836,11 @@
             const targetMode = document.getElementById('uploadTarget').value;
 
             statusEl.style.display = 'block';
-            statusEl.innerText = `⏳ 총 ${fileList.length}개 파일 처리 중... (${targetMode === 'inventory' ? '재고표 엑셀 업로드' : '온라인 실적 원본'})`;
+            statusEl.innerText = `⏳ 총 ${fileList.length}개 파일 처리 중...`;
 
             const onlineRowsRaw = [];
             const inventoryUploadedRows = [];
+            const adSpendMap = new Map(); // Store Ad Spend by item name key
 
             for (let file of fileList) {
                 const fileName = file.name.toLowerCase();
@@ -1860,6 +1860,8 @@
                 } else if (fileName.includes('temu') || fileName.includes('테무')) {
                     fileChannel = '테무';
                 }
+
+                const isAdFile = targetMode === 'adSpend' || fileName.includes('광고') || fileName.includes('ad') || fileName.includes('cost');
 
                 if (fileName.endsWith('.json')) {
                     try {
@@ -1895,7 +1897,29 @@
                                 itemObj[h] = row[idx] !== undefined ? String(row[idx]).trim() : '';
                             });
 
-                            if (targetMode === 'inventory' || fileName.includes('재고') || fileName.includes('stock') || fileName.includes('inventory')) {
+                            if (isAdFile) {
+                                // ADVERTISING COST EXCEL PARSING
+                                const rawItemName = findValue(itemObj, [
+                                    '상품명', '옵션명', '광고그룹명', '광고 그룹명', '캠페인명', 
+                                    '키워드', 'vendor_item_name', 'Item Name'
+                                ]);
+                                if (!rawItemName) continue;
+
+                                const adCostVal = findValue(itemObj, [
+                                    '총 광고비(원)', '광고비(원)', '광고비', '집행비용', '집행금액', 
+                                    '비용', 'ad_spend', 'Ad Spend', 'cost', 'Cost'
+                                ]) || '0';
+
+                                const costNum = parseInt(String(adCostVal).replace(/,/g, '')) || 0;
+                                const normKey = normalizeItemName(rawItemName);
+
+                                if (adSpendMap.has(normKey)) {
+                                    adSpendMap.set(normKey, adSpendMap.get(normKey) + costNum);
+                                } else {
+                                    adSpendMap.set(normKey, costNum);
+                                }
+                            } else if (targetMode === 'inventory' || fileName.includes('재고') || fileName.includes('stock') || fileName.includes('inventory')) {
+                                // INVENTORY EXCEL PARSING
                                 const rawItemName = findValue(itemObj, ['상품명', '제품명', '품목명', '품목', 'Item Name', 'Product Name']);
                                 if (!rawItemName) continue;
 
@@ -1914,6 +1938,7 @@
                                     orderNeed: scmInfo.statusText
                                 });
                             } else {
+                                // ONLINE WEEKLY SALES EXCEL PARSING
                                 const rawItemName = findValue(itemObj, [
                                     'vendor_item_name', '등록상품명', '옵션명', '판매 제품명', '판매제품명', 
                                     '상품명', '제품명', 'Item Name', 'Product Name'
@@ -1949,6 +1974,33 @@
                         }
                     } catch (err) { console.error(err); }
                 }
+            }
+
+            // AD SPEND UPDATE PROCESS
+            if (adSpendMap.size > 0) {
+                const currentOnline = JSON.parse(localStorage.getItem('erp_online')) || defaultOnline;
+                let updatedCount = 0;
+
+                currentOnline.forEach(row => {
+                    const normRowKey = normalizeItemName(row.item || '');
+                    
+                    // Match by full key or partial name inclusion
+                    adSpendMap.forEach((costVal, adKey) => {
+                        if (normRowKey === adKey || normRowKey.includes(adKey) || adKey.includes(normRowKey)) {
+                            const existingCost = parseInt(String(row.adSpend || '0').replace(/,/g, '')) || 0;
+                            row.adSpend = String(existingCost + costVal);
+                            updatedCount++;
+                        }
+                    });
+                });
+
+                localStorage.setItem('erp_online', JSON.stringify(currentOnline));
+                reloadAllTables();
+                syncToCloud(true);
+                statusEl.innerText = `✅ [광고비용 엑셀 업로드] 총 ${updatedCount}개 항목 광고비 반영 완료!`;
+                setTimeout(closeUploadModal, 1500);
+                showToast(`📢 총 ${updatedCount}개 품목의 광고비용이 성공적으로 업로드 합산되었습니다.`);
+                return;
             }
 
             if (targetMode === 'inventory' && inventoryUploadedRows.length > 0) {
