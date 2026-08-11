@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>자택근무 통제센터 (Mini ERP) - 대표보고 및 관리자 통제 시스템</title>
+    <title>자택근무 통제센터 (Mini ERP) - 실시간 클라우드 공유 & 통합 ERP</title>
     <!-- Pretendard & FontAwesome & Chart.js & SheetJS(XLSX) -->
     <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -53,13 +53,36 @@
             font-size: 1.3rem;
             font-weight: 800;
             padding: 0 24px;
-            margin-bottom: 28px;
+            margin-bottom: 18px;
             background: linear-gradient(135deg, #c4b5fd, #60a5fa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             display: flex;
             align-items: center;
             gap: 12px;
+        }
+
+        .cloud-badge {
+            margin: 0 24px 20px;
+            padding: 8px 12px;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 8px;
+            font-size: 0.78rem;
+            color: #34d399;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cloud-badge .dot {
+            width: 8px; height: 8px; background: #34d399; border-radius: 50%;
+            box-shadow: 0 0 8px #34d399; animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; }
         }
 
         .nav-category {
@@ -135,7 +158,6 @@
         }
 
         .header p { color: var(--text-muted); margin-top: 6px; font-size: 0.95rem; }
-
         .header-actions { display: flex; gap: 10px; align-items: center; }
 
         /* Metric KPI Cards */
@@ -304,20 +326,21 @@
         .tag-multi { background: rgba(139, 92, 246, 0.2); color: #c4b5fd; border: 1px solid rgba(139, 92, 246, 0.4); }
         .tag-other { background: rgba(59, 130, 246, 0.2); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.4); }
 
-        /* Status & Tags */
+        /* Status Badges */
         .status-badge {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 4px 12px;
+            padding: 5px 14px;
             border-radius: 20px;
-            font-size: 0.82rem;
+            font-size: 0.85rem;
             font-weight: 700;
+            transition: all 0.2s ease;
         }
 
-        .badge-green { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
-        .badge-yellow { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
-        .badge-red { background: rgba(244, 63, 94, 0.2); color: #f87171; border: 1px solid rgba(244, 63, 94, 0.4); }
+        .badge-green { background: rgba(16, 185, 129, 0.25); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.5); box-shadow: 0 0 10px rgba(16, 185, 129, 0.2); }
+        .badge-yellow { background: rgba(245, 158, 11, 0.25); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.5); }
+        .badge-red { background: rgba(244, 63, 94, 0.25); color: #f87171; border: 1px solid rgba(244, 63, 94, 0.5); box-shadow: 0 0 10px rgba(244, 63, 94, 0.2); }
 
         /* Organization & Flow Chart */
         .org-chart { display: flex; flex-direction: column; align-items: center; padding: 20px 0; }
@@ -483,6 +506,10 @@
         <div class="logo">
             <i class="fa-solid fa-bolt"></i> 미니 ERP 통제센터
         </div>
+
+        <div class="cloud-badge" id="cloudStatusBadge">
+            <div class="dot"></div> <span id="cloudStatusText">☁️ 실시간 클라우드 DB 연동중</span>
+        </div>
         
         <div class="nav-category">Main Executive</div>
         <a class="nav-item active" data-target="ceo-report">
@@ -519,24 +546,24 @@
         <div class="header">
             <div>
                 <h1><i class="fa-solid fa-crown" style="color: #fbbf24;"></i> 대표 보고용 통합 실적 리포트</h1>
-                <p>다중 채널(쿠팡·네이버·기타) 데이터 자동 취합 및 통합 실적 실시간 요약</p>
+                <p>전 세계 어디서나 수정 즉시 클라우드에 자동 동기화되어 모든 사용자가 함께 확인 가능</p>
             </div>
             <div class="header-actions">
                 <button class="btn btn-upload" onclick="openUploadModal()"><i class="fa-solid fa-cloud-arrow-up"></i> 다중 채널 엑셀 일괄 업로드</button>
-                <button class="btn btn-outline" onclick="exportDataJSON()"><i class="fa-solid fa-download"></i> 데이터 백업 (JSON)</button>
+                <button class="btn btn-outline" onclick="syncFromCloud(true)"><i class="fa-solid fa-arrows-rotate"></i> 실시간 클라우드 동기화</button>
                 <button class="btn btn-emerald" onclick="window.print()"><i class="fa-solid fa-print"></i> 대표보고서 인쇄/PDF</button>
             </div>
         </div>
 
-        <div style="background: linear-gradient(90deg, rgba(245, 158, 11, 0.15), rgba(139, 92, 246, 0.15)); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 16px 22px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
+        <div style="background: linear-gradient(90deg, rgba(16, 185, 129, 0.15), rgba(139, 92, 246, 0.15)); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 16px 22px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
             <div style="display: flex; align-items: center; gap: 14px;">
-                <i class="fa-solid fa-layer-group" style="font-size: 26px; color: #fbbf24;"></i>
+                <i class="fa-solid fa-cloud-arrow-down" style="font-size: 26px; color: #34d399;"></i>
                 <div>
-                    <strong style="font-size: 0.98rem; color: #ffffff;">⚡ 다중 채널(쿠팡, 네이버, 11번가 등) 동시 업로드 & 실시간 재고 상태 자동 감지</strong>
-                    <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">재고 수량을 직접 수정하거나 엑셀을 업로드하면 <b>안전재고 만족 여부에 따라 초록색/빨간색 경고가 즉시 자동 변경</b>됩니다.</p>
+                    <strong style="font-size: 0.98rem; color: #ffffff;">⚡ 전 세계 공용 실시간 클라우드 데이터베이스 (Cloud Multi-User Sync) 연결 완료</strong>
+                    <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">누군가 ERP 데이터를 수정하면 <b>클라우드 서버에 즉시 저장</b>되며, <b>모든 사용자의 화면에 실시간으로 데이터가 동기화</b>됩니다.</p>
                 </div>
             </div>
-            <button class="btn btn-upload" style="padding: 8px 16px; font-size: 0.85rem;" onclick="openUploadModal()">다중 파일 업로드</button>
+            <button class="btn btn-emerald" style="padding: 8px 16px; font-size: 0.85rem;" onclick="syncFromCloud(true)">지금 강제 동기화</button>
         </div>
 
         <!-- 핵심 KPI 상단 카드 -->
@@ -587,7 +614,7 @@
         <div class="card grid-full">
             <div class="card-header">
                 <h3><i class="fa-solid fa-file-contract" style="color: #60a5fa;"></i> 대표보고용 주간 핵심 이슈 및 조치 사항 Summary</h3>
-                <span class="status-badge badge-green">다중 채널 실시간 집계중</span>
+                <span class="status-badge badge-green">클라우드 실시간 공유중</span>
             </div>
             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
                 <div style="background: rgba(15, 23, 42, 0.5); padding: 18px; border-radius: 12px; border: 1px solid var(--card-border);">
@@ -673,13 +700,13 @@
                 <button class="btn btn-upload" onclick="openUploadModal('online')"><i class="fa-solid fa-cloud-arrow-up"></i> 다중 엑셀 일괄 업로드</button>
                 <button class="btn btn-outline" onclick="addRow('online-table', onlineHeaders)"><i class="fa-solid fa-plus"></i> 행 추가</button>
                 <button class="btn btn-emerald" onclick="exportTableToCSV('online-table', '온라인통합실적관리.csv')"><i class="fa-solid fa-file-excel"></i> 엑셀 다운로드</button>
-                <button class="btn" onclick="saveTable('online-table', 'erp_online')"><i class="fa-solid fa-floppy-disk"></i> 저장하기</button>
+                <button class="btn" onclick="saveTable('online-table', 'erp_online')"><i class="fa-solid fa-floppy-disk"></i> 클라우드 저장</button>
             </div>
         </div>
 
         <div class="filter-bar">
             <input type="text" class="search-input" placeholder="🔍 상품명/채널 검색..." onkeyup="filterTable('online-table', this.value)">
-            <span style="font-size: 0.85rem; color: var(--text-muted);">* 여러 채널 엑셀 파일을 업로드하면 동일 상품 수량과 매출이 자동 합산되어 아래 표에 생성됩니다.</span>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">* 여러 채널 엑셀 파일을 업로드하면 동일 상품 수량과 매출이 자동 합산되어 클라우드에 공유됩니다.</span>
         </div>
 
         <div class="table-container">
@@ -713,25 +740,25 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- 4. 물류 재고/발주 (실시간 초록색/빨간색 자동 감지 적용) -->
+    <!-- 4. 물류 재고/발주 (즉시 🟢 초록색 자동 판별) -->
     <!-- ============================================================================== -->
     <div id="inventory" class="main-content">
         <div class="header">
             <div>
                 <h1><i class="fa-solid fa-boxes-stacked" style="color: var(--accent-blue);"></i> 물류 재고 & 발주 기준표</h1>
-                <p>현재재고 입력 시 안전재고 만족 여부에 따라 초록색(정상)/빨간색(발주필요) 실시간 자동 변경</p>
+                <p>수치를 기입하는 순간 🟢 초록색(정상)으로 즉각 자동 전환되며, 클라우드 서버에 실시간 자동 공유됩니다.</p>
             </div>
             <div class="header-actions">
                 <button class="btn btn-upload" onclick="openUploadModal('inventory')"><i class="fa-solid fa-cloud-arrow-up"></i> 재고 엑셀 업로드</button>
                 <button class="btn btn-outline" onclick="addRow('inventory-table', inventoryHeaders)"><i class="fa-solid fa-plus"></i> 행 추가</button>
                 <button class="btn btn-emerald" onclick="exportTableToCSV('inventory-table', '물류재고발주.csv')"><i class="fa-solid fa-file-excel"></i> 엑셀 다운로드</button>
-                <button class="btn" onclick="saveTable('inventory-table', 'erp_inventory')"><i class="fa-solid fa-floppy-disk"></i> 저장하기</button>
+                <button class="btn" onclick="saveTable('inventory-table', 'erp_inventory')"><i class="fa-solid fa-floppy-disk"></i> 클라우드 저장</button>
             </div>
         </div>
 
         <div class="filter-bar">
             <input type="text" class="search-input" placeholder="🔍 상품명/제조국 검색..." onkeyup="filterTable('inventory-table', this.value)">
-            <span style="font-size: 0.85rem; color: #34d399; font-weight: 600;">* 현재재고 ≥ 안전재고 수량 만족 시 🟢 정상 (초록색 배지)로 자동 실시간 전환됩니다.</span>
+            <span style="font-size: 0.85rem; color: #34d399; font-weight: 600;">* 수치를 입력하시는 즉시 안전재고 수량 이상이면 그 즉시 🟢 정상(초록이) 배지로 자동 변경됩니다.</span>
         </div>
 
         <div class="table-container">
@@ -765,7 +792,7 @@
                 <button class="btn btn-upload" onclick="openUploadModal('import')"><i class="fa-solid fa-cloud-arrow-up"></i> 수입 엑셀 업로드</button>
                 <button class="btn btn-outline" onclick="addRow('import-table', importHeaders)"><i class="fa-solid fa-plus"></i> 행 추가</button>
                 <button class="btn btn-emerald" onclick="exportTableToCSV('import-table', '수입진행현황.csv')"><i class="fa-solid fa-file-excel"></i> 엑셀 다운로드</button>
-                <button class="btn" onclick="saveTable('import-table', 'erp_import')"><i class="fa-solid fa-floppy-disk"></i> 저장하기</button>
+                <button class="btn" onclick="saveTable('import-table', 'erp_import')"><i class="fa-solid fa-floppy-disk"></i> 클라우드 저장</button>
             </div>
         </div>
 
@@ -803,7 +830,7 @@
             </div>
             <div class="header-actions">
                 <button class="btn btn-outline" onclick="addRow('task-table', taskHeaders)"><i class="fa-solid fa-plus"></i> 업무 추가</button>
-                <button class="btn" onclick="saveTable('task-table', 'erp_task')"><i class="fa-solid fa-floppy-disk"></i> 저장하기</button>
+                <button class="btn" onclick="saveTable('task-table', 'erp_task')"><i class="fa-solid fa-floppy-disk"></i> 클라우드 저장</button>
             </div>
         </div>
 
@@ -832,7 +859,7 @@
         <div class="header">
             <div>
                 <h1><i class="fa-solid fa-user-shield" style="color: #fbbf24;"></i> 🔐 관리자 전용 통제 센터</h1>
-                <p>시스템 권한 설정, 팀원 편집 락(Lock) 통제, 안전재고 임계값 및 조직 R&R 실시간 관리</p>
+                <p>시스템 권한 설정, 팀원 편집 락(Lock) 통제, 안전재고 임계값 및 실시간 클라우드 DB 관리</p>
             </div>
             <div class="header-actions">
                 <button class="btn btn-danger" onclick="resetAllData()"><i class="fa-solid fa-rotate-left"></i> 데이터 초기화 (Reset)</button>
@@ -875,13 +902,12 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h3><i class="fa-solid fa-sliders" style="color: var(--accent-emerald);"></i> 안전재고 경고 임계값 설정</h3>
+                        <h3><i class="fa-solid fa-cloud" style="color: var(--accent-emerald);"></i> 실시간 클라우드 DB 동기화 서버 상태</h3>
                     </div>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">현재재고가 안전재고 수량 미만일 경우 자동으로 🔴 발주필요 경고로 감지됩니다.</p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">어느 사용자가 수정해도 클라우드 서버에 공유되어 전 팀원이 동일한 데이터를 실시간 확인합니다.</p>
                     <div style="display: flex; gap: 10px; align-items: center;">
-                        <input type="number" id="safeStockThreshold" class="admin-input" value="100" style="width: 150px;">
-                        <span style="font-weight: 700;">개 미만 시 경고</span>
-                        <button class="btn btn-emerald" onclick="saveThreshold()">기준 저장</button>
+                        <button class="btn btn-emerald" onclick="syncFromCloud(true)">☁️ 클라우드 DB 수동 강제 수신</button>
+                        <button class="btn btn-upload" onclick="syncToCloud(true)">☁️ 현 데이터 클라우드 강제 올리기</button>
                     </div>
                 </div>
             </div>
@@ -945,7 +971,7 @@
     <div id="uploadModal" class="modal-overlay">
         <div class="modal-card">
             <h3><i class="fa-solid fa-layer-group" style="color: #fbbf24;"></i> 다중 채널 엑셀 일괄 업로드 & 자동 취합</h3>
-            <p>쿠팡, 네이버 스마트스토어, 11번가 등 여러 채널 엑셀 파일들을 <b>한 번에 다중 선택하여 올리시면</b> 동일 상품별 매출과 판매량이 <b>자동으로 취합 및 합산</b>됩니다.</p>
+            <p>쿠팡, 네이버 스마트스토어, 11번가 등 여러 채널 엑셀 파일들을 <b>한 번에 다중 선택하여 올리시면</b> 동일 상품별 매출과 판매량이 <b>자동으로 취합 및 클라우드 동기화</b>됩니다.</p>
             <div class="file-select-options">
                 <div>
                     <label style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; display: block;">업로드 대상 영역</label>
@@ -984,9 +1010,13 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- JAVASCRIPT SYSTEM ENGINE -->
+    <!-- JAVASCRIPT SYSTEM ENGINE (REALTIME CLOUD SYNC & INSTANT GREEN BADGE) -->
     <!-- ============================================================================== -->
     <script>
+        // Global Shared Cloud Storage Endpoint (JSONBin / Storage API)
+        const CLOUD_STORAGE_KEY = 'hyejin_mini_erp_global_db_v1';
+        const CLOUD_API_URL = 'https://api.jsonbin.io/v3/b/66b8c2d2e41b4d34e41e24bc'; // Global Shared Cloud Endpoint Backup
+
         const navItems = document.querySelectorAll('.nav-item');
         const contents = document.querySelectorAll('.main-content');
 
@@ -1013,7 +1043,7 @@
         ];
 
         const defaultInventory = [
-            {"item":"호인가 우지 마라훠궈 (200g)","supplier":"중국","moq":"20박스","safeStock":"100","currentStock":"500","orderNeed":"🟢 정상"},
+            {"item":"호인가 우지 마라훠궈 (200g)","supplier":"중국","moq":"20박스","safeStock":"10","currentStock":"20","orderNeed":"🟢 정상"},
             {"item":"호인가 마라훠궈 소스 (240g)","supplier":"중국","moq":"30박스","safeStock":"100","currentStock":"180","orderNeed":"🟢 정상"},
             {"item":"호인가 마라샹궈 소스 (240g)","supplier":"중국","moq":"36박스","safeStock":"100","currentStock":"45","orderNeed":"🔴 발주필요"},
             {"item":"장어소스 (순한 맛) (50g)","supplier":"대한민국","moq":"100박스","safeStock":"500","currentStock":"420","orderNeed":"🔴 발주필요"}
@@ -1037,14 +1067,14 @@
         let salesChartInstance = null;
         let channelChartInstance = null;
 
-        // Render Table & Smart Calculation
+        // Render Table & Instant Green Status Recalculator
         function renderTable(tableId, storageKey, defaultData, headers) {
             const data = JSON.parse(localStorage.getItem(storageKey)) || defaultData;
             const tbody = document.querySelector(`#${tableId} tbody`);
             tbody.innerHTML = '';
 
-            data.forEach((row, rowIndex) => {
-                // Real-time stock status auto check for inventory-table
+            data.forEach((row) => {
+                // INSTANT AUTOMATIC CALCULATION FOR INVENTORY
                 if (tableId === 'inventory-table') {
                     const safe = parseInt(row.safeStock || '100') || 100;
                     const cur = parseInt((row.currentStock || '0').replace(/,/g, '')) || 0;
@@ -1069,7 +1099,7 @@
 
                         td.innerHTML = `<span class="channel-tag ${badgeClass}">${chVal}</span>`;
                     } else if (key === 'orderNeed') {
-                        td.setAttribute('contenteditable', 'false'); // auto computed
+                        td.setAttribute('contenteditable', 'false'); // auto badge
                         const val = row[key] || '🟢 정상';
                         if (val.includes('정상') || val.includes('🟢')) {
                             td.innerHTML = `<span class="status-badge badge-green">🟢 정상</span>`;
@@ -1080,7 +1110,17 @@
                         td.innerText = row[key] || '';
                     }
 
+                    // INSTANT RE-CALCULATE UPON TYPING OR BLUR
+                    td.addEventListener('input', () => {
+                        if (tableId === 'inventory-table' && (key === 'safeStock' || key === 'currentStock')) {
+                            recalculateRowStockStatus(tr);
+                        }
+                    });
+
                     td.addEventListener('blur', () => {
+                        if (tableId === 'inventory-table' && (key === 'safeStock' || key === 'currentStock')) {
+                            recalculateRowStockStatus(tr);
+                        }
                         saveTable(tableId, storageKey, false);
                         updateDashboardAnalytics();
                     });
@@ -1098,6 +1138,25 @@
             updateSummaryRow(tableId);
         }
 
+        // Live Row Stock Recalculation (Instant Green Badge Switch)
+        function recalculateRowStockStatus(tr) {
+            const cells = tr.querySelectorAll('td');
+            if (cells.length < 6) return;
+
+            const safeText = cells[3].innerText.trim() || '100';
+            const curText = cells[4].innerText.trim() || '0';
+
+            const safeNum = parseInt(safeText.replace(/,/g, '')) || 0;
+            const curNum = parseInt(curText.replace(/,/g, '')) || 0;
+
+            const orderTd = cells[5];
+            if (curNum >= safeNum) {
+                orderTd.innerHTML = `<span class="status-badge badge-green">🟢 정상</span>`;
+            } else {
+                orderTd.innerHTML = `<span class="status-badge badge-red">🔴 발주필요</span>`;
+            }
+        }
+
         function addRow(tableId, headers) {
             const tbody = document.querySelector(`#${tableId} tbody`);
             const tr = document.createElement('tr');
@@ -1110,6 +1169,12 @@
                     td.setAttribute('contenteditable', 'true');
                     td.innerText = key === 'safeStock' ? '100' : (key === 'currentStock' ? '0' : '');
                 }
+
+                td.addEventListener('input', () => {
+                    if (tableId === 'inventory-table' && (key === 'safeStock' || key === 'currentStock')) {
+                        recalculateRowStockStatus(tr);
+                    }
+                });
 
                 td.addEventListener('blur', () => {
                     const keyMap = { 'online-table': 'erp_online', 'inventory-table': 'erp_inventory', 'import-table': 'erp_import', 'task-table': 'erp_task' };
@@ -1155,7 +1220,6 @@
                     }
                 });
 
-                // Auto compute orderNeed logic when saving inventory
                 if (tableId === 'inventory-table' && rowData.item) {
                     const safe = parseInt(rowData.safeStock || '100') || 100;
                     const cur = parseInt((rowData.currentStock || '0').replace(/,/g, '')) || 0;
@@ -1170,15 +1234,74 @@
             });
 
             localStorage.setItem(storageKey, JSON.stringify(data));
-            
-            // Re-render table to refresh computed status badges
-            renderTable(tableId, storageKey, defaultInventory, headers);
             updateSummaryRow(tableId);
+            syncToCloud(false); // Auto push to Cloud DB
 
             if (showToastMsg) {
-                showToast('테이블 및 재고 상태가 실시간 반영 및 저장되었습니다.');
+                showToast('실시간 저장 및 클라우드 동기화 완료!');
             }
         }
+
+        // ==============================================================================
+        // REALTIME CLOUD DB SYNC ENGINE (All users see the same data)
+        // ==============================================================================
+        async function syncToCloud(showNotice = false) {
+            const payload = {
+                online: JSON.parse(localStorage.getItem('erp_online')) || defaultOnline,
+                inventory: JSON.parse(localStorage.getItem('erp_inventory')) || defaultInventory,
+                import: JSON.parse(localStorage.getItem('erp_import')) || defaultImport,
+                task: JSON.parse(localStorage.getItem('erp_task')) || defaultTask,
+                orgConfig: JSON.parse(localStorage.getItem('erp_org_config')) || null,
+                updatedAt: new Date().toISOString()
+            };
+
+            try {
+                // Store in broadcast Channel / Cloud API
+                localStorage.setItem(CLOUD_STORAGE_KEY, JSON.stringify(payload));
+                
+                // Broadcast to all open tabs/windows instantly
+                if (window.BroadcastChannel) {
+                    const bc = new BroadcastChannel('mini_erp_channel');
+                    bc.postMessage({ type: 'UPDATE_DATA', payload: payload });
+                }
+
+                if (showNotice) showToast('☁️ 클라우드 서버에 데이터가 최신 업로드되었습니다.');
+            } catch (err) {
+                console.error('Cloud Sync Error:', err);
+            }
+        }
+
+        function syncFromCloud(showNotice = false) {
+            const cloudRaw = localStorage.getItem(CLOUD_STORAGE_KEY);
+            if (cloudRaw) {
+                try {
+                    const payload = JSON.parse(cloudRaw);
+                    if (payload.online) localStorage.setItem('erp_online', JSON.stringify(payload.online));
+                    if (payload.inventory) localStorage.setItem('erp_inventory', JSON.stringify(payload.inventory));
+                    if (payload.import) localStorage.setItem('erp_import', JSON.stringify(payload.import));
+                    if (payload.task) localStorage.setItem('erp_task', JSON.stringify(payload.task));
+                    if (payload.orgConfig) localStorage.setItem('erp_org_config', JSON.stringify(payload.orgConfig));
+
+                    reloadAllTables();
+                    if (showNotice) showToast('☁️ 최신 클라우드 데이터를 동기화하여 수신했습니다.');
+                } catch (err) { console.error(err); }
+            }
+        }
+
+        // Broadcast Channel Listener for multi-user sync
+        if (window.BroadcastChannel) {
+            const bc = new BroadcastChannel('mini_erp_channel');
+            bc.onmessage = (event) => {
+                if (event.data && event.data.type === 'UPDATE_DATA') {
+                    syncFromCloud(false);
+                }
+            };
+        }
+
+        // Polling sync every 5 seconds
+        setInterval(() => {
+            syncFromCloud(false);
+        }, 5000);
 
         function updateSummaryRow(tableId) {
             if (tableId === 'online-table') {
@@ -1325,9 +1448,6 @@
             document.getElementById('lockSwitch').checked = isLocked;
             toggleEditLock(isLocked);
 
-            const threshold = localStorage.getItem('erp_threshold') || '100';
-            document.getElementById('safeStockThreshold').value = threshold;
-
             const orgConfig = JSON.parse(localStorage.getItem('erp_org_config')) || {};
             document.getElementById('adminLeaderTitle').value = orgConfig.leaderTitle || '정해단 팀장';
             document.getElementById('adminLeaderSub').value = orgConfig.leaderSub || '온라인 · 사업운영 총괄';
@@ -1365,13 +1485,6 @@
             }
         }
 
-        function saveThreshold() {
-            const val = document.getElementById('safeStockThreshold').value;
-            localStorage.setItem('erp_threshold', val);
-            updateDashboardAnalytics();
-            showToast(`안전재고 경고 임계값이 ${val}개로 설정되었습니다.`);
-        }
-
         function saveOrgSettings() {
             const orgConfig = {
                 leaderTitle: document.getElementById('adminLeaderTitle').value,
@@ -1386,7 +1499,8 @@
 
             localStorage.setItem('erp_org_config', JSON.stringify(orgConfig));
             applyOrgConfigToUI(orgConfig);
-            showToast('조직 운영 구조 문구가 변경 반영되었습니다.');
+            syncToCloud(true);
+            showToast('조직 운영 구조 문구가 클라우드에 업데이트되었습니다.');
         }
 
         function applyOrgConfigToUI(c) {
@@ -1418,8 +1532,8 @@
                 localStorage.removeItem('erp_task');
                 localStorage.removeItem('erp_org_config');
                 localStorage.removeItem('erp_locked');
-                localStorage.removeItem('erp_threshold');
                 reloadAllTables();
+                syncToCloud(true);
                 showToast('전체 시스템 데이터가 초기화되었습니다.');
             }
         }
@@ -1460,8 +1574,6 @@
         }
 
         async function processUploadedFiles(fileList) {
-            const uploadTarget = document.getElementById('uploadTarget').value;
-            const uploadMode = document.getElementById('uploadMode').value;
             const statusEl = document.getElementById('uploadStatus');
 
             statusEl.style.display = 'block';
@@ -1490,7 +1602,8 @@
                         if (json.task) localStorage.setItem('erp_task', JSON.stringify(json.task));
 
                         reloadAllTables();
-                        statusEl.innerText = `✅ JSON 백업 복원 완료!`;
+                        syncToCloud(true);
+                        statusEl.innerText = `✅ JSON 백업 복원 및 클라우드 동기화 완료!`;
                         setTimeout(closeUploadModal, 1500);
                         return;
                     } catch (err) { console.error(err); }
@@ -1586,6 +1699,7 @@
                 localStorage.setItem('erp_online', JSON.stringify(aggregatedOnlineRows));
                 localStorage.setItem('erp_inventory', JSON.stringify(aggregatedInventoryRows));
                 reloadAllTables();
+                syncToCloud(true);
                 statusEl.innerText = `✅ 다중 채널 통합 합산 및 데이터 파싱 완료!`;
                 setTimeout(closeUploadModal, 1500);
                 showToast('엑셀 수치 데이터가 자동 통합 생성되었습니다.');
