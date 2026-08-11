@@ -1213,11 +1213,11 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- JAVASCRIPT SYSTEM ENGINE -->
+    <!-- JAVASCRIPT SYSTEM ENGINE (HIGH-RELIABILITY REALTIME CLOUD DB ENGINE) -->
     <!-- ============================================================================== -->
     <script>
         const CLOUD_STORAGE_KEY = 'hyejin_mini_erp_global_db_v1';
-        const CLOUD_API_URL = 'https://api.npoint.io/c0a96ef8c2f1f516543b';
+        const CLOUD_API_URL = 'https://api.restful-api.dev/objects/ff8081819f7e10ae019fefd6a9d9230e';
 
         const navItems = document.querySelectorAll('.nav-item');
         const contents = document.querySelectorAll('.main-content');
@@ -1709,26 +1709,31 @@
         // REALTIME GLOBAL CLOUD DB SYNC ENGINE FOR MULTI-DEVICE & TEAM MEMBERS
         async function syncToCloud(showNotice = false) {
             const payload = {
-                online: JSON.parse(localStorage.getItem('erp_online')) || defaultOnline,
-                inventory: JSON.parse(localStorage.getItem('erp_inventory')) || defaultInventory,
-                import: JSON.parse(localStorage.getItem('erp_import')) || defaultImport,
-                task: JSON.parse(localStorage.getItem('erp_task')) || defaultTask,
-                orgConfig: JSON.parse(localStorage.getItem('erp_org_config')) || null,
-                updatedAt: new Date().toISOString()
+                name: 'Hyejin Mini ERP Global DB',
+                data: {
+                    online: JSON.parse(localStorage.getItem('erp_online')) || defaultOnline,
+                    inventory: JSON.parse(localStorage.getItem('erp_inventory')) || defaultInventory,
+                    import: JSON.parse(localStorage.getItem('erp_import')) || defaultImport,
+                    task: JSON.parse(localStorage.getItem('erp_task')) || defaultTask,
+                    orgConfig: JSON.parse(localStorage.getItem('erp_org_config')) || null,
+                    updatedAt: new Date().toISOString()
+                }
             };
 
             try {
-                localStorage.setItem(CLOUD_STORAGE_KEY, JSON.stringify(payload));
+                localStorage.setItem(CLOUD_STORAGE_KEY, JSON.stringify(payload.data));
                 
                 if (window.BroadcastChannel) {
                     const bc = new BroadcastChannel('mini_erp_channel');
-                    bc.postMessage({ type: 'UPDATE_DATA', payload: payload });
+                    bc.postMessage({ type: 'UPDATE_DATA', payload: payload.data });
                 }
 
                 fetch(CLOUD_API_URL, {
-                    method: 'POST',
+                    method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
+                }).then(r => r.json()).then(res => {
+                    console.log('Cloud Sync Success:', res);
                 }).catch(err => console.log('Global Relay Sync:', err));
 
                 if (showNotice) showToast('☁️ 글로벌 클라우드 서버에 데이터가 최신 업로드되었습니다.');
@@ -1741,7 +1746,8 @@
             try {
                 const res = await fetch(CLOUD_API_URL, { cache: 'no-cache' });
                 if (res.ok) {
-                    const payload = await res.json();
+                    const wrapper = await res.json();
+                    const payload = wrapper ? wrapper.data : null;
                     if (payload && payload.online) {
                         const localTime = localStorage.getItem('erp_last_updated') || '';
                         if (!localTime || new Date(payload.updatedAt) > new Date(localTime)) {
