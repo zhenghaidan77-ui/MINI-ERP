@@ -12,7 +12,7 @@
     <style>
         :root {
             --bg-color: #0b0f19;
-            --sidebar-bg: rgba(15, 23, 42, 0.85);
+            --sidebar-bg: rgba(15, 23, 42, 0.95);
             --card-bg: rgba(30, 41, 59, 0.6);
             --card-border: rgba(255, 255, 255, 0.08);
             --text-main: #f8fafc;
@@ -32,21 +32,33 @@
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
-            overflow-x: hidden;
+            overflow-x: auto; /* 좌우 이동/스크롤 가능 */
+            overflow-y: auto;
         }
 
-        /* Sidebar Nav */
+        /* Custom Modern Scrollbar Style for Horizontal & Vertical Navigation */
+        ::-webkit-scrollbar { width: 8px; height: 10px; }
+        ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
+        ::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.4); border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(139, 92, 246, 0.8); }
+
+        /* Sidebar Nav - Fixed Positioned Left Bar */
         .sidebar {
             width: 270px;
             background: var(--sidebar-bg);
-            backdrop-filter: blur(16px);
+            backdrop-filter: blur(20px);
             border-right: 1px solid var(--card-border);
             display: flex;
             flex-direction: column;
             padding: 24px 0;
             position: fixed;
+            top: 0;
+            left: 0;
             height: 100vh;
-            z-index: 100;
+            z-index: 1000;
+            overflow-y: auto;
+            box-shadow: 4px 0 24px rgba(0,0,0,0.4);
+            flex-shrink: 0;
         }
 
         .logo {
@@ -122,13 +134,14 @@
 
         .nav-item i { width: 20px; text-align: center; }
 
-        /* Main Content */
+        /* Main Content Area - Fully Scrollable Left-to-Right & Up-and-Down */
         .main-content {
             margin-left: 270px;
             flex: 1;
             padding: 36px 40px;
             display: none;
             animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            min-width: 1080px; /* 좌우 옆으로 넉넉하게 이동 및 조회가 가능한 가로폭 확보 */
         }
 
         .main-content.active { display: block; }
@@ -268,25 +281,30 @@
             box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
         }
 
-        /* Table Styling */
+        /* Smooth Left-to-Right Horizontal Scrollable Table Container */
         .table-container {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
             border-radius: 14px;
             overflow-x: auto;
+            overflow-y: hidden;
             backdrop-filter: blur(12px);
             margin-bottom: 20px;
+            box-shadow: inset 0 0 12px rgba(0,0,0,0.3);
         }
 
-        table { width: 100%; border-collapse: collapse; white-space: nowrap; font-size: 0.92rem; }
+        table { width: 100%; border-collapse: collapse; white-space: nowrap; font-size: 0.92rem; min-width: 1200px; }
         th, td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--card-border); transition: background 0.2s; }
         
         th {
-            background: rgba(15, 23, 42, 0.6);
+            background: rgba(15, 23, 42, 0.85);
             color: var(--text-muted);
             font-weight: 600;
             font-size: 0.85rem;
             letter-spacing: 0.5px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
         td { color: var(--text-main); }
@@ -418,7 +436,7 @@
             transform: translateY(100px);
             opacity: 0;
             transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            z-index: 1000;
+            z-index: 2000;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -432,6 +450,7 @@
             gap: 12px;
             margin-bottom: 16px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .search-input, .admin-input {
@@ -445,7 +464,7 @@
             width: 100%;
         }
 
-        .search-input { width: 220px; }
+        .search-input { width: 240px; }
         .search-input:focus, .admin-input:focus { border-color: var(--accent-purple); }
 
         .summary-footer {
@@ -479,17 +498,18 @@
         .worst-badge { background: rgba(244,63,94,0.2); color: #f87171; border: 1px solid rgba(244,63,94,0.4); border-radius: 4px; padding: 2px 8px; font-size: 0.78rem; font-weight: 700; margin-right: 8px; flex-shrink: 0; }
 
         /* ========================================================================== */
-        /* HORIZONTAL TREE ORG CHART (LEFT TO RIGHT DIRECTION) */
+        /* HORIZONTAL TREE ORG CHART (LEFT TO RIGHT DIRECTION & SCROLLABLE) */
         /* ========================================================================== */
         .org-chart-horiz {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             padding: 40px 30px;
             background: rgba(15, 23, 42, 0.5);
             border-radius: 16px;
             border: 1px solid var(--card-border);
             margin-bottom: 28px;
+            overflow-x: auto;
         }
 
         .org-node-horiz {
@@ -574,13 +594,14 @@
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(11, 15, 25, 0.85); backdrop-filter: blur(12px);
-            display: none; justify-content: center; align-items: center; z-index: 999;
+            display: none; justify-content: center; align-items: center; z-index: 2000;
         }
 
         .modal-card {
             background: #1e293b; border: 1px solid var(--card-border);
             border-radius: 20px; width: 620px; padding: 32px; color: white;
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            max-height: 90vh; overflow-y: auto;
         }
 
         .modal-card h3 { margin-bottom: 12px; font-size: 1.3rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
@@ -641,7 +662,7 @@
 </head>
 <body>
 
-    <!-- Sidebar Nav -->
+    <!-- Sidebar Nav - Fixed Left Menu Container -->
     <div class="sidebar">
         <div class="logo">
             <i class="fa-solid fa-bolt"></i> 미니 ERP 종합운영센터
@@ -680,7 +701,7 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- 1. 경영진 종합실적 대시보드 -->
+    <!-- 1. 경영진 종합실적 대시보드 (좌우 옆 스크롤 & 고정 메뉴) -->
     <!-- ============================================================================== -->
     <div id="ceo-report" class="main-content active">
         <div class="header">
@@ -840,7 +861,7 @@
         </div>
 
         <div class="card grid-full">
-            <h3><i class="fa-solid fa-diagram-project" style="color: var(--accent-purple);"></i> 조직 운영 구조 (업무 체계)</h3>
+            <h3><i class="fa-solid fa-diagram-project" style="color: var(--accent-purple);"></i> 조직 운영 구조 (업무 체계 - 좌우 이동 조망)</h3>
             
             <div class="org-chart-horiz">
                 <!-- 1. 왼쪽: 총괄 리더 (정해단 팀장) -->
@@ -883,7 +904,7 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- 3. 온라인 주간 운영 현황 -->
+    <!-- 3. 온라인 주간 운영 현황 (좌우 옆 이동 자유화) -->
     <!-- ============================================================================== -->
     <div id="online" class="main-content">
         <div class="header">
@@ -903,7 +924,7 @@
 
         <div class="filter-bar">
             <input type="text" class="search-input" placeholder="🔍 상품명/옵션/채널 검색..." onkeyup="filterTable('online-table', this.value)">
-            <span style="font-size: 0.85rem; color: #c4b5fd; font-weight: 600;">* [실시간 연동]: 이곳의 판매량이 수정/업로드되는 즉시 물류재고 탭의 현재재고가 자동 차감 연산됩니다.</span>
+            <span style="font-size: 0.85rem; color: #c4b5fd; font-weight: 600;">* [좌우 이동 및 스크롤 안내]: 마우스 휠이나 좌우 스크롤을 이용해 10개 전체 표 항목을 자유롭게 이동 조망하실 수 있습니다.</span>
         </div>
 
         <div class="table-container">
@@ -941,7 +962,7 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- 4. 물류 재고/발주 (온라인 7일 판매량 실시간 100% 자동 연동 차감) -->
+    <!-- 4. 물류 재고/발주 (좌우 옆 이동 자유화) -->
     <!-- ============================================================================== -->
     <div id="inventory" class="main-content">
         <div class="header">
