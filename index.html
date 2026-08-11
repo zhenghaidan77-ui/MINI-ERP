@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>자택근무 통제센터 (Mini ERP) - 실시간 클라우드 공유 & SCM 안전재고 ERP</title>
+    <title>자택근무 통제센터 (Mini ERP) - 실시간 데이터 감지 & SCM 연동 ERP</title>
     <!-- Pretendard & FontAwesome & Chart.js & SheetJS(XLSX) -->
     <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -546,7 +546,7 @@
         <div class="header">
             <div>
                 <h1><i class="fa-solid fa-crown" style="color: #fbbf24;"></i> 대표 보고용 통합 실적 리포트</h1>
-                <p>온라인 7일 판매 회전율 기반 5일치 동적 안전재고 연산 & 클라우드 실시간 동기화</p>
+                <p>온라인 엑셀 데이터 실시간 감지 ➔ 5일치 동적 안전재고 수량 자동 실시간 변동 연동</p>
             </div>
             <div class="header-actions">
                 <button class="btn btn-upload" onclick="openUploadModal()"><i class="fa-solid fa-cloud-arrow-up"></i> 다중 채널 엑셀 일괄 업로드</button>
@@ -557,10 +557,10 @@
 
         <div style="background: linear-gradient(90deg, rgba(16, 185, 129, 0.15), rgba(139, 92, 246, 0.15)); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 16px 22px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
             <div style="display: flex; align-items: center; gap: 14px;">
-                <i class="fa-solid fa-calculator" style="font-size: 26px; color: #34d399;"></i>
+                <i class="fa-solid fa-arrows-split-up-and-left" style="font-size: 26px; color: #34d399;"></i>
                 <div>
-                    <strong style="font-size: 0.98rem; color: #ffffff;">⚡ 동적 회전율 SCM 엔진: 최근 7일간 판매데이터 기준 '5일치 안전재고' 자동 확보 시스템</strong>
-                    <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">주간 판매량에 따라 안전재고 기준(5일치)이 **매주 동적으로 자동 계산**되며, 보유 재고가 **5일치 미만 시 🔴 발주필요**로 자동 트리거됩니다.</p>
+                    <strong style="font-size: 0.98rem; color: #ffffff;">⚡ 온라인 데이터 실시간 감지 연동: 주간 판매량 업로드 시 '5일치 안전재고' 수량 자동 변동</strong>
+                    <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">엑셀을 올리시거나 판매 수치를 수정하면 **물류 탭의 안전재고 숫자와 5일치 보유 상태가 눈앞에서 실시간 자동 연동 변동**됩니다.</p>
                 </div>
             </div>
             <button class="btn btn-emerald" style="padding: 8px 16px; font-size: 0.85rem;" onclick="syncFromCloud(true)">지금 강제 동기화</button>
@@ -614,7 +614,7 @@
         <div class="card grid-full">
             <div class="card-header">
                 <h3><i class="fa-solid fa-file-contract" style="color: #60a5fa;"></i> 대표보고용 주간 핵심 이슈 및 조치 사항 Summary</h3>
-                <span class="status-badge badge-green">7일 회전율 SCM 실시간 계산중</span>
+                <span class="status-badge badge-green">데이터 실시간 감지 연동중</span>
             </div>
             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
                 <div style="background: rgba(15, 23, 42, 0.5); padding: 18px; border-radius: 12px; border: 1px solid var(--card-border);">
@@ -706,7 +706,7 @@
 
         <div class="filter-bar">
             <input type="text" class="search-input" placeholder="🔍 상품명/채널 검색..." onkeyup="filterTable('online-table', this.value)">
-            <span style="font-size: 0.85rem; color: var(--text-muted);">* 주간 통합 판매량이 변경되면 물류 탭의 <b>'7일 판매 기준 5일치 안전재고'</b>가 실시간 자동 계산됩니다.</span>
+            <span style="font-size: 0.85rem; color: #c4b5fd; font-weight: 600;">* 온라인 7일 판매량이 수정되면 물류 탭의 <b>'5일치 안전재고 수량'</b>이 즉각 실시간 자동 변동됩니다.</span>
         </div>
 
         <div class="table-container">
@@ -740,13 +740,13 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- 4. 물류 재고/발주 (7일 판매 회전율 5일치 안전재고 SCM 엔진) -->
+    <!-- 4. 물류 재고/발주 (7일 판매 실시간 감지 연동 5일치 안전재고) -->
     <!-- ============================================================================== -->
     <div id="inventory" class="main-content">
         <div class="header">
             <div>
-                <h1><i class="fa-solid fa-boxes-stacked" style="color: var(--accent-blue);"></i> 물류 재고 & 발주 기준표 (7일 회전율 SCM)</h1>
-                <p>온라인 주간 7일 판매량 기준 <b>'5일치 동적 안전재고'</b> 자동 확보 및 보유일수 5일 미만 시 🔴 발주필요 실시간 감지</p>
+                <h1><i class="fa-solid fa-boxes-stacked" style="color: var(--accent-blue);"></i> 물류 재고 & 발주 기준표 (실시간 연동)</h1>
+                <p>온라인 주간 7일 판매량 실시간 감지 ➔ <b>'5일치 안전재고 수량'</b> 자동 연동 변동 & 보유 5일 미만 시 🔴 발주필요</p>
             </div>
             <div class="header-actions">
                 <button class="btn btn-upload" onclick="openUploadModal('inventory')"><i class="fa-solid fa-cloud-arrow-up"></i> 재고 엑셀 업로드</button>
@@ -758,7 +758,7 @@
 
         <div class="filter-bar">
             <input type="text" class="search-input" placeholder="🔍 상품명/제조국 검색..." onkeyup="filterTable('inventory-table', this.value)">
-            <span style="font-size: 0.85rem; color: #34d399; font-weight: 600;">* [SCM 공식]: 안전재고 = (7일 판매량 ÷ 7일) × 5일치. 현재재고 보유일수가 5일치 미만이면 🔴 발주필요 경고!</span>
+            <span style="font-size: 0.85rem; color: #34d399; font-weight: 600;">* [실시간 감지 공식]: 온라인 7일 판매량 ÷ 7일 × 5일치 = 안전재고 수량 자동 변동. 현재재고가 5일치 미만 시 🔴 발주필요 감지</span>
         </div>
 
         <div class="table-container">
@@ -768,7 +768,7 @@
                         <th data-key="item">상품명</th>
                         <th data-key="supplier">제조국/업체</th>
                         <th data-key="moq">MOQ (박스)</th>
-                        <th data-key="safeStock">동적 안전재고 (5일치)</th>
+                        <th data-key="safeStock">동적 안전재고 (5일치 수량)</th>
                         <th data-key="currentStock">현재재고</th>
                         <th data-key="orderNeed">발주 경고 상태 (보유일수)</th>
                         <th style="width: 60px;">관리</th>
@@ -1010,7 +1010,7 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- JAVASCRIPT SYSTEM ENGINE (DYNAMIC 7-DAY ROTATION SCM SAFETY STOCK ALGORITHM) -->
+    <!-- JAVASCRIPT SYSTEM ENGINE (REALTIME DATA DETECTION & DYNAMIC SCM RE-CALCULATOR) -->
     <!-- ============================================================================== -->
     <script>
         const CLOUD_STORAGE_KEY = 'hyejin_mini_erp_global_db_v1';
@@ -1041,10 +1041,10 @@
         ];
 
         const defaultInventory = [
-            {"item":"호인가 우지 마라훠궈 (200g)","supplier":"중국","moq":"20박스","safeStock":"100","currentStock":"250","orderNeed":"🟢 정상"},
-            {"item":"호인가 마라훠궈 소스 (240g)","supplier":"중국","moq":"30박스","safeStock":"50","currentStock":"180","orderNeed":"🟢 정상"},
-            {"item":"호인가 마라샹궈 소스 (240g)","supplier":"중국","moq":"36박스","safeStock":"60","currentStock":"20","orderNeed":"🔴 발주필요"},
-            {"item":"장어소스 (순한 맛) (50g)","supplier":"대한민국","moq":"100박스","safeStock":"50","currentStock":"420","orderNeed":"🟢 정상"}
+            {"item":"호인가 우지 마라훠궈 (200g)","supplier":"중국","moq":"20박스","safeStock":"100개 (5일치)","currentStock":"250","orderNeed":"🟢 정상"},
+            {"item":"호인가 마라훠궈 소스 (240g)","supplier":"중국","moq":"30박스","safeStock":"50개 (5일치)","currentStock":"180","orderNeed":"🟢 정상"},
+            {"item":"호인가 마라샹궈 소스 (240g)","supplier":"중국","moq":"36박스","safeStock":"60개 (5일치)","currentStock":"20","orderNeed":"🔴 발주필요"},
+            {"item":"장어소스 (순한 맛) (50g)","supplier":"대한민국","moq":"100박스","safeStock":"50개 (5일치)","currentStock":"420","orderNeed":"🟢 정상"}
         ];
 
         const defaultImport = [
@@ -1065,29 +1065,32 @@
         let salesChartInstance = null;
         let channelChartInstance = null;
 
-        // DYNAMIC SCM SAFETY STOCK CALCULATOR (7-Day Sales -> 5-Day Safety Stock Target)
+        // REAL-TIME SMART PRODUCT MATCHING & SCM CALCULATOR
         function calculateDynamicSCM(itemName, currentStockVal) {
             const onlineData = JSON.parse(localStorage.getItem('erp_online')) || defaultOnline;
             const normTargetName = normalizeProductName(itemName);
 
-            // Find matching product sales in 7-day online sales table
+            // Fuzzy Smart Match across online 7-day sales
             let weeklySales = 0;
-            const matchedRow = onlineData.find(r => normalizeProductName(r.item || '').includes(normTargetName) || normTargetName.includes(normalizeProductName(r.item || '')));
-            
+            let matchedRow = onlineData.find(r => {
+                const cleanRowName = normalizeProductName(r.item || '');
+                return cleanRowName === normTargetName || cleanRowName.includes(normTargetName) || normTargetName.includes(cleanRowName);
+            });
+
             if (matchedRow && matchedRow.sales) {
                 weeklySales = parseInt(String(matchedRow.sales).replace(/,/g, '')) || 0;
             }
 
             // Daily Sales = Weekly Sales / 7 Days
-            const dailySales = weeklySales > 0 ? (weeklySales / 7) : 2; // Default 2/day if new
+            const dailySales = weeklySales > 0 ? (weeklySales / 7) : 2.0; // Default 2/day if new
             // Target 5-Day Safety Stock = Math.ceil(Daily Sales * 5)
-            const safeStock5Days = Math.ceil(dailySales * 5);
+            const safeStock5Days = Math.max(Math.ceil(dailySales * 5), 10);
 
             // Calculate Days of Inventory Remaining
             const currentStockNum = parseInt(String(currentStockVal || '0').replace(/,/g, '')) || 0;
             const daysRemaining = dailySales > 0 ? (currentStockNum / dailySales).toFixed(1) : (currentStockNum > 0 ? '99.0' : '0.0');
 
-            const isSufficient = parseFloat(daysRemaining) >= 5.0;
+            const isSufficient = currentStockNum >= safeStock5Days && parseFloat(daysRemaining) >= 5.0;
 
             return {
                 weeklySales: weeklySales,
@@ -1099,7 +1102,7 @@
             };
         }
 
-        // Render Table & Dynamic SCM Safety Stock Integration
+        // Render Table & Real-Time Sync
         function renderTable(tableId, storageKey, defaultData, headers) {
             const data = JSON.parse(localStorage.getItem(storageKey)) || defaultData;
             const tbody = document.querySelector(`#${tableId} tbody`);
@@ -1129,7 +1132,7 @@
                         td.innerHTML = `<span class="channel-tag ${badgeClass}">${chVal}</span>`;
                     } else if (key === 'safeStock' && tableId === 'inventory-table') {
                         td.setAttribute('contenteditable', 'false'); // Computed dynamically based on 7-day sales
-                        td.innerHTML = `<b style="color:#c4b5fd;">${scmInfo.safeStock5Days} 개</b> <span style="font-size:0.75rem; color:var(--text-muted);">(7일 판매 기준 5일치)</span>`;
+                        td.innerHTML = `<b style="color:#c4b5fd; font-size: 1.02rem;">${scmInfo.safeStock5Days} 개</b> <span style="font-size:0.75rem; color:var(--text-muted);">(7일 판매:${scmInfo.weeklySales}개 ➔ 일${scmInfo.dailySales}개 × 5일)</span>`;
                     } else if (key === 'orderNeed' && tableId === 'inventory-table') {
                         td.setAttribute('contenteditable', 'false');
                         if (scmInfo.isSufficient) {
@@ -1145,6 +1148,9 @@
                     td.addEventListener('input', () => {
                         if (tableId === 'inventory-table') {
                             recalculateRowStockStatus(tr);
+                        } else if (tableId === 'online-table' && key === 'sales') {
+                            // If Online Sales changed, instantly recalculate inventory safety stock in real-time
+                            syncOnlineSalesToInventory();
                         }
                     });
 
@@ -1152,8 +1158,7 @@
                         if (tableId === 'inventory-table') {
                             recalculateRowStockStatus(tr);
                         } else if (tableId === 'online-table') {
-                            // If online 7-day sales changed, refresh inventory table SCM calculations
-                            renderTable('inventory-table', 'erp_inventory', defaultInventory, inventoryHeaders);
+                            syncOnlineSalesToInventory();
                         }
                         saveTable(tableId, storageKey, false);
                         updateDashboardAnalytics();
@@ -1172,6 +1177,12 @@
             updateSummaryRow(tableId);
         }
 
+        // Real-time link between Online Sales and Inventory Table
+        function syncOnlineSalesToInventory() {
+            saveTable('online-table', 'erp_online', false);
+            renderTable('inventory-table', 'erp_inventory', defaultInventory, inventoryHeaders);
+        }
+
         // Live Row Stock Recalculation (Instant SCM Days Badge Switch)
         function recalculateRowStockStatus(tr) {
             const cells = tr.querySelectorAll('td');
@@ -1183,7 +1194,7 @@
             const scmInfo = calculateDynamicSCM(itemName, curText);
 
             // Update Safety Stock Cell (Column 3)
-            cells[3].innerHTML = `<b style="color:#c4b5fd;">${scmInfo.safeStock5Days} 개</b> <span style="font-size:0.75rem; color:var(--text-muted);">(7일 판매 기준 5일치)</span>`;
+            cells[3].innerHTML = `<b style="color:#c4b5fd; font-size: 1.02rem;">${scmInfo.safeStock5Days} 개</b> <span style="font-size:0.75rem; color:var(--text-muted);">(7일 판매:${scmInfo.weeklySales}개 ➔ 일${scmInfo.dailySales}개 × 5일)</span>`;
 
             // Update Order Need Badge Cell (Column 5)
             const orderTd = cells[5];
@@ -1201,7 +1212,7 @@
                 const td = document.createElement('td');
                 if (key === 'safeStock' && tableId === 'inventory-table') {
                     td.setAttribute('contenteditable', 'false');
-                    td.innerHTML = `<b style="color:#c4b5fd;">10 개</b> <span style="font-size:0.75rem; color:var(--text-muted);">(7일 판매 기준 5일치)</span>`;
+                    td.innerHTML = `<b style="color:#c4b5fd;">10 개</b> <span style="font-size:0.75rem; color:var(--text-muted);">(7일 판매:14개 ➔ 일2.0개 × 5일)</span>`;
                 } else if (key === 'orderNeed' && tableId === 'inventory-table') {
                     td.setAttribute('contenteditable', 'false');
                     td.innerHTML = `<span class="status-badge badge-red">🔴 발주필요 (보유 0.0일치)</span>`;
@@ -1272,7 +1283,7 @@
             syncToCloud(false);
 
             if (showToastMsg) {
-                showToast('7일 회전율 SCM 실시간 연산 및 클라우드 동기화 완료!');
+                showToast('7일 회전율 SCM 실시간 감지 연동 완료!');
             }
         }
 
@@ -1731,14 +1742,20 @@
                 localStorage.setItem('erp_inventory', JSON.stringify(aggregatedInventoryRows));
                 reloadAllTables();
                 syncToCloud(true);
-                statusEl.innerText = `✅ 다중 채널 취합 & 7일 회전율 5일치 안전재고 계산 완료!`;
+                statusEl.innerText = `✅ 다중 채널 취합 & 7일 회전율 5일치 안전재고 자동 연동 완료!`;
                 setTimeout(closeUploadModal, 1500);
-                showToast('엑셀 수치 기반 SCM 안전재고가 생성되었습니다.');
+                showToast('엑셀 수치 기반 안전재고 수량이 자동 변동되었습니다.');
             }
         }
 
         function normalizeProductName(name) {
-            return String(name || '').replace(/\[.*?\]/g, '').replace(/\(.*?\)/g, '').trim();
+            return String(name || '')
+                .replace(/\[.*?\]/g, '')
+                .replace(/\(.*?\)/g, '')
+                .replace(/[_\-]/g, ' ')
+                .replace(/\s+/g, '')
+                .trim()
+                .toLowerCase();
         }
 
         function readFileAsText(file) {
