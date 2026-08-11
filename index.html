@@ -585,8 +585,8 @@
             <div style="display: flex; align-items: center; gap: 14px;">
                 <i class="fa-solid fa-check-double" style="font-size: 26px; color: #fbbf24;"></i>
                 <div>
-                    <strong style="font-size: 0.98rem; color: #ffffff;">⚡ 온라인 주간 실적 100% 원본 유지: [상품명, 중량, 옵션 엑셀 그대로 연동 보장]</strong>
-                    <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">온라인 탭에는 업로드하신 엑셀의 **상품명, 중량, 옵션 명칭이 한 글자도 변형 없이 그대로 100% 반영**됩니다.</p>
+                    <strong style="font-size: 0.98rem; color: #ffffff;">⚡ 온라인 주간 실적: [업로드 엑셀 기재 판매 제품명 100% 원본 반영]</strong>
+                    <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">온라인 주간 실적 탭에는 업로드하신 엑셀 파일의 **판매 제품명이 글자 변형 없이 그대로 100% 반영**됩니다.</p>
                 </div>
             </div>
             <button class="btn btn-emerald" style="padding: 8px 16px; font-size: 0.85rem;" onclick="syncFromCloud(true)">지금 강제 동기화</button>
@@ -735,13 +735,13 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- 3. 온라인 주간 운영 현황 (엑셀 원본 그대로 연동 보장) -->
+    <!-- 3. 온라인 주간 운영 현황 (엑셀 기재 판매 제품명 그대로 연동) -->
     <!-- ============================================================================== -->
     <div id="online" class="main-content">
         <div class="header">
             <div>
-                <h1><i class="fa-solid fa-cart-shopping" style="color: var(--accent-purple);"></i> 온라인 주간 실적 현황 (엑셀 원본 100% 연동)</h1>
-                <p>업로드하신 엑셀 원본의 <b>[상품명, 중량, 옵션 명칭]이 가공 없이 100% 그대로 반영</b>됩니다.</p>
+                <h1><i class="fa-solid fa-cart-shopping" style="color: var(--accent-purple);"></i> 온라인 주간 실적 현황 (엑셀 기재 판매 제품명 100% 원본 반영)</h1>
+                <p>업로드하신 엑셀 파일에 기재된 <b>[판매 제품명, 중량, 옵션] 명칭이 100% 원본 그대로 반영</b>됩니다.</p>
             </div>
             <div class="header-actions">
                 <button class="btn btn-upload" onclick="openUploadModal('online')"><i class="fa-solid fa-cloud-arrow-up"></i> 다중 엑셀 일괄 업로드</button>
@@ -761,7 +761,7 @@
                 <thead>
                     <tr>
                         <th data-key="channel">판매 채널</th>
-                        <th data-key="item">상품명 (중량 및 옵션 원본연동)</th>
+                        <th data-key="item">상품명 (엑셀 기재 판매 제품명 원본)</th>
                         <th data-key="sales">판매량(7일/개)</th>
                         <th data-key="revenue">판매 금액(원)</th>
                         <th data-key="adSpend">총 광고비(원)</th>
@@ -1018,7 +1018,7 @@
     <div id="uploadModal" class="modal-overlay">
         <div class="modal-card">
             <h3><i class="fa-solid fa-layer-group" style="color: #fbbf24;"></i> 다중 채널 엑셀 일괄 업로드 & 노출0/품절 자동 제외</h3>
-            <p>쿠팡, 네이버, 카카오, G마켓 등 엑셀을 올리시면 <b>[온라인 주간 실적 100% 원본 반영]</b> 및 <b>[노출0건/품절 제외 분석]</b>이 실시간 처리됩니다.</p>
+            <p>쿠팡, 네이버, 카카오, G마켓 등 엑셀을 올리시면 <b>[기재된 판매 제품명 100% 그대로 반영]</b> 및 <b>[노출0건/품절 제외 분석]</b>이 실시간 처리됩니다.</p>
             <div class="file-select-options">
                 <div>
                     <label style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; display: block;">업로드 대상 영역</label>
@@ -1032,7 +1032,7 @@
                 <div>
                     <label style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; display: block;">다중 파일 합산 처리 방식</label>
                     <select id="uploadMode" class="select-box">
-                        <option value="consolidate">원본 유지 및 품절 제외 (추천)</option>
+                        <option value="consolidate">원본 제품명 유지 & 품절 제외 (추천)</option>
                         <option value="replace">기존 데이터 덮어쓰기</option>
                         <option value="append">기존 데이터 뒤에 개별 추가</option>
                     </select>
@@ -1057,7 +1057,7 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- JAVASCRIPT SYSTEM ENGINE (FULL RAW ORIGINAL KEEPING FOR ONLINE WEEKLY SHEET) -->
+    <!-- JAVASCRIPT SYSTEM ENGINE (FULL RAW ORIGINAL PRODUCT NAME ENFORCEMENT) -->
     <!-- ============================================================================== -->
     <script>
         const CLOUD_STORAGE_KEY = 'hyejin_mini_erp_global_db_v1';
@@ -1079,7 +1079,7 @@
             });
         });
 
-        // Default Sample Data (All Active & Valid Products)
+        // Default Sample Data
         const defaultOnline = [
             {"channel":"쿠팡","item":"미미각 마라샹궈 소스 마라맛 볶음소스, 1개, 500g","sales":"140","revenue":"1440000","adSpend":"180000","inventory":"250","issue":"정상 판매중","action":"쿠팡 타임딜 기획","status":"진행중"},
             {"channel":"쿠팡","item":"[한정수량 특가판매 ] 미미각 마라소스 마라장 업소용, 1kg, 1개","sales":"110","revenue":"1100000","adSpend":"120000","inventory":"180","issue":"인기 품목","action":"추가 생산","status":"완료"},
@@ -1150,7 +1150,7 @@
             return match ? match[0].toLowerCase() : '';
         }
 
-        // Clean Base Title for Grouping
+        // Clean Base Title for Grouping (Used for Inventory consolidation)
         function cleanBaseTitle(name) {
             let str = String(name || '');
             str = str.replace(/\[.*?\]/g, '').replace(/\{.*?\}/g, '');
@@ -1203,7 +1203,7 @@
             };
         }
 
-        // Render Table Function - ONLINE TABLE KEEPS 100% EXACT RAW UNTOUCHED STRING
+        // Render Table Function - ONLINE TABLE GUARANTEES 100% UNTOUCHED ORIGINAL PRODUCT NAME
         function renderTable(tableId, storageKey, defaultData, headers) {
             const rawData = JSON.parse(localStorage.getItem(storageKey)) || defaultData;
             const tbody = document.querySelector(`#${tableId} tbody`);
@@ -1274,7 +1274,7 @@
                             td.innerHTML = `<span class="status-badge badge-red">🔴 발주필요 (보유 ${scmInfo.daysRemaining}일치)</span>`;
                         }
                     } else {
-                        // FOR ONLINE TABLE: 100% EXACT RAW UNTOUCHED STRING DISPLAY (Product Name, Weight, Options)
+                        // FOR ONLINE TABLE: 100% UNTOUCHED ORIGINAL PRODUCT NAME FROM EXCEL
                         td.innerText = row[key] || '';
                     }
 
@@ -1862,7 +1862,7 @@
             const statusEl = document.getElementById('uploadStatus');
 
             statusEl.style.display = 'block';
-            statusEl.innerText = `⏳ 총 ${fileList.length}개 파일 처리 중... (온라인 탭 엑셀 원본 100% 반영)`;
+            statusEl.innerText = `⏳ 총 ${fileList.length}개 파일 처리 중... (판매 제품명 100% 원본 반영)`;
 
             const onlineRowsRaw = [];
 
@@ -1919,8 +1919,11 @@
                                 itemObj[h] = row[idx] !== undefined ? String(row[idx]).trim() : '';
                             });
 
-                            // Full Original Raw Title/Option String
-                            const rawItemName = findValue(itemObj, ['상품명', '상품', '제품명', '옵션명', 'vendor_item_name', 'Item Name']);
+                            // STRICT PRIORITY ORDER FOR RAW EXCEL PRODUCT TITLE
+                            const rawItemName = findValue(itemObj, [
+                                'vendor_item_name', '등록상품명', '옵션명', '판매 제품명', '판매제품명', 
+                                '상품명', '제품명', 'Item Name', 'Product Name'
+                            ]);
                             if (!rawItemName) continue;
 
                             const itemStatus = findValue(itemObj, ['상태', '진행상태', '판매상태', 'Status', 'issue']);
@@ -1930,17 +1933,17 @@
                             const adSpendAmt = findValue(itemObj, ['총 광고비(원)', '광고비', 'ad_spend', 'Ad Spend']) || '0';
                             const stockQty = findValue(itemObj, ['재고 현황', '현재재고', '재고', 'stock', 'Stock']) || '0';
 
-                            // EXCLUDE BOTH IMPRESSION ZERO & SOLD OUT
+                            // EXCLUDE IMPRESSION ZERO & SOLD OUT
                             if (isInvalidOrZeroOrSoldOut(itemStatus, rawItemName, impressionVal, salesQty, revenueAmt)) {
                                 continue;
                             }
 
                             const parsedChannel = findValue(itemObj, ['판매채널', '채널', '쇼핑몰', 'Channel']) || fileChannel;
 
-                            // 100% UNTOUCHED RAW ORIGINAL ITEM NAME STORED FOR ONLINE WEEKLY SHEET
+                            // ONLINE SHEET STORES 100% UNTOUCHED EXACT RAW PRODUCT TITLE FROM EXCEL
                             onlineRowsRaw.push({
                                 channel: parsedChannel,
-                                item: rawItemName, // Full untouched name, weight, and options
+                                item: rawItemName, // Exact raw product title, weight & options
                                 sales: String(salesQty),
                                 revenue: String(revenueAmt),
                                 adSpend: String(adSpendAmt),
@@ -1956,7 +1959,7 @@
             }
 
             if (onlineRowsRaw.length > 0) {
-                // Online Sheet receives 100% untouched raw excel strings
+                // Online Sheet stores 100% exact raw product title from excel
                 localStorage.setItem('erp_online', JSON.stringify(onlineRowsRaw));
 
                 // Inventory Sheet receives grouped items (Product Name + Weight)
@@ -1985,9 +1988,9 @@
                 localStorage.setItem('erp_inventory', JSON.stringify(Array.from(invGroupMap.values())));
                 reloadAllTables();
                 syncToCloud(true);
-                statusEl.innerText = `✅ [온라인 탭 원본 100% 반영] 완료!`;
+                statusEl.innerText = `✅ [엑셀 기재 판매 제품명 100% 반영] 완료!`;
                 setTimeout(closeUploadModal, 1500);
-                showToast('온라인 주간 실적에 엑셀 원본 그대로 반영되었습니다.');
+                showToast('온라인 주간 실적에 엑셀 기재 판매 제품명이 그대로 반영되었습니다.');
             }
         }
 
@@ -2010,9 +2013,11 @@
         }
 
         function findValue(obj, possibleKeys) {
-            for (let k of Object.keys(obj)) {
-                for (let pk of possibleKeys) {
-                    if (k.toLowerCase().includes(pk.toLowerCase())) return obj[k];
+            for (let pk of possibleKeys) {
+                for (let k of Object.keys(obj)) {
+                    if (k.toLowerCase().trim() === pk.toLowerCase().trim() || k.toLowerCase().includes(pk.toLowerCase())) {
+                        return obj[k];
+                    }
                 }
             }
             return '';
