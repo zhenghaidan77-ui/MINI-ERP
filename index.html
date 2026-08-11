@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>자택근무 통제센터 (Mini ERP) - 대표보고 및 다중채널 자동취합 시스템</title>
+    <title>자택근무 통제센터 (Mini ERP) - 대표보고 및 관리자 통제 시스템</title>
     <!-- Pretendard & FontAwesome & Chart.js & SheetJS(XLSX) -->
     <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -240,6 +240,11 @@
             box-shadow: 0 4px 12px rgba(245, 158, 11, 0.25);
         }
 
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444, #b91c1c);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+        }
+
         /* Table Styling */
         .table-container {
             background: var(--card-bg);
@@ -278,6 +283,12 @@
         td[contenteditable="true"]:focus {
             background: rgba(139, 92, 246, 0.15);
             box-shadow: inset 0 0 0 1px var(--accent-purple);
+        }
+
+        /* Readonly mode when locked */
+        body.locked td[contenteditable="true"] {
+            pointer-events: none;
+            background: transparent !important;
         }
 
         /* Channel Badges */
@@ -376,18 +387,19 @@
             align-items: center;
         }
 
-        .search-input {
+        .search-input, .admin-input {
             background: rgba(15, 23, 42, 0.6);
             border: 1px solid var(--card-border);
             color: white;
-            padding: 8px 14px;
+            padding: 10px 14px;
             border-radius: 8px;
-            font-size: 0.88rem;
+            font-size: 0.9rem;
             outline: none;
-            width: 220px;
+            width: 100%;
         }
 
-        .search-input:focus { border-color: var(--accent-purple); }
+        .search-input { width: 220px; }
+        .search-input:focus, .admin-input:focus { border-color: var(--accent-purple); }
 
         .summary-footer {
             background: rgba(15, 23, 42, 0.8);
@@ -397,7 +409,7 @@
 
         .summary-footer td { color: #ffffff; font-size: 0.95rem; }
 
-        /* Upload Modal Styling */
+        /* Upload & Admin Modal Styling */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(11, 15, 25, 0.85); backdrop-filter: blur(12px);
@@ -445,6 +457,26 @@
         .modal-footer {
             display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px;
         }
+
+        /* Toggle switch */
+        .switch {
+            position: relative; display: inline-block; width: 50px; height: 26px;
+        }
+
+        .switch input { opacity: 0; width: 0; height: 0; }
+
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #334155; transition: .3s; border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px;
+            background-color: white; transition: .3s; border-radius: 50%;
+        }
+
+        input:checked + .slider { background-color: var(--accent-emerald); }
+        input:checked + .slider:before { transform: translateX(24px); }
     </style>
 </head>
 <body>
@@ -475,6 +507,11 @@
         </a>
         <a class="nav-item" data-target="task">
             <i class="fa-solid fa-list-check"></i> 업무 요청 관리
+        </a>
+
+        <div class="nav-category">Control Panel</div>
+        <a class="nav-item" data-target="admin" style="color: #fbbf24;">
+            <i class="fa-solid fa-user-shield"></i> 🔐 관리자 통제 센터
         </a>
     </div>
 
@@ -597,17 +634,17 @@
             <h3><i class="fa-solid fa-diagram-project" style="color: var(--accent-purple);"></i> 조직 운영 구조 (보고 체계)</h3>
             <div class="org-chart">
                 <div class="org-node main-node">
-                    <div class="org-title">정해단 팀장</div>
-                    <div class="org-subtitle">온라인 · 사업운영 총괄</div>
+                    <div class="org-title" id="orgLeaderTitle">정해단 팀장</div>
+                    <div class="org-subtitle" id="orgLeaderSub">온라인 · 사업운영 총괄</div>
                 </div>
                 <div class="org-line-v"></div>
                 <div class="org-branch">
                     <div class="org-col">
                         <div class="org-line-v"></div>
                         <div class="org-node">
-                            <div class="org-title">김윤미 대리</div>
-                            <div class="org-subtitle">온라인 · 디자인 운영</div>
-                            <div class="org-desc">
+                            <div class="org-title" id="orgMember1Title">김윤미 대리</div>
+                            <div class="org-subtitle" id="orgMember1Sub">온라인 · 디자인 운영</div>
+                            <div class="org-desc" id="orgMember1Desc">
                                 상품등록 / SNS / 디자인<br/>온라인 기본운영<br/>데이터 관리
                             </div>
                         </div>
@@ -615,9 +652,9 @@
                     <div class="org-col">
                         <div class="org-line-v"></div>
                         <div class="org-node">
-                            <div class="org-title">김미경 대리</div>
-                            <div class="org-subtitle" style="color: #6ee7b7;">물류 · 발주 운영</div>
-                            <div class="org-desc">
+                            <div class="org-title" id="orgMember2Title">김미경 대리</div>
+                            <div class="org-subtitle" style="color: #6ee7b7;" id="orgMember2Sub">물류 · 발주 운영</div>
+                            <div class="org-desc" id="orgMember2Desc">
                                 재고 / 발주 / 입출고<br/>택배 / 업체관리<br/>물류관리
                             </div>
                         </div>
@@ -625,58 +662,10 @@
                 </div>
             </div>
         </div>
-
-        <div class="grid-3">
-            <div class="card">
-                <h3><i class="fa-solid fa-user-gear" style="color: var(--accent-purple);"></i> 역할 및 권한 분배</h3>
-                <div style="font-size: 0.88rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 14px; margin-top: 10px;">
-                    <div style="background: rgba(139, 92, 246, 0.1); padding: 12px; border-radius: 8px; border-left: 3px solid var(--accent-purple);">
-                        <strong style="color: #c4b5fd;">정해단 팀장 (총괄)</strong><br/>
-                        온라인 총괄, 수입·소싱, 마진·프로모션 결정, 업무 기준 설정 및 최종 의사결정
-                    </div>
-                    <div style="background: rgba(59, 130, 246, 0.1); padding: 12px; border-radius: 8px; border-left: 3px solid var(--accent-blue);">
-                        <strong style="color: #93c5fd;">김윤미 대리 (디자인/온라인)</strong><br/>
-                        상품등록, 상세페이지/영상 제작, SNS 운영, 매일 실적 데이터 입력
-                    </div>
-                    <div style="background: rgba(16, 185, 129, 0.1); padding: 12px; border-radius: 8px; border-left: 3px solid var(--accent-emerald);">
-                        <strong style="color: #6ee7b7;">김미경 대리 (물류/발주)</strong><br/>
-                        재고 실시간 추적, 국내 발주 진행, 입출고 관리, 물류업체 소통
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <h3><i class="fa-solid fa-comments" style="color: var(--accent-blue);"></i> 보고 및 소통 규칙</h3>
-                <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 10px; font-size: 0.88rem;">
-                    <div style="display: flex; gap: 10px;">
-                        <span class="status-badge badge-green">🟢 일반보고</span>
-                        <div style="color: var(--text-muted);">답변 대기 없이 즉시 진행<br/><i>(예: "재고 180개 확인했습니다")</i></div>
-                    </div>
-                    <div style="display: flex; gap: 10px;">
-                        <span class="status-badge badge-yellow">🟡 승인요청</span>
-                        <div style="color: var(--text-muted);">팀장 의사결정 후 실행<br/><i>(예: "재고 미달, 300개 발주할까요?")</i></div>
-                    </div>
-                    <div style="display: flex; gap: 10px;">
-                        <span class="status-badge badge-red">🔴 긴급보고</span>
-                        <div style="color: var(--text-muted);">즉시 전화 통화<br/><i>(배송 중단, 대량 사고, 통관 이슈)</i></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <h3><i class="fa-solid fa-arrows-spin" style="color: var(--accent-emerald);"></i> 발주 & 재고 프로세스</h3>
-                <ol style="margin-left: 18px; font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-top: 10px;">
-                    <li><strong style="color: white;">재고 감지</strong> (김미경 대리): 수량 체크 후 시스템 기입</li>
-                    <li><strong style="color: white;">발주 보고</strong> (김미경 대리 → 정해단 팀장): 안전재고 미달 시 검토 요청</li>
-                    <li><strong style="color: white;">승인 및 결정</strong> (정해단 팀장): 단가 확인 및 발주량 확정</li>
-                    <li><strong style="color: white;">입고 및 반영</strong> (김미경 대리): 입고 일정 확인 후 시스템 재고 업데이트</li>
-                </ol>
-            </div>
-        </div>
     </div>
 
     <!-- ============================================================================== -->
-    <!-- 3. 온라인 주간 운영 현황 (다중 채널 합산 자동 취합 뷰) -->
+    <!-- 3. 온라인 주간 운영 현황 -->
     <!-- ============================================================================== -->
     <div id="online" class="main-content">
         <div class="header">
@@ -840,7 +829,132 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- 다중 채널 일괄 업로드 모달 (MULTI-FILE EXCEL PARSER) -->
+    <!-- 7. 🔐 관리자 전용 통제 센터 (ADMIN CONTROL PANEL) -->
+    <!-- ============================================================================== -->
+    <div id="admin" class="main-content">
+        <div class="header">
+            <div>
+                <h1><i class="fa-solid fa-user-shield" style="color: #fbbf24;"></i> 🔐 관리자 전용 통제 센터</h1>
+                <p>시스템 권한 설정, 팀원 편집 락(Lock) 통제, 안전재고 임계값 및 조직 R&R 실시간 관리</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-danger" onclick="resetAllData()"><i class="fa-solid fa-rotate-left"></i> 데이터 초기화 (Reset)</button>
+            </div>
+        </div>
+
+        <!-- 로그인 인증 박스 -->
+        <div id="adminAuthBox" class="card grid-full" style="max-width: 500px; margin: 40px auto; text-align: center;">
+            <i class="fa-solid fa-lock" style="font-size: 45px; color: #fbbf24; margin-bottom: 16px;"></i>
+            <h3 style="justify-content: center; margin-bottom: 10px;">관리자 핀코드(비밀번호) 인증</h3>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 20px;">관리자 전용 설정 변경을 위해 핀코드를 입력하세요. (기본 핀코드: <b>1234</b>)</p>
+            <input type="password" id="adminPinInput" class="admin-input" placeholder="비밀번호 입력..." style="text-align: center; font-size: 1.2rem; margin-bottom: 16px;">
+            <button class="btn btn-emerald" style="width: 100%;" onclick="authenticateAdmin()">관리자 인증하기</button>
+        </div>
+
+        <!-- 관리자 통제 패널 (인증 후 노출) -->
+        <div id="adminPanel" style="display: none;">
+            
+            <div class="grid-2">
+                <!-- 1. 보안 및 권한 설정 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-key" style="color: var(--accent-purple);"></i> 팀원 쓰기 권한 & 비밀번호 변경</h3>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(15,23,42,0.6); padding: 16px; border-radius: 10px; margin-bottom: 18px;">
+                        <div>
+                            <strong style="font-size: 0.95rem;">팀원 편집 잠금 (Read-Only 모드)</strong>
+                            <p style="font-size: 0.8rem; color: var(--text-muted);">켜짐 상태일 경우 관리자를 제외한 셀 직접 수정이 차단됩니다.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="lockSwitch" onchange="toggleEditLock(this.checked)">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div style="margin-top: 15px;">
+                        <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 6px;">관리자 핀코드(비밀번호) 변경</label>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="password" id="newPinInput" class="admin-input" placeholder="새 비밀번호 입력...">
+                            <button class="btn" onclick="changeAdminPin()">변경 저장</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. 임계값 설정 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-sliders" style="color: var(--accent-emerald);"></i> 안전재고 경고 임계값 설정</h3>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">현재 재고가 설정된 수치 미만으로 떨어지면 대시보드에 자동으로 <b>🔴 발주 필요</b> 경고가 출력됩니다.</p>
+
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <input type="number" id="safeStockThreshold" class="admin-input" value="100" style="width: 150px;">
+                        <span style="font-weight: 700;">개 미만 시 경고</span>
+                        <button class="btn btn-emerald" onclick="saveThreshold()">기준 저장</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 조직 구조 & R&R 실시간 문구 편집기 -->
+            <div class="card grid-full">
+                <div class="card-header">
+                    <h3><i class="fa-solid fa-pen-to-square" style="color: #60a5fa;"></i> 조직 운영 구조 & R&R 문구 실시간 관리자 수정</h3>
+                    <button class="btn btn-emerald" onclick="saveOrgSettings()"><i class="fa-solid fa-save"></i> 조직 문구 저장하기</button>
+                </div>
+
+                <div class="grid-3">
+                    <div>
+                        <h4 style="color: #c4b5fd; margin-bottom: 10px;">총괄 리더 정보</h4>
+                        <div class="form-group">
+                            <label>직함 / 성명</label>
+                            <input type="text" id="adminLeaderTitle" class="admin-input" value="정해단 팀장">
+                        </div>
+                        <div class="form-group">
+                            <label>담당 업무 요약</label>
+                            <input type="text" id="adminLeaderSub" class="admin-input" value="온라인 · 사업운영 총괄">
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 style="color: #93c5fd; margin-bottom: 10px;">온라인/디자인 담당자 정보</h4>
+                        <div class="form-group">
+                            <label>직함 / 성명</label>
+                            <input type="text" id="adminMember1Title" class="admin-input" value="김윤미 대리">
+                        </div>
+                        <div class="form-group">
+                            <label>담당 업무 요약</label>
+                            <input type="text" id="adminMember1Sub" class="admin-input" value="온라인 · 디자인 운영">
+                        </div>
+                        <div class="form-group">
+                            <label>세부 가이드라인</label>
+                            <textarea id="adminMember1Desc" class="admin-input" rows="3">상품등록 / SNS / 디자인&#10;온라인 기본운영&#10;데이터 관리</textarea>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 style="color: #6ee7b7; margin-bottom: 10px;">물류/발주 담당자 정보</h4>
+                        <div class="form-group">
+                            <label>직함 / 성명</label>
+                            <input type="text" id="adminMember2Title" class="admin-input" value="김미경 대리">
+                        </div>
+                        <div class="form-group">
+                            <label>담당 업무 요약</label>
+                            <input type="text" id="adminMember2Sub" class="admin-input" value="물류 · 발주 운영">
+                        </div>
+                        <div class="form-group">
+                            <label>세부 가이드라인</label>
+                            <textarea id="adminMember2Desc" class="admin-input" rows="3">재고 / 발주 / 입출고&#10;택배 / 업체관리&#10;물류관리</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ============================================================================== -->
+    <!-- 다중 채널 일괄 업로드 모달 -->
     <!-- ============================================================================== -->
     <div id="uploadModal" class="modal-overlay">
         <div class="modal-card">
@@ -867,7 +981,6 @@
                 </div>
             </div>
 
-            <!-- Drag and Drop Zone (Multiple Allowed) -->
             <div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
                 <i class="fa-solid fa-cloud-arrow-up"></i>
                 <h4>여기에 여러 개의 엑셀 파일들을 동시 드래그하거나 클릭</h4>
@@ -956,7 +1069,6 @@
                     const td = document.createElement('td');
                     td.setAttribute('contenteditable', 'true');
                     
-                    // Render Channel Tag Badge if key === 'channel'
                     if (key === 'channel') {
                         const chVal = row[key] || '통합';
                         let badgeClass = 'tag-other';
@@ -1095,8 +1207,10 @@
             });
 
             let warningCount = 0;
+            const threshold = parseInt(localStorage.getItem('erp_threshold') || '100');
             inventoryData.forEach(r => {
-                if ((r.orderNeed || '').includes('발주') || (r.orderNeed || '').includes('검토') || (r.orderNeed || '').includes('🔴')) {
+                const cur = parseInt((r.currentStock || '0').replace(/,/g, '')) || 0;
+                if (cur < threshold || (r.orderNeed || '').includes('발주') || (r.orderNeed || '').includes('검토') || (r.orderNeed || '').includes('🔴')) {
                     warningCount++;
                 }
             });
@@ -1121,7 +1235,6 @@
             document.getElementById('summary-import-text').innerText = 
                 `현재 ${importData.length}건의 중국 소싱/수입 파이프라인 진행 중.`;
 
-            // 1. Sales Chart
             const labels = onlineData.slice(0, 5).map(d => (d.item || '').split(' ')[0]);
             const revenues = onlineData.slice(0, 5).map(d => parseInt(((d.revenue || '0').toString()).replace(/,/g, '')) / 10000);
 
@@ -1151,7 +1264,6 @@
                 }
             });
 
-            // 2. Channel Chart (Donut)
             if (channelChartInstance) channelChartInstance.destroy();
             const ctx2 = document.getElementById('channelChart').getContext('2d');
             channelChartInstance = new Chart(ctx2, {
@@ -1173,7 +1285,131 @@
         }
 
         // ==============================================================================
-        // MULTI-FILE UPLOAD & AUTOMATIC CONSOLIDATION ENGINE
+        // ADMIN CONTROL PANEL SYSTEM ENGINE
+        // ==============================================================================
+        const defaultPin = '1234';
+
+        function authenticateAdmin() {
+            const inputPin = document.getElementById('adminPinInput').value;
+            const currentPin = localStorage.getItem('erp_admin_pin') || defaultPin;
+
+            if (inputPin === currentPin) {
+                document.getElementById('adminAuthBox').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+                loadAdminSettings();
+                showToast('🔑 관리자 인증이 완료되었습니다.');
+            } else {
+                alert('❌ 비밀번호가 올바르지 않습니다. (기본 비밀번호: 1234)');
+            }
+        }
+
+        function loadAdminSettings() {
+            const isLocked = localStorage.getItem('erp_locked') === 'true';
+            document.getElementById('lockSwitch').checked = isLocked;
+            toggleEditLock(isLocked);
+
+            const threshold = localStorage.getItem('erp_threshold') || '100';
+            document.getElementById('safeStockThreshold').value = threshold;
+
+            // Load Org Configs
+            const orgConfig = JSON.parse(localStorage.getItem('erp_org_config')) || {};
+            document.getElementById('adminLeaderTitle').value = orgConfig.leaderTitle || '정해단 팀장';
+            document.getElementById('adminLeaderSub').value = orgConfig.leaderSub || '온라인 · 사업운영 총괄';
+
+            document.getElementById('adminMember1Title').value = orgConfig.m1Title || '김윤미 대리';
+            document.getElementById('adminMember1Sub').value = orgConfig.m1Sub || '온라인 · 디자인 운영';
+            document.getElementById('adminMember1Desc').value = orgConfig.m1Desc || '상품등록 / SNS / 디자인\n온라인 기본운영\n데이터 관리';
+
+            document.getElementById('adminMember2Title').value = orgConfig.m2Title || '김미경 대리';
+            document.getElementById('adminMember2Sub').value = orgConfig.m2Sub || '물류 · 발주 운영';
+            document.getElementById('adminMember2Desc').value = orgConfig.m2Desc || '재고 / 발주 / 입출고\n택배 / 업체관리\n물류관리';
+
+            applyOrgConfigToUI(orgConfig);
+        }
+
+        function toggleEditLock(isLocked) {
+            localStorage.setItem('erp_locked', isLocked);
+            if (isLocked) {
+                document.body.classList.add('locked');
+                showToast('🔒 팀원 쓰기 권한이 잠겼습니다 (Read-Only).');
+            } else {
+                document.body.classList.remove('locked');
+                showToast('🔓 자유 수정 모드가 활성화되었습니다.');
+            }
+        }
+
+        function changeAdminPin() {
+            const newPin = document.getElementById('newPinInput').value;
+            if (newPin && newPin.length >= 4) {
+                localStorage.setItem('erp_admin_pin', newPin);
+                document.getElementById('newPinInput').value = '';
+                showToast('🔑 관리자 비밀번호가 새로 저장되었습니다.');
+            } else {
+                alert('4자리 이상의 새 비밀번호를 입력해주세요.');
+            }
+        }
+
+        function saveThreshold() {
+            const val = document.getElementById('safeStockThreshold').value;
+            localStorage.setItem('erp_threshold', val);
+            updateDashboardAnalytics();
+            showToast(`안전재고 경고 임계값이 ${val}개로 설정되었습니다.`);
+        }
+
+        function saveOrgSettings() {
+            const orgConfig = {
+                leaderTitle: document.getElementById('adminLeaderTitle').value,
+                leaderSub: document.getElementById('adminLeaderSub').value,
+                m1Title: document.getElementById('adminMember1Title').value,
+                m1Sub: document.getElementById('adminMember1Sub').value,
+                m1Desc: document.getElementById('adminMember1Desc').value,
+                m2Title: document.getElementById('adminMember2Title').value,
+                m2Sub: document.getElementById('adminMember2Sub').value,
+                m2Desc: document.getElementById('adminMember2Desc').value
+            };
+
+            localStorage.setItem('erp_org_config', JSON.stringify(orgConfig));
+            applyOrgConfigToUI(orgConfig);
+            showToast('조직 운영 구조 문구가 변경 반영되었습니다.');
+        }
+
+        function applyOrgConfigToUI(c) {
+            if (!c) return;
+            const lTitle = document.getElementById('orgLeaderTitle');
+            const lSub = document.getElementById('orgLeaderSub');
+            const m1Title = document.getElementById('orgMember1Title');
+            const m1Sub = document.getElementById('orgMember1Sub');
+            const m1Desc = document.getElementById('orgMember1Desc');
+            const m2Title = document.getElementById('orgMember2Title');
+            const m2Sub = document.getElementById('orgMember2Sub');
+            const m2Desc = document.getElementById('orgMember2Desc');
+
+            if (lTitle) lTitle.innerText = c.leaderTitle || '정해단 팀장';
+            if (lSub) lSub.innerText = c.leaderSub || '온라인 · 사업운영 총괄';
+            if (m1Title) m1Title.innerText = c.m1Title || '김윤미 대리';
+            if (m1Sub) m1Sub.innerText = c.m1Sub || '온라인 · 디자인 운영';
+            if (m1Desc) m1Desc.innerHTML = (c.m1Desc || '').replace(/\n/g, '<br/>');
+            if (m2Title) m2Title.innerText = c.m2Title || '김미경 대리';
+            if (m2Sub) m2Sub.innerText = c.m2Sub || '물류 · 발주 운영';
+            if (m2Desc) m2Desc.innerHTML = (c.m2Desc || '').replace(/\n/g, '<br/>');
+        }
+
+        function resetAllData() {
+            if (confirm('🚨 모든 데이터가 초기화되고 기본 샘플로 원복됩니다. 진행하시겠습니까?')) {
+                localStorage.removeItem('erp_online');
+                localStorage.removeItem('erp_inventory');
+                localStorage.removeItem('erp_import');
+                localStorage.removeItem('erp_task');
+                localStorage.removeItem('erp_org_config');
+                localStorage.removeItem('erp_locked');
+                localStorage.removeItem('erp_threshold');
+                reloadAllTables();
+                showToast('전체 시스템 데이터가 초기화되었습니다.');
+            }
+        }
+
+        // ==============================================================================
+        // UPLOAD & FILE PARSER
         // ==============================================================================
         function openUploadModal(target = 'online') {
             document.getElementById('uploadTarget').value = target;
@@ -1209,31 +1445,25 @@
             }
         }
 
-        // Process Multiple Files concurrently & Consolidate
         async function processUploadedFiles(fileList) {
             const uploadTarget = document.getElementById('uploadTarget').value;
             const uploadMode = document.getElementById('uploadMode').value;
             const statusEl = document.getElementById('uploadStatus');
 
             statusEl.style.display = 'block';
-            statusEl.innerText = `⏳ 총 ${fileList.length}개 파일 읽는 중... 다중 채널 자동 합산 진행 중...`;
+            statusEl.innerText = `⏳ 총 ${fileList.length}개 파일 처리 중...`;
 
-            // Aggregation Map by Product Item Name
             const productAggMap = new Map();
-            let totalParsedItems = 0;
             let channelSet = new Set();
 
             for (let file of fileList) {
                 const fileName = file.name.toLowerCase();
-                
-                // Detect Channel from Filename or Contents
                 let fileChannel = '기타/자사몰';
                 if (fileName.includes('seller_insights') || fileName.includes('vendor') || fileName.includes('coupang') || fileName.includes('쿠팡')) {
                     fileChannel = '쿠팡';
                 } else if (fileName.includes('naver') || fileName.includes('smart') || fileName.includes('네이버') || fileName.includes('스마트')) {
                     fileChannel = '네이버';
                 }
-
                 channelSet.add(fileChannel);
 
                 if (fileName.endsWith('.json')) {
@@ -1246,12 +1476,10 @@
                         if (json.task) localStorage.setItem('erp_task', JSON.stringify(json.task));
 
                         reloadAllTables();
-                        statusEl.innerText = `✅ JSON 백업 파일 데이터가 정상 복원되었습니다!`;
+                        statusEl.innerText = `✅ JSON 백업 복원 완료!`;
                         setTimeout(closeUploadModal, 1500);
                         return;
-                    } catch (err) {
-                        console.error(err);
-                    }
+                    } catch (err) { console.error(err); }
                 } else if (fileName.endsWith('.xlsx') || fileName.endsWith('.xls') || fileName.endsWith('.csv')) {
                     try {
                         const buffer = await readFileAsArrayBuffer(file);
@@ -1260,15 +1488,7 @@
                         const rows = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
 
                         if (rows.length < 2) continue;
-
                         const headers = rows[0].map(h => String(h || '').trim());
-
-                        // Detect Channel from Headers if not detected by filename
-                        if (fileChannel === '기타/자사몰') {
-                            const headerStr = headers.join(' ').toLowerCase();
-                            if (headerStr.includes('vendor_item_name') || headerStr.includes('옵션ID')) fileChannel = '쿠팡';
-                            else if (headerStr.includes('상품주문번호') || headerStr.includes('스마트스토어')) fileChannel = '네이버';
-                        }
 
                         for (let i = 1; i < rows.length; i++) {
                             const row = rows[i];
@@ -1282,14 +1502,11 @@
                             const rawItemName = findValue(itemObj, ['상품명', '상품', '제품명', '옵션명', 'vendor_item_name', 'Item Name']);
                             if (!rawItemName) continue;
 
-                            // Clean & Normalize Item Key
                             const cleanItemKey = normalizeProductName(rawItemName);
                             const salesQty = parseInt((findValue(itemObj, ['총 판매량(개)', '판매량', '수량', '판매수량', 'sales_qty', 'Qty']) || '0').replace(/,/g, '')) || 0;
                             const revenueAmt = parseInt((findValue(itemObj, ['총 매출(원)', '매출액', '총매출', '결제금액', 'revenue', 'Amount']) || '0').replace(/,/g, '')) || 0;
                             const adSpendAmt = parseInt((findValue(itemObj, ['총 광고비(원)', '광고비', 'ad_spend', 'Ad Spend']) || '0').replace(/,/g, '')) || 0;
                             const stockQty = findValue(itemObj, ['재고 현황', '현재재고', '재고', 'stock', 'Stock']) || '0';
-
-                            totalParsedItems++;
 
                             if (productAggMap.has(cleanItemKey)) {
                                 const existing = productAggMap.get(cleanItemKey);
@@ -1316,13 +1533,10 @@
                                 });
                             }
                         }
-                    } catch (err) {
-                        console.error('File parsing error:', err);
-                    }
+                    } catch (err) { console.error(err); }
                 }
             }
 
-            // Convert Aggregation Map to Table Rows
             const aggregatedOnlineRows = [];
             const aggregatedInventoryRows = [];
 
@@ -1351,34 +1565,17 @@
             });
 
             if (aggregatedOnlineRows.length > 0) {
-                let targetKey = 'erp_online';
-                if (uploadTarget === 'inventory') targetKey = 'erp_inventory';
-
-                if (uploadMode === 'consolidate' || uploadMode === 'replace') {
-                    localStorage.setItem('erp_online', JSON.stringify(aggregatedOnlineRows));
-                    localStorage.setItem('erp_inventory', JSON.stringify(aggregatedInventoryRows));
-                } else {
-                    const existingOnline = JSON.parse(localStorage.getItem('erp_online')) || [];
-                    localStorage.setItem('erp_online', JSON.stringify(existingOnline.concat(aggregatedOnlineRows)));
-                }
-
+                localStorage.setItem('erp_online', JSON.stringify(aggregatedOnlineRows));
+                localStorage.setItem('erp_inventory', JSON.stringify(aggregatedInventoryRows));
                 reloadAllTables();
-
-                const channelListStr = Array.from(channelSet).join(', ');
-                statusEl.innerHTML = `✅ <b>총 ${fileList.length}개 파일</b> (${channelListStr}) 업로드 완료!<br/><b>${aggregatedOnlineRows.length}개 핵심 품목</b> 수치 다중 채널 통합 합산 자동 생성 완료!`;
-                setTimeout(closeUploadModal, 2000);
-                showToast(`다중 채널 엑셀 ${fileList.length}개 파일 자동 통합 취합이 완료되었습니다.`);
-            } else {
-                statusEl.innerText = `❌ 유효한 매출/상품 데이터를 찾지 못했습니다.`;
+                statusEl.innerText = `✅ 다중 채널 통합 합산 및 데이터 파싱 완료!`;
+                setTimeout(closeUploadModal, 1500);
+                showToast('엑셀 수치 데이터가 자동 통합 생성되었습니다.');
             }
         }
 
-        // Clean & Normalize product names for cross-channel merging
         function normalizeProductName(name) {
-            return String(name || '')
-                .replace(/\[.*?\]/g, '') // remove brackets
-                .replace(/\(.*?\)/g, '') // remove parens
-                .trim();
+            return String(name || '').replace(/\[.*?\]/g, '').replace(/\(.*?\)/g, '').trim();
         }
 
         function readFileAsText(file) {
@@ -1402,9 +1599,7 @@
         function findValue(obj, possibleKeys) {
             for (let k of Object.keys(obj)) {
                 for (let pk of possibleKeys) {
-                    if (k.toLowerCase().includes(pk.toLowerCase())) {
-                        return obj[k];
-                    }
+                    if (k.toLowerCase().includes(pk.toLowerCase())) return obj[k];
                 }
             }
             return '';
@@ -1415,6 +1610,14 @@
             renderTable('inventory-table', 'erp_inventory', defaultInventory, inventoryHeaders);
             renderTable('import-table', 'erp_import', defaultImport, importHeaders);
             renderTable('task-table', 'erp_task', defaultTask, taskHeaders);
+
+            const savedOrgConfig = JSON.parse(localStorage.getItem('erp_org_config'));
+            if (savedOrgConfig) applyOrgConfigToUI(savedOrgConfig);
+
+            const isLocked = localStorage.getItem('erp_locked') === 'true';
+            if (isLocked) document.body.classList.add('locked');
+            else document.body.classList.remove('locked');
+
             updateDashboardAnalytics();
         }
 
@@ -1456,6 +1659,7 @@
                 inventory: JSON.parse(localStorage.getItem('erp_inventory')) || defaultInventory,
                 import: JSON.parse(localStorage.getItem('erp_import')) || defaultImport,
                 task: JSON.parse(localStorage.getItem('erp_task')) || defaultTask,
+                orgConfig: JSON.parse(localStorage.getItem('erp_org_config')) || null,
                 exportedAt: new Date().toLocaleString()
             };
 
