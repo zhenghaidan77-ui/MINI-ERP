@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>자택근무 통제센터 (Mini ERP) - 채널별 잘 팔리는 제품 대시보드</title>
+    <title>자택근무 통제센터 (Mini ERP) - 실시간 통합 ERP</title>
     <!-- Pretendard & FontAwesome & Chart.js & SheetJS(XLSX) -->
     <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -679,7 +679,7 @@
         <div class="header">
             <div>
                 <h1><i class="fa-solid fa-sitemap" style="color: var(--accent-purple);"></i> 팀원 업무 통제 기준 및 보고 체계</h1>
-                <p>내가 직접 하는 것보다, 다른 사람이 기준대로 하게 만드는 전천후 운영 가이드</p>
+                <p>조직원별 R&R 역할 분담 및 표준 운영 가이드(SOP)</p>
             </div>
             <div class="header-actions">
                 <button class="btn btn-upload" onclick="openUploadModal()"><i class="fa-solid fa-cloud-arrow-up"></i> 다중 엑셀 파일 업로드</button>
@@ -1837,7 +1837,6 @@
                             const adSpendAmt = findValue(itemObj, ['총 광고비(원)', '광고비', 'ad_spend', 'Ad Spend']) || '0';
                             const stockQty = findValue(itemObj, ['재고 현황', '현재재고', '재고', 'stock', 'Stock']) || '0';
 
-                            // Keep FULL original product name & options for Online Table
                             onlineRowsRaw.push({
                                 channel: fileChannel,
                                 item: rawItemName,
@@ -1855,10 +1854,8 @@
             }
 
             if (onlineRowsRaw.length > 0) {
-                // Save Online Raw Data
                 localStorage.setItem('erp_online', JSON.stringify(onlineRowsRaw));
 
-                // Generate Inventory Grouped Data by Product Name + Weight
                 const invGroupMap = new Map();
                 onlineRowsRaw.forEach(r => {
                     const groupTitle = getItemWithWeightGroupTitle(r.item);
