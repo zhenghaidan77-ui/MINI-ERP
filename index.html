@@ -547,7 +547,7 @@
 
         <div class="nav-category">Operations</div>
         <a class="nav-item" data-target="online">
-            <i class="fa-solid fa-cart-shopping"></i> 온라인 주간 실적 (엑셀연동)
+            <i class="fa-solid fa-cart-shopping"></i> 온라인 주간 실적 (엑셀 원본연동)
         </a>
         <a class="nav-item" data-target="inventory">
             <i class="fa-solid fa-boxes-stacked"></i> 물류 재고 & 발주 (상품명+중량)
@@ -583,10 +583,10 @@
 
         <div style="background: linear-gradient(90deg, rgba(16, 185, 129, 0.15), rgba(139, 92, 246, 0.15)); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 16px 22px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
             <div style="display: flex; align-items: center; gap: 14px;">
-                <i class="fa-solid fa-filter-circle-xmark" style="font-size: 26px; color: #fbbf24;"></i>
+                <i class="fa-solid fa-check-double" style="font-size: 26px; color: #fbbf24;"></i>
                 <div>
-                    <strong style="font-size: 0.98rem; color: #ffffff;">⚡ 데이터 정밀 필터링: [노출 제로(0) & 품절/판매중지 상품 자동 제외]</strong>
-                    <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">노출수가 0이거나 품절·판매중지된 제품은 자동 제외되고, **실제 노출 및 판매 중인 활성 상품만 분석**됩니다.</p>
+                    <strong style="font-size: 0.98rem; color: #ffffff;">⚡ 온라인 주간 실적 100% 원본 유지: [상품명, 중량, 옵션 엑셀 그대로 연동 보장]</strong>
+                    <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">온라인 탭에는 업로드하신 엑셀의 **상품명, 중량, 옵션 명칭이 한 글자도 변형 없이 그대로 100% 반영**됩니다.</p>
                 </div>
             </div>
             <button class="btn btn-emerald" style="padding: 8px 16px; font-size: 0.85rem;" onclick="syncFromCloud(true)">지금 강제 동기화</button>
@@ -617,7 +617,7 @@
         </div>
 
         <!-- ============================================================================== -->
-        <!-- MAIN DASHBOARD CARD: 노출제로 및 품절 제외 채널별 TOP 3 & WORST 10 분석 센터 -->
+        <!-- MAIN DASHBOARD CARD: 쇼핑몰별 TOP 3 & WORST 10 분석 센터 -->
         <!-- ============================================================================== -->
         <div class="card grid-full" style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95)); border: 1px solid rgba(139, 92, 246, 0.4); box-shadow: 0 12px 32px rgba(0,0,0,0.4); margin-bottom: 28px;">
             <div class="card-header" style="margin-bottom: 18px; border-bottom: 1px solid var(--card-border); padding-bottom: 14px; flex-wrap: wrap; gap: 12px;">
@@ -735,13 +735,13 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- 3. 온라인 주간 운영 현황 (엑셀 원본 연동) -->
+    <!-- 3. 온라인 주간 운영 현황 (엑셀 원본 그대로 연동 보장) -->
     <!-- ============================================================================== -->
     <div id="online" class="main-content">
         <div class="header">
             <div>
-                <h1><i class="fa-solid fa-cart-shopping" style="color: var(--accent-purple);"></i> 온라인 주간 실적 현황 (엑셀 원본 연동)</h1>
-                <p>업로드하신 엑셀 원본 기준 <b>상품명, 중량, 옵션 데이터가 연동</b>되며 <b>노출 제로(0건) 및 품절/판매중지 품목은 자동 제외</b>됩니다.</p>
+                <h1><i class="fa-solid fa-cart-shopping" style="color: var(--accent-purple);"></i> 온라인 주간 실적 현황 (엑셀 원본 100% 연동)</h1>
+                <p>업로드하신 엑셀 원본의 <b>[상품명, 중량, 옵션 명칭]이 가공 없이 100% 그대로 반영</b>됩니다.</p>
             </div>
             <div class="header-actions">
                 <button class="btn btn-upload" onclick="openUploadModal('online')"><i class="fa-solid fa-cloud-arrow-up"></i> 다중 엑셀 일괄 업로드</button>
@@ -1018,7 +1018,7 @@
     <div id="uploadModal" class="modal-overlay">
         <div class="modal-card">
             <h3><i class="fa-solid fa-layer-group" style="color: #fbbf24;"></i> 다중 채널 엑셀 일괄 업로드 & 노출0/품절 자동 제외</h3>
-            <p>쿠팡, 네이버, 카카오, G마켓 등 엑셀을 올리시면 <b>[노출 0건 및 품절/판매중지 자동 필터링]</b> 후 실적과 5일치 안전재고 및 대시보드가 완벽 집계됩니다.</p>
+            <p>쿠팡, 네이버, 카카오, G마켓 등 엑셀을 올리시면 <b>[온라인 주간 실적 100% 원본 반영]</b> 및 <b>[노출0건/품절 제외 분석]</b>이 실시간 처리됩니다.</p>
             <div class="file-select-options">
                 <div>
                     <label style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; display: block;">업로드 대상 영역</label>
@@ -1032,7 +1032,7 @@
                 <div>
                     <label style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; display: block;">다중 파일 합산 처리 방식</label>
                     <select id="uploadMode" class="select-box">
-                        <option value="consolidate">노출0 및 품절 제외 취합 (추천)</option>
+                        <option value="consolidate">원본 유지 및 품절 제외 (추천)</option>
                         <option value="replace">기존 데이터 덮어쓰기</option>
                         <option value="append">기존 데이터 뒤에 개별 추가</option>
                     </select>
@@ -1057,7 +1057,7 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- JAVASCRIPT SYSTEM ENGINE (AUTOMATIC IMPRESSION ZERO & SOLD OUT EXCLUSION) -->
+    <!-- JAVASCRIPT SYSTEM ENGINE (FULL RAW ORIGINAL KEEPING FOR ONLINE WEEKLY SHEET) -->
     <!-- ============================================================================== -->
     <script>
         const CLOUD_STORAGE_KEY = 'hyejin_mini_erp_global_db_v1';
@@ -1119,23 +1119,20 @@
         let channelChartInstance = null;
         let activeRankChannel = 'ALL';
 
-        // COMPREHENSIVE FILTER ENGINE: Exclude Impression Zero AND Sold Out / Discontinued
+        // FILTER ENGINE: Exclude Impression Zero AND Sold Out / Discontinued
         function isInvalidOrZeroOrSoldOut(statusStr, nameStr, impressionVal = null, salesVal = null, revVal = null) {
             const combined = (String(statusStr || '') + ' ' + String(nameStr || '')).toLowerCase();
             
-            // 1. Sold Out or Discontinued Check
             if (combined.includes('판매중지') || combined.includes('품절') || combined.includes('일시품절') || 
                 combined.includes('중단') || combined.includes('discontinued') || combined.includes('out of stock')) {
                 return true;
             }
 
-            // 2. Impression Zero (노출수 0) Check
             if (impressionVal !== null && impressionVal !== undefined && impressionVal !== '') {
                 const impNum = parseInt(String(impressionVal).replace(/,/g, '')) || 0;
-                if (impNum <= 0) return true; // Exclude Impression Zero
+                if (impNum <= 0) return true;
             }
 
-            // 3. Complete Zero Activity Check (No Impressions, Sales, or Revenue at all)
             if (salesVal !== null && revVal !== null) {
                 const sNum = parseInt(String(salesVal).replace(/,/g, '')) || 0;
                 const rNum = parseInt(String(revVal).replace(/,/g, '')) || 0;
@@ -1153,7 +1150,7 @@
             return match ? match[0].toLowerCase() : '';
         }
 
-        // Clean Base Title
+        // Clean Base Title for Grouping
         function cleanBaseTitle(name) {
             let str = String(name || '');
             str = str.replace(/\[.*?\]/g, '').replace(/\{.*?\}/g, '');
@@ -1206,7 +1203,7 @@
             };
         }
 
-        // Render Table Function
+        // Render Table Function - ONLINE TABLE KEEPS 100% EXACT RAW UNTOUCHED STRING
         function renderTable(tableId, storageKey, defaultData, headers) {
             const rawData = JSON.parse(localStorage.getItem(storageKey)) || defaultData;
             const tbody = document.querySelector(`#${tableId} tbody`);
@@ -1277,6 +1274,7 @@
                             td.innerHTML = `<span class="status-badge badge-red">🔴 발주필요 (보유 ${scmInfo.daysRemaining}일치)</span>`;
                         }
                     } else {
+                        // FOR ONLINE TABLE: 100% EXACT RAW UNTOUCHED STRING DISPLAY (Product Name, Weight, Options)
                         td.innerText = row[key] || '';
                     }
 
@@ -1514,7 +1512,6 @@
 
             if (!topBox || !worstBox) return;
 
-            // Exclude Invalid/Impression Zero/Sold Out items
             let activeList = onlineData.filter(r => !isInvalidOrZeroOrSoldOut(r.issue || r.status, r.item, r.impression, r.sales, r.revenue));
 
             let filtered = activeList.filter(r => {
@@ -1826,7 +1823,7 @@
             }
         }
 
-        // Upload Modal & Impression Zero Filter
+        // Upload Modal Engine (ONLINE SHEET STORES FULL 100% UNTOUCHED RAW EXCEL STRING)
         function openUploadModal(target = 'online') {
             document.getElementById('uploadTarget').value = target;
             document.getElementById('uploadStatus').style.display = 'none';
@@ -1865,7 +1862,7 @@
             const statusEl = document.getElementById('uploadStatus');
 
             statusEl.style.display = 'block';
-            statusEl.innerText = `⏳ 총 ${fileList.length}개 파일 처리 [노출0건 & 품절 필터링] 중...`;
+            statusEl.innerText = `⏳ 총 ${fileList.length}개 파일 처리 중... (온라인 탭 엑셀 원본 100% 반영)`;
 
             const onlineRowsRaw = [];
 
@@ -1922,6 +1919,7 @@
                                 itemObj[h] = row[idx] !== undefined ? String(row[idx]).trim() : '';
                             });
 
+                            // Full Original Raw Title/Option String
                             const rawItemName = findValue(itemObj, ['상품명', '상품', '제품명', '옵션명', 'vendor_item_name', 'Item Name']);
                             if (!rawItemName) continue;
 
@@ -1932,16 +1930,17 @@
                             const adSpendAmt = findValue(itemObj, ['총 광고비(원)', '광고비', 'ad_spend', 'Ad Spend']) || '0';
                             const stockQty = findValue(itemObj, ['재고 현황', '현재재고', '재고', 'stock', 'Stock']) || '0';
 
-                            // AUTOMATICALLY EXCLUDE BOTH IMPRESSION ZERO & SOLD OUT / DISCONTINUED
+                            // EXCLUDE BOTH IMPRESSION ZERO & SOLD OUT
                             if (isInvalidOrZeroOrSoldOut(itemStatus, rawItemName, impressionVal, salesQty, revenueAmt)) {
                                 continue;
                             }
 
                             const parsedChannel = findValue(itemObj, ['판매채널', '채널', '쇼핑몰', 'Channel']) || fileChannel;
 
+                            // 100% UNTOUCHED RAW ORIGINAL ITEM NAME STORED FOR ONLINE WEEKLY SHEET
                             onlineRowsRaw.push({
                                 channel: parsedChannel,
-                                item: rawItemName,
+                                item: rawItemName, // Full untouched name, weight, and options
                                 sales: String(salesQty),
                                 revenue: String(revenueAmt),
                                 adSpend: String(adSpendAmt),
@@ -1957,8 +1956,10 @@
             }
 
             if (onlineRowsRaw.length > 0) {
+                // Online Sheet receives 100% untouched raw excel strings
                 localStorage.setItem('erp_online', JSON.stringify(onlineRowsRaw));
 
+                // Inventory Sheet receives grouped items (Product Name + Weight)
                 const invGroupMap = new Map();
                 onlineRowsRaw.forEach(r => {
                     const groupTitle = getItemWithWeightGroupTitle(r.item);
@@ -1984,9 +1985,9 @@
                 localStorage.setItem('erp_inventory', JSON.stringify(Array.from(invGroupMap.values())));
                 reloadAllTables();
                 syncToCloud(true);
-                statusEl.innerText = `✅ [노출0건 & 품절 자동 제외] 완료!`;
+                statusEl.innerText = `✅ [온라인 탭 원본 100% 반영] 완료!`;
                 setTimeout(closeUploadModal, 1500);
-                showToast('노출 0건 및 품절 제외 후 활성 상품만 업데이트되었습니다.');
+                showToast('온라인 주간 실적에 엑셀 원본 그대로 반영되었습니다.');
             }
         }
 
