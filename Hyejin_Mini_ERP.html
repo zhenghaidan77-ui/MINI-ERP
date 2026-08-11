@@ -471,6 +471,8 @@
         .top-1 { background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 0 12px rgba(245,158,11,0.6); }
         .top-2 { background: linear-gradient(135deg, #94a3b8, #64748b); }
         .top-3 { background: linear-gradient(135deg, #b45309, #78350f); }
+        .top-other-rank { background: linear-gradient(135deg, #8b5cf6, #3b82f6); font-size: 0.78rem; }
+
         .worst-badge { background: rgba(244,63,94,0.2); color: #f87171; border: 1px solid rgba(244,63,94,0.4); border-radius: 4px; padding: 2px 8px; font-size: 0.78rem; font-weight: 700; margin-right: 8px; flex-shrink: 0; }
 
         /* Upload & Admin Modal Styling */
@@ -583,13 +585,13 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- 1. 경영진 종합실적 대시보드 (광고비, ROAS, 순이익 남은금액 자동 연산 노출) -->
+    <!-- 1. 경영진 종합실적 대시보드 (판매량 1~10위 대시보드 연동) -->
     <!-- ============================================================================== -->
     <div id="ceo-report" class="main-content active">
         <div class="header">
             <div>
                 <h1><i class="fa-solid fa-crown" style="color: #fbbf24;"></i> 대표님 · 팀장 전용 종합실적 대시보드 🔐</h1>
-                <p>쇼핑몰별 광고비/ROAS, 판매량 재공 차감 및 원가 차감 순이익(남은 금액) 실시간 노출</p>
+                <p>쇼핑몰별 판매량 1~10위 BEST 효자 상품 & 부진 WORST 10 실시간 모니터링</p>
             </div>
             <div class="header-actions">
                 <button class="btn btn-upload" onclick="openUploadModal('online')"><i class="fa-solid fa-cloud-arrow-up"></i> 다중 채널 엑셀 일괄 업로드</button>
@@ -613,10 +615,10 @@
         <div id="ceoDashboardContent" style="display: none;">
             <div style="background: linear-gradient(90deg, rgba(16, 185, 129, 0.15), rgba(139, 92, 246, 0.15)); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 16px 22px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
                 <div style="display: flex; align-items: center; gap: 14px;">
-                    <i class="fa-solid fa-calculator" style="font-size: 26px; color: #fbbf24;"></i>
+                    <i class="fa-solid fa-trophy" style="font-size: 26px; color: #fbbf24;"></i>
                     <div>
-                        <strong style="font-size: 0.98rem; color: #ffffff;">⚡ [광고비/ROAS & 7일 판매량 재고 차감 & 원가 차감 순이익 엔진 연동 완비]</strong>
-                        <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">광고 엑셀 업로드 시 **광고비/ROAS가 자동 생성**되며, **7일 판매량이 재고에서 자동 차감**되고 **(원가×판매량) 차감 남은금액(순이익)**이 실시간 정산됩니다.</p>
+                        <strong style="font-size: 0.98rem; color: #ffffff;">⚡ [쇼핑몰별 판매량 TOP 1 ~ 10위 확장 구축 완비]</strong>
+                        <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">쇼핑몰별 잘 팔리는 **효자 상품이 1위부터 10위까지 확장 출력**되어 최상위 매출 흐름을 정밀 분석하실 수 있습니다.</p>
                     </div>
                 </div>
                 <button class="btn btn-outline" style="padding: 8px 16px; font-size: 0.85rem;" onclick="lockCEODashboard()">🔒 열람 잠금</button>
@@ -660,15 +662,15 @@
             </div>
 
             <!-- ============================================================================== -->
-            <!-- MAIN DASHBOARD CARD: 쇼핑몰별 TOP 3 & WORST 10 분석 센터 -->
+            <!-- MAIN DASHBOARD CARD: 쇼핑몰별 TOP 1~10위 & WORST 10 분석 센터 -->
             <!-- ============================================================================== -->
             <div class="card grid-full" style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95)); border: 1px solid rgba(139, 92, 246, 0.4); box-shadow: 0 12px 32px rgba(0,0,0,0.4); margin-bottom: 28px;">
                 <div class="card-header" style="margin-bottom: 18px; border-bottom: 1px solid var(--card-border); padding-bottom: 14px; flex-wrap: wrap; gap: 12px;">
                     <div>
                         <h3 style="font-size: 1.25rem; font-weight: 800; color: #ffffff;">
-                            <i class="fa-solid fa-trophy" style="color: #fbbf24;"></i> 쇼핑몰별 잘 팔리는 베스트 (TOP 3) & 부진 (WORST 10) 실시간 분석 대시보드
+                            <i class="fa-solid fa-trophy" style="color: #fbbf24;"></i> 쇼핑몰별 잘 팔리는 베스트 (TOP 10) & 부진 (WORST 10) 실시간 분석 대시보드
                         </h3>
-                        <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 4px;">노출 0건 및 품절 제외 후, 클릭하신 채널별 활성 효자 상품과 부진 상품 수량/금액이 실시간 노출됩니다.</p>
+                        <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 4px;">노출 0건 및 품절 제외 후, 클릭하신 채널별 판매량/매출 <b>1위부터 10위까지 효자 상품</b>이 실시간 노출됩니다.</p>
                     </div>
                     <div style="display: flex; gap: 6px; flex-wrap: wrap;">
                         <button class="rank-btn active" onclick="switchChannelRank('ALL', this)"><i class="fa-solid fa-globe"></i> 전체</button>
@@ -684,13 +686,13 @@
                 </div>
 
                 <div class="grid-2">
-                    <!-- TOP 1~3위 잘 팔리는 제품 -->
+                    <!-- TOP 1~10위 잘 팔리는 제품 -->
                     <div style="background: rgba(15, 23, 42, 0.7); padding: 22px; border-radius: 14px; border: 1px solid rgba(245, 158, 11, 0.4);">
                         <h4 style="color: #fbbf24; margin-bottom: 16px; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(245, 158, 11, 0.2); padding-bottom: 10px;">
-                            <i class="fa-solid fa-crown"></i> 🏆 쇼핑몰별 매출/판매량 1 ~ 3위 (BEST 효자 상품)
+                            <i class="fa-solid fa-crown"></i> 🏆 쇼핑몰별 매출/판매량 1 ~ 10위 (BEST 효자 상품)
                         </h4>
-                        <div id="topRankContainer" style="display: flex; flex-direction: column; gap: 12px;">
-                            <!-- JS Dynamic Ranking Output -->
+                        <div id="topRankContainer" style="display: flex; flex-direction: column; gap: 10px; max-height: 380px; overflow-y: auto; padding-right: 6px;">
+                            <!-- JS Dynamic Ranking Output (1~10위) -->
                         </div>
                     </div>
 
@@ -699,7 +701,7 @@
                         <h4 style="color: #f87171; margin-bottom: 16px; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(244, 63, 94, 0.2); padding-bottom: 10px;">
                             <i class="fa-solid fa-triangle-exclamation"></i> ⚠️ 쇼핑몰별 판매 부진 1 ~ 10위 (WORST 관측 품목)
                         </h4>
-                        <div id="worstRankContainer" style="display: flex; flex-direction: column; gap: 8px; max-height: 360px; overflow-y: auto; padding-right: 6px;">
+                        <div id="worstRankContainer" style="display: flex; flex-direction: column; gap: 8px; max-height: 380px; overflow-y: auto; padding-right: 6px;">
                             <!-- JS Dynamic Ranking Output -->
                         </div>
                     </div>
@@ -1109,7 +1111,7 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- JAVASCRIPT SYSTEM ENGINE (AD SPEND, ROAS, STOCK DEDUCTION, NET PROFIT INTEGRATED) -->
+    <!-- JAVASCRIPT SYSTEM ENGINE (BEST RANKING 1~10 INTEGRATED) -->
     <!-- ============================================================================== -->
     <script>
         const CLOUD_STORAGE_KEY = 'hyejin_mini_erp_global_db_v1';
@@ -1314,7 +1316,6 @@
                 }
             });
 
-            // AUTOMATIC STOCK DEDUCTION: Current Stock = Base Stock - 7-day Sales
             const baseStockNum = parseInt(String(baseStockVal || '0').replace(/,/g, '')) || 0;
             const currentDeductedStock = Math.max(baseStockNum - totalWeeklySales, 0);
 
@@ -1659,7 +1660,7 @@
             }
         }
 
-        // MAIN DASHBOARD RANKING RENDERER
+        // MAIN DASHBOARD RANKING RENDERER (TOP 1~10 FULL SUPPORT)
         function switchChannelRank(channelFilter, btnEl) {
             document.querySelectorAll('.rank-btn').forEach(b => b.classList.remove('active'));
             btnEl.classList.add('active');
@@ -1695,29 +1696,29 @@
                 };
             });
 
-            const topSorted = [...parsedList].sort((a, b) => b.revenue - a.revenue || b.sales - a.sales);
-            const worstSorted = [...parsedList].sort((a, b) => a.revenue - b.revenue || a.sales - b.sales);
+            const topSorted = [...parsedList].sort((a, b) => b.sales - a.sales || b.revenue - a.revenue);
+            const worstSorted = [...parsedList].sort((a, b) => a.sales - b.sales || a.revenue - b.revenue);
 
             topBox.innerHTML = '';
-            const top3List = topSorted.slice(0, 3);
-            if (top3List.length === 0) {
+            const top10List = topSorted.slice(0, 10);
+            if (top10List.length === 0) {
                 topBox.innerHTML = `<div style="font-size:0.88rem; color:var(--text-muted); padding:10px;">노출 및 판매 중인 상품 데이터가 없습니다.</div>`;
             } else {
-                top3List.forEach((item, idx) => {
-                    const badgeClass = idx === 0 ? 'top-1' : (idx === 1 ? 'top-2' : 'top-3');
+                top10List.forEach((item, idx) => {
+                    const badgeClass = idx === 0 ? 'top-1' : (idx === 1 ? 'top-2' : (idx === 2 ? 'top-3' : 'top-other-rank'));
                     const rankDiv = document.createElement('div');
-                    rankDiv.style.cssText = 'display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.05); padding:12px 16px; border-radius:10px; border:1px solid rgba(255,255,255,0.06);';
+                    rankDiv.style.cssText = 'display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.04); padding:10px 14px; border-radius:8px; border:1px solid rgba(255,255,255,0.05);';
                     rankDiv.innerHTML = `
                         <div style="display:flex; align-items:center; overflow:hidden;">
                             <span class="rank-badge-top ${badgeClass}">${idx + 1}</span>
-                            <div style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:280px;">
-                                <strong style="font-size:0.95rem; color:white;">${item.rawItem}</strong>
-                                <div style="font-size:0.78rem; color:var(--text-muted); margin-top:2px;"><span class="channel-tag tag-multi">${item.channel}</span></div>
+                            <div style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:260px;">
+                                <strong style="font-size:0.92rem; color:white;">${item.rawItem}</strong>
+                                <div style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;"><span class="channel-tag tag-multi">${item.channel}</span></div>
                             </div>
                         </div>
                         <div style="text-align:right;">
-                            <b style="color:#fbbf24; font-size:1.05rem;">${item.revenue.toLocaleString()} 원</b>
-                            <div style="font-size:0.8rem; color:#34d399; font-weight:700;">판매 ${item.sales.toLocaleString()}개</div>
+                            <b style="color:#34d399; font-size:0.95rem;">판매 ${item.sales.toLocaleString()}개</b>
+                            <div style="font-size:0.78rem; color:#fbbf24; font-weight:600;">${item.revenue.toLocaleString()} 원</div>
                         </div>
                     `;
                     topBox.appendChild(rankDiv);
@@ -1738,8 +1739,8 @@
                             <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:250px; color:#e2e8f0; font-weight:500;">${item.rawItem}</span>
                         </div>
                         <div style="text-align:right; display:flex; gap:14px; align-items:center;">
-                            <span style="color:#f87171; font-weight:700;">${item.revenue.toLocaleString()} 원</span>
-                            <span style="color:var(--text-muted); font-size:0.8rem;">(${item.sales}개)</span>
+                            <span style="color:#f87171; font-weight:700;">${item.sales.toLocaleString()}개</span>
+                            <span style="color:var(--text-muted); font-size:0.8rem;">(${item.revenue.toLocaleString()}원)</span>
                         </div>
                     `;
                     worstBox.appendChild(rankDiv);
@@ -2098,7 +2099,6 @@
                             });
 
                             if (isCostFile) {
-                                // UNIT COST EXCEL PARSING
                                 const rawItemName = findValue(itemObj, [
                                     '상품명', '제품명', '품목명', '옵션명', 'vendor_item_name', 'Item Name'
                                 ]);
@@ -2112,7 +2112,6 @@
                                 const normKey = normalizeItemName(rawItemName);
                                 unitCostMap.set(normKey, costNum);
                             } else if (isAdFile) {
-                                // AD SPEND EXCEL PARSING
                                 const rawItemName = findValue(itemObj, [
                                     '상품명', '옵션명', '광고그룹명', '광고 그룹명', '캠페인명', 
                                     '키워드', 'vendor_item_name', 'Item Name'
@@ -2193,7 +2192,6 @@
                 }
             }
 
-            // UNIT COST UPDATE PROCESS
             if (unitCostMap.size > 0) {
                 const currentOnline = JSON.parse(localStorage.getItem('erp_online')) || defaultOnline;
                 let updatedCostCount = 0;
@@ -2220,7 +2218,6 @@
                 return;
             }
 
-            // AD SPEND UPDATE PROCESS
             if (adSpendMap.size > 0) {
                 const currentOnline = JSON.parse(localStorage.getItem('erp_online')) || defaultOnline;
                 let updatedCount = 0;
