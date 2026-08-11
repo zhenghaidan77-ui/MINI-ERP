@@ -332,6 +332,22 @@
         .tag-multi { background: rgba(139, 92, 246, 0.2); color: #c4b5fd; border: 1px solid rgba(139, 92, 246, 0.4); }
         .tag-other { background: rgba(148, 163, 184, 0.2); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.4); }
 
+        /* ROAS Badges */
+        .roas-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.84rem;
+            font-weight: 800;
+        }
+
+        .roas-super { background: rgba(16, 185, 129, 0.25); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.5); }
+        .roas-good { background: rgba(59, 130, 246, 0.25); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.5); }
+        .roas-normal { background: rgba(245, 158, 11, 0.25); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.5); }
+        .roas-bad { background: rgba(244, 63, 94, 0.25); color: #f87171; border: 1px solid rgba(244, 63, 94, 0.5); }
+
         /* Status Badges */
         .status-badge {
             display: inline-flex;
@@ -547,7 +563,7 @@
 
         <div class="nav-category">Operations</div>
         <a class="nav-item" data-target="online">
-            <i class="fa-solid fa-cart-shopping"></i> 온라인 주간 실적 (광고비 엑셀연동)
+            <i class="fa-solid fa-cart-shopping"></i> 온라인 주간 실적 (ROAS 추가 연동)
         </a>
         <a class="nav-item" data-target="inventory">
             <i class="fa-solid fa-boxes-stacked"></i> 물류 재고 & 발주 (7일 판매 기반 5일 안전재고)
@@ -583,10 +599,10 @@
 
         <div style="background: linear-gradient(90deg, rgba(16, 185, 129, 0.15), rgba(139, 92, 246, 0.15)); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 16px 22px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
             <div style="display: flex; align-items: center; gap: 14px;">
-                <i class="fa-solid fa-bullhorn" style="font-size: 26px; color: #fbbf24;"></i>
+                <i class="fa-solid fa-chart-pie" style="font-size: 26px; color: #fbbf24;"></i>
                 <div>
-                    <strong style="font-size: 0.98rem; color: #ffffff;">⚡ [광고비용 엑셀 업로드 연동 완비]: 채널별 광고 집행비용 자동 매칭 및 합산 지원</strong>
-                    <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">광고 보고서 엑셀을 올리시면 **온라인 주간 실적의 총 광고비 항목에 자동 집계**되어 실시간 반영됩니다.</p>
+                    <strong style="font-size: 0.98rem; color: #ffffff;">⚡ [ROAS(광고 수익률) 컬럼 전면 추가]: 매출액 대비 광고비용 효율 자동 연산</strong>
+                    <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">온라인 주간 실적 표에 **ROAS(%) 컬럼이 신규 탑재**되어 상품별 광고 집행 효율성이 실시간 계산됩니다.</p>
                 </div>
             </div>
             <button class="btn btn-emerald" style="padding: 8px 16px; font-size: 0.85rem;" onclick="syncFromCloud(true)">지금 강제 동기화</button>
@@ -735,13 +751,13 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- 3. 온라인 주간 운영 현황 (광고비용 엑셀 연동 지원) -->
+    <!-- 3. 온라인 주간 운영 현황 (ROAS 신규 컬럼 연동) -->
     <!-- ============================================================================== -->
     <div id="online" class="main-content">
         <div class="header">
             <div>
-                <h1><i class="fa-solid fa-cart-shopping" style="color: var(--accent-purple);"></i> 온라인 주간 실적 현황 (광고비용 엑셀 연동 지원)</h1>
-                <p>실적 엑셀뿐만 아니라 <b>[광고비용 엑셀]을 올리셔도 총 광고비 항목에 자동 반영 및 집계</b>됩니다.</p>
+                <h1><i class="fa-solid fa-cart-shopping" style="color: var(--accent-purple);"></i> 온라인 주간 실적 현황 (ROAS 연산 추가)</h1>
+                <p>매출액과 총 광고비를 기반으로 <b>ROAS(광고 수익률 %)가 실시간 자동 연산 연동</b>됩니다.</p>
             </div>
             <div class="header-actions">
                 <button class="btn btn-upload" onclick="openUploadModal('online')"><i class="fa-solid fa-cloud-arrow-up"></i> 온라인 실적 엑셀 업로드</button>
@@ -754,7 +770,7 @@
 
         <div class="filter-bar">
             <input type="text" class="search-input" placeholder="🔍 상품명/옵션/채널 검색..." onkeyup="filterTable('online-table', this.value)">
-            <span style="font-size: 0.85rem; color: #c4b5fd; font-weight: 600;">* 광고비용 엑셀 업로드 시 각 상품의 <b>총 광고비(원)</b> 열에 실시간 자동 합산 매칭됩니다.</span>
+            <span style="font-size: 0.85rem; color: #c4b5fd; font-weight: 600;">* ROAS(%) = (판매 금액 ÷ 총 광고비) × 100. [500%+ 초고효율 / 300%+ 양호 / 100% 미만 손실]</span>
         </div>
 
         <div class="table-container">
@@ -766,6 +782,7 @@
                         <th data-key="sales">판매량(7일/개)</th>
                         <th data-key="revenue">판매 금액(원)</th>
                         <th data-key="adSpend">총 광고비(원)</th>
+                        <th data-key="roas">ROAS (광고수익률)</th>
                         <th data-key="inventory">재고 현황</th>
                         <th data-key="issue">이슈 및 문제점</th>
                         <th data-key="action">이번 주 액션 플랜</th>
@@ -776,10 +793,11 @@
                 <tbody></tbody>
                 <tfoot>
                     <tr class="summary-footer">
-                        <td colspan="2">전 채널 통합 합계 / 요약</td>
+                        <td colspan="2">전 채널 통합 합계 / 평균 ROAS 요약</td>
                         <td id="sum-online-sales">0</td>
                         <td id="sum-online-revenue">0 원</td>
                         <td id="sum-online-adspend" style="color: #fbbf24;">0 원</td>
+                        <td id="sum-online-roas" style="color: #34d399;">0%</td>
                         <td colspan="5">-</td>
                     </tr>
                 </tfoot>
@@ -1018,8 +1036,8 @@
     <!-- 모달 -->
     <div id="uploadModal" class="modal-overlay">
         <div class="modal-card">
-            <h3><i class="fa-solid fa-layer-group" style="color: #fbbf24;"></i> 다중 엑셀 일괄 업로드 & 광고비 연동</h3>
-            <p>온라인 판매 엑셀, <b>[📢 광고비용 엑셀]</b> 또는 창고 <b>[📦 재고표 엑셀]</b>을 업로드하시면 해당 항목에 실시간 자동 집계 매칭됩니다.</p>
+            <h3><i class="fa-solid fa-layer-group" style="color: #fbbf24;"></i> 다중 엑셀 일괄 업로드 & 안전재고/ROAS 연동</h3>
+            <p>온라인 판매 엑셀, <b>[📢 광고비용 엑셀]</b> 또는 창고 <b>[📦 재고표 엑셀]</b>을 업로드하시면 <b>ROAS 및 5일 안전재고가 실시간 자동 연산</b>됩니다.</p>
             <div class="file-select-options">
                 <div>
                     <label style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; display: block;">업로드 대상 영역</label>
@@ -1059,7 +1077,7 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- JAVASCRIPT SYSTEM ENGINE (ADVERTISING COST EXCEL UPLOAD PARSER INTEGRATED) -->
+    <!-- JAVASCRIPT SYSTEM ENGINE (ROAS COLUMN & DYNAMIC CALCULATION INTEGRATED) -->
     <!-- ============================================================================== -->
     <script>
         const CLOUD_STORAGE_KEY = 'hyejin_mini_erp_global_db_v1';
@@ -1112,7 +1130,7 @@
             {"date":"10/21","request":"신규 수입 마라도삭면 샘플 확인","pic":"정해단 팀장","deadline":"10/25","status":"대기","completeDate":"-"}
         ];
 
-        const onlineHeaders = ['channel', 'item', 'sales', 'revenue', 'adSpend', 'inventory', 'issue', 'action', 'status'];
+        const onlineHeaders = ['channel', 'item', 'sales', 'revenue', 'adSpend', 'roas', 'inventory', 'issue', 'action', 'status'];
         const inventoryHeaders = ['item', 'supplier', 'moq', 'safeStock', 'currentStock', 'orderNeed'];
         const importHeaders = ['item', 'supplier', 'price', 'moq', 'qty', 'payment', 'production', 'shipping', 'customs', 'eta', 'current'];
         const taskHeaders = ['date', 'request', 'pic', 'deadline', 'status', 'completeDate'];
@@ -1144,6 +1162,30 @@
             }
 
             return false;
+        }
+
+        // Calculate ROAS Value and Visual Badge
+        function calculateROASInfo(revenueVal, adSpendVal) {
+            const rev = parseInt(String(revenueVal || '0').replace(/,/g, '')) || 0;
+            const spend = parseInt(String(adSpendVal || '0').replace(/,/g, '')) || 0;
+
+            if (spend <= 0) {
+                return { roasVal: 0, roasStr: '-', badgeClass: 'roas-normal' };
+            }
+
+            const roasPercent = Math.round((rev / spend) * 100);
+            let badgeClass = 'roas-normal';
+
+            if (roasPercent >= 500) badgeClass = 'roas-super';
+            else if (roasPercent >= 300) badgeClass = 'roas-good';
+            else if (roasPercent >= 100) badgeClass = 'roas-normal';
+            else badgeClass = 'roas-bad';
+
+            return {
+                roasVal: roasPercent,
+                roasStr: `${roasPercent.toLocaleString()}%`,
+                badgeClass: badgeClass
+            };
         }
 
         // Extract Weight/Size (e.g. 500g, 1kg, 240g) from Product String
@@ -1206,7 +1248,7 @@
             };
         }
 
-        // Render Table Function
+        // Render Table Function - ROAS DYNAMIC DISPLAY ADDED
         function renderTable(tableId, storageKey, defaultData, headers) {
             const rawData = JSON.parse(localStorage.getItem(storageKey)) || defaultData;
             const tbody = document.querySelector(`#${tableId} tbody`);
@@ -1241,6 +1283,10 @@
                         else if (chVal.includes('+') || chVal.includes('통합')) badgeClass = 'tag-multi';
 
                         td.innerHTML = `<span class="channel-tag ${badgeClass}">${chVal}</span>`;
+                    } else if (key === 'roas' && tableId === 'online-table') {
+                        td.setAttribute('contenteditable', 'false');
+                        const roasInfo = calculateROASInfo(row.revenue, row.adSpend);
+                        td.innerHTML = `<span class="roas-badge ${roasInfo.badgeClass}"><i class="fa-solid fa-chart-line"></i> ${roasInfo.roasStr}</span>`;
                     } else if (key === 'safeStock' && tableId === 'inventory-table') {
                         td.setAttribute('contenteditable', 'false');
                         td.innerHTML = `<b style="color:#c4b5fd; font-size: 1.02rem;">${scmInfo.safeStock5Days} 개</b> <span style="font-size:0.75rem; color:var(--text-muted);">(7일 판매: ${scmInfo.weeklySales}개 기준)</span>`;
@@ -1258,7 +1304,8 @@
                     td.addEventListener('input', () => {
                         if (tableId === 'inventory-table') {
                             recalculateRowStockStatus(tr);
-                        } else if (tableId === 'online-table' && (key === 'sales' || key === 'adSpend')) {
+                        } else if (tableId === 'online-table' && (key === 'sales' || key === 'revenue' || key === 'adSpend')) {
+                            recalculateRowROAS(tr);
                             syncOnlineSalesToInventory();
                         }
                     });
@@ -1267,6 +1314,7 @@
                         if (tableId === 'inventory-table') {
                             recalculateRowStockStatus(tr);
                         } else if (tableId === 'online-table') {
+                            recalculateRowROAS(tr);
                             syncOnlineSalesToInventory();
                         }
                         saveTable(tableId, storageKey, false);
@@ -1284,6 +1332,17 @@
             });
 
             updateSummaryRow(tableId);
+        }
+
+        function recalculateRowROAS(tr) {
+            const cells = tr.querySelectorAll('td');
+            if (cells.length < 6) return;
+
+            const revText = cells[3].innerText.trim();
+            const adSpendText = cells[4].innerText.trim();
+
+            const roasInfo = calculateROASInfo(revText, adSpendText);
+            cells[5].innerHTML = `<span class="roas-badge ${roasInfo.badgeClass}"><i class="fa-solid fa-chart-line"></i> ${roasInfo.roasStr}</span>`;
         }
 
         function syncOnlineSalesToInventory() {
@@ -1315,7 +1374,10 @@
             const tr = document.createElement('tr');
             headers.forEach(key => {
                 const td = document.createElement('td');
-                if (key === 'safeStock' && tableId === 'inventory-table') {
+                if (key === 'roas' && tableId === 'online-table') {
+                    td.setAttribute('contenteditable', 'false');
+                    td.innerHTML = `<span class="roas-badge roas-normal"><i class="fa-solid fa-chart-line"></i> -</span>`;
+                } else if (key === 'safeStock' && tableId === 'inventory-table') {
                     td.setAttribute('contenteditable', 'false');
                     td.innerHTML = `<b style="color:#c4b5fd;">10 개</b> <span style="font-size:0.75rem; color:var(--text-muted);">(7일 판매 기준 5일치)</span>`;
                 } else if (key === 'orderNeed' && tableId === 'inventory-table') {
@@ -1328,6 +1390,7 @@
 
                 td.addEventListener('input', () => {
                     if (tableId === 'inventory-table') recalculateRowStockStatus(tr);
+                    else if (tableId === 'online-table') recalculateRowROAS(tr);
                 });
 
                 td.addEventListener('blur', () => {
@@ -1374,7 +1437,10 @@
                     }
                 });
 
-                if (tableId === 'inventory-table' && rowData.item) {
+                if (tableId === 'online-table') {
+                    const roasInfo = calculateROASInfo(rowData.revenue, rowData.adSpend);
+                    rowData.roas = roasInfo.roasStr;
+                } else if (tableId === 'inventory-table' && rowData.item) {
                     const scmInfo = calculateDynamicSCM(rowData.item, rowData.currentStock);
                     rowData.safeStock = `${scmInfo.safeStock5Days}개 (5일치)`;
                     rowData.orderNeed = scmInfo.statusText;
@@ -1460,13 +1526,17 @@
                     totalAdSpend += parseInt((r.adSpend || '').toString().replace(/,/g, '') || 0) || 0;
                 });
 
+                const avgRoasInfo = calculateROASInfo(totalRevenue, totalAdSpend);
+
                 const sumSalesEl = document.getElementById('sum-online-sales');
                 const sumRevEl = document.getElementById('sum-online-revenue');
                 const sumAdEl = document.getElementById('sum-online-adspend');
+                const sumRoasEl = document.getElementById('sum-online-roas');
 
                 if (sumSalesEl) sumSalesEl.innerText = totalSales.toLocaleString() + ' 개';
                 if (sumRevEl) sumRevEl.innerText = totalRevenue.toLocaleString() + ' 원';
                 if (sumAdEl) sumAdEl.innerText = totalAdSpend.toLocaleString() + ' 원';
+                if (sumRoasEl) sumRoasEl.innerHTML = `<span class="roas-badge ${avgRoasInfo.badgeClass}">통합 ROAS ${avgRoasInfo.roasStr}</span>`;
             }
         }
 
@@ -1796,7 +1866,7 @@
             }
         }
 
-        // Upload Modal Engine: SUPPORT ADVERTISING COST EXCEL PARSING
+        // Upload Modal Engine
         function openUploadModal(target = 'online') {
             document.getElementById('uploadTarget').value = target;
             document.getElementById('uploadStatus').style.display = 'none';
@@ -1840,7 +1910,7 @@
 
             const onlineRowsRaw = [];
             const inventoryUploadedRows = [];
-            const adSpendMap = new Map(); // Store Ad Spend by item name key
+            const adSpendMap = new Map();
 
             for (let file of fileList) {
                 const fileName = file.name.toLowerCase();
@@ -1898,7 +1968,6 @@
                             });
 
                             if (isAdFile) {
-                                // ADVERTISING COST EXCEL PARSING
                                 const rawItemName = findValue(itemObj, [
                                     '상품명', '옵션명', '광고그룹명', '광고 그룹명', '캠페인명', 
                                     '키워드', 'vendor_item_name', 'Item Name'
@@ -1919,7 +1988,6 @@
                                     adSpendMap.set(normKey, costNum);
                                 }
                             } else if (targetMode === 'inventory' || fileName.includes('재고') || fileName.includes('stock') || fileName.includes('inventory')) {
-                                // INVENTORY EXCEL PARSING
                                 const rawItemName = findValue(itemObj, ['상품명', '제품명', '품목명', '품목', 'Item Name', 'Product Name']);
                                 if (!rawItemName) continue;
 
@@ -1938,7 +2006,6 @@
                                     orderNeed: scmInfo.statusText
                                 });
                             } else {
-                                // ONLINE WEEKLY SALES EXCEL PARSING
                                 const rawItemName = findValue(itemObj, [
                                     'vendor_item_name', '등록상품명', '옵션명', '판매 제품명', '판매제품명', 
                                     '상품명', '제품명', 'Item Name', 'Product Name'
@@ -1958,12 +2025,15 @@
 
                                 const parsedChannel = findValue(itemObj, ['판매채널', '채널', '쇼핑몰', 'Channel']) || fileChannel;
 
+                                const roasCalculated = calculateROASInfo(revenueAmt, adSpendAmt);
+
                                 onlineRowsRaw.push({
                                     channel: parsedChannel,
                                     item: rawItemName,
                                     sales: String(salesQty),
                                     revenue: String(revenueAmt),
                                     adSpend: String(adSpendAmt),
+                                    roas: roasCalculated.roasStr,
                                     inventory: String(stockQty),
                                     impression: String(impressionVal || ''),
                                     issue: itemStatus || '정상 노출/판매중',
@@ -1976,7 +2046,6 @@
                 }
             }
 
-            // AD SPEND UPDATE PROCESS
             if (adSpendMap.size > 0) {
                 const currentOnline = JSON.parse(localStorage.getItem('erp_online')) || defaultOnline;
                 let updatedCount = 0;
@@ -1984,11 +2053,14 @@
                 currentOnline.forEach(row => {
                     const normRowKey = normalizeItemName(row.item || '');
                     
-                    // Match by full key or partial name inclusion
                     adSpendMap.forEach((costVal, adKey) => {
                         if (normRowKey === adKey || normRowKey.includes(adKey) || adKey.includes(normRowKey)) {
                             const existingCost = parseInt(String(row.adSpend || '0').replace(/,/g, '')) || 0;
-                            row.adSpend = String(existingCost + costVal);
+                            const newCost = existingCost + costVal;
+                            row.adSpend = String(newCost);
+                            
+                            const newRoas = calculateROASInfo(row.revenue, newCost);
+                            row.roas = newRoas.roasStr;
                             updatedCount++;
                         }
                     });
@@ -1997,9 +2069,9 @@
                 localStorage.setItem('erp_online', JSON.stringify(currentOnline));
                 reloadAllTables();
                 syncToCloud(true);
-                statusEl.innerText = `✅ [광고비용 엑셀 업로드] 총 ${updatedCount}개 항목 광고비 반영 완료!`;
+                statusEl.innerText = `✅ [광고비용 엑셀 업로드 & ROAS 갱신] 총 ${updatedCount}개 항목 광고비/ROAS 연동 완료!`;
                 setTimeout(closeUploadModal, 1500);
-                showToast(`📢 총 ${updatedCount}개 품목의 광고비용이 성공적으로 업로드 합산되었습니다.`);
+                showToast(`📢 총 ${updatedCount}개 품목의 광고비용 및 ROAS가 성공적으로 갱신되었습니다.`);
                 return;
             }
 
@@ -2041,9 +2113,9 @@
 
                 reloadAllTables();
                 syncToCloud(true);
-                statusEl.innerText = `✅ [온라인 실적 엑셀 및 5일 안전재고] 반영 완료!`;
+                statusEl.innerText = `✅ [온라인 실적 엑셀 & ROAS 자동 연산] 반영 완료!`;
                 setTimeout(closeUploadModal, 1500);
-                showToast('온라인 주간 실적 및 5일 안전재고 수량이 업데이트되었습니다.');
+                showToast('온라인 주간 실적 및 ROAS(광고수익률 %) 수량이 업데이트되었습니다.');
             }
         }
 
