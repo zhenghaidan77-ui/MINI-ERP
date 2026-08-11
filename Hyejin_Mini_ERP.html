@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>자택근무 통제센터 (Mini ERP) - 실시간 통합 ERP</title>
+    <title>미니 ERP 스마트 워크스페이스 - 통합 실적 모니터링</title>
     <!-- Pretendard & FontAwesome & Chart.js & SheetJS(XLSX) -->
     <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -523,7 +523,7 @@
     <!-- Sidebar Nav -->
     <div class="sidebar">
         <div class="logo">
-            <i class="fa-solid fa-bolt"></i> 미니 ERP 통제센터
+            <i class="fa-solid fa-bolt"></i> 미니 ERP 종합운영센터
         </div>
 
         <div class="cloud-badge" id="cloudStatusBadge">
@@ -532,10 +532,10 @@
         
         <div class="nav-category">Main Executive</div>
         <a class="nav-item active" data-target="ceo-report">
-            <i class="fa-solid fa-chart-line"></i> 대표 보고용 대시보드
+            <i class="fa-solid fa-chart-line"></i> 경영진 종합실적 대시보드
         </a>
         <a class="nav-item" data-target="dashboard">
-            <i class="fa-solid fa-sitemap"></i> 팀원 업무통제 기준표
+            <i class="fa-solid fa-sitemap"></i> 조직 업무 표준 기준표 (SOP)
         </a>
 
         <div class="nav-category">Operations</div>
@@ -554,23 +554,23 @@
 
         <div class="nav-category">Control Panel</div>
         <a class="nav-item" data-target="admin" style="color: #fbbf24;">
-            <i class="fa-solid fa-user-shield"></i> 🔐 관리자 통제 센터
+            <i class="fa-solid fa-user-gear"></i> 🔐 시스템 종합 관리 센터
         </a>
     </div>
 
     <!-- ============================================================================== -->
-    <!-- 1. 대표 보고용 대시보드 (MAIN DASHBOARD & BEST/WORST RANKING CENTER) -->
+    <!-- 1. 경영진 종합실적 대시보드 (MAIN DASHBOARD & BEST/WORST RANKING CENTER) -->
     <!-- ============================================================================== -->
     <div id="ceo-report" class="main-content active">
         <div class="header">
             <div>
-                <h1><i class="fa-solid fa-crown" style="color: #fbbf24;"></i> 대표 보고용 통합 실적 리포트</h1>
+                <h1><i class="fa-solid fa-crown" style="color: #fbbf24;"></i> 통합 주간 실적 모니터링</h1>
                 <p>쇼핑몰별 잘 팔리는 베스트 (TOP 3) & 부진 (WORST 10) 제품 실시간 연동 대시보드</p>
             </div>
             <div class="header-actions">
                 <button class="btn btn-upload" onclick="openUploadModal()"><i class="fa-solid fa-cloud-arrow-up"></i> 다중 채널 엑셀 일괄 업로드</button>
                 <button class="btn btn-outline" onclick="syncFromCloud(true)"><i class="fa-solid fa-arrows-rotate"></i> 실시간 클라우드 동기화</button>
-                <button class="btn btn-emerald" onclick="window.print()"><i class="fa-solid fa-print"></i> 대표보고서 인쇄/PDF</button>
+                <button class="btn btn-emerald" onclick="window.print()"><i class="fa-solid fa-print"></i> 실적 리포트 인쇄/PDF</button>
             </div>
         </div>
 
@@ -578,8 +578,8 @@
             <div style="display: flex; align-items: center; gap: 14px;">
                 <i class="fa-solid fa-fire" style="font-size: 26px; color: #fbbf24;"></i>
                 <div>
-                    <strong style="font-size: 0.98rem; color: #ffffff;">⚡ 대시보드 메인 구축: [쇼핑몰별 잘 팔리는 베스트 TOP 3 & 부진 WORST 10] 실시간 분석연동</strong>
-                    <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">쿠팡, 네이버 스마트스토어 등 업로드한 엑셀 기반으로 **잘 팔리는 효자 상품과 부진 상품 수량/금액이 한눈에 출력**됩니다.</p>
+                    <strong style="font-size: 0.98rem; color: #ffffff;">⚡ 대시보드 실시간 연동: [품절/판매중지 자동 제외] & [쇼핑몰별 BEST TOP 3 / WORST 10] 분석</strong>
+                    <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">엑셀 업로드 시 품절 및 판매중지 상품은 자동 필터링되어 활성 상품의 수량/금액 그래프와 랭킹이 실시간 노출됩니다.</p>
                 </div>
             </div>
             <button class="btn btn-emerald" style="padding: 8px 16px; font-size: 0.85rem;" onclick="syncFromCloud(true)">지금 강제 동기화</button>
@@ -651,21 +651,23 @@
             </div>
         </div>
 
-        <!-- 실시간 시각화 차트 대시보드 -->
+        <!-- 실시간 시각화 차트 대시보드 (버그 완벽 수정 및 실시간 데이터 연동) -->
         <div class="grid-2">
             <div class="card">
                 <div class="card-header">
-                    <h3><i class="fa-solid fa-chart-bar" style="color: var(--accent-purple);"></i> 상위 품목별 매출 및 판매 수량 현황</h3>
+                    <h3><i class="fa-solid fa-chart-bar" style="color: var(--accent-purple);"></i> 상위 품목별 매출 및 판매 수량 그래프 현황</h3>
+                    <span class="status-badge badge-green">실시간 데이터 연동됨</span>
                 </div>
-                <div style="height: 250px; position: relative;">
+                <div style="height: 280px; position: relative;">
                     <canvas id="salesChart"></canvas>
                 </div>
             </div>
             <div class="card">
                 <div class="card-header">
                     <h3><i class="fa-solid fa-chart-pie" style="color: var(--accent-emerald);"></i> 판매 채널별 매출 점유율 분석</h3>
+                    <span class="status-badge badge-green">자동 비율 집계</span>
                 </div>
-                <div style="height: 250px; position: relative;">
+                <div style="height: 280px; position: relative;">
                     <canvas id="channelChart"></canvas>
                 </div>
             </div>
@@ -673,12 +675,12 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- 2. 팀원 업무통제 기준표 (DASHBOARD & SOP RULES) -->
+    <!-- 2. 조직 업무 표준 기준표 (SOP) -->
     <!-- ============================================================================== -->
     <div id="dashboard" class="main-content">
         <div class="header">
             <div>
-                <h1><i class="fa-solid fa-sitemap" style="color: var(--accent-purple);"></i> 팀원 업무 통제 기준 및 보고 체계</h1>
+                <h1><i class="fa-solid fa-sitemap" style="color: var(--accent-purple);"></i> 조직 업무 표준 기준표 (SOP)</h1>
                 <p>조직원별 R&R 역할 분담 및 표준 운영 가이드(SOP)</p>
             </div>
             <div class="header-actions">
@@ -687,7 +689,7 @@
         </div>
 
         <div class="card grid-full">
-            <h3><i class="fa-solid fa-diagram-project" style="color: var(--accent-purple);"></i> 조직 운영 구조 (보고 체계)</h3>
+            <h3><i class="fa-solid fa-diagram-project" style="color: var(--accent-purple);"></i> 조직 운영 구조 (업무 체계)</h3>
             <div class="org-chart">
                 <div class="org-node main-node">
                     <div class="org-title" id="orgLeaderTitle">정해단 팀장</div>
@@ -727,7 +729,7 @@
         <div class="header">
             <div>
                 <h1><i class="fa-solid fa-cart-shopping" style="color: var(--accent-purple);"></i> 온라인 주간 실적 현황 (엑셀 원본 연동)</h1>
-                <p>업로드하신 엑셀 원본 기준 <b>상품명, 중량, 옵션 등 세부 데이터가 그대로 연동</b>되어 파악됩니다.</p>
+                <p>업로드하신 엑셀 원본 기준 <b>상품명, 중량, 옵션 등 세부 데이터가 그대로 연동</b>되며 품절/판매중지 품목은 자동 제외됩니다.</p>
             </div>
             <div class="header-actions">
                 <button class="btn btn-upload" onclick="openUploadModal('online')"><i class="fa-solid fa-cloud-arrow-up"></i> 다중 엑셀 일괄 업로드</button>
@@ -886,13 +888,13 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- 7. 🔐 관리자 전용 통제 센터 -->
+    <!-- 7. 🔐 시스템 종합 관리 센터 -->
     <!-- ============================================================================== -->
     <div id="admin" class="main-content">
         <div class="header">
             <div>
-                <h1><i class="fa-solid fa-user-shield" style="color: #fbbf24;"></i> 🔐 관리자 전용 통제 센터</h1>
-                <p>시스템 권한 설정, 팀원 편집 락(Lock) 통제, 안전재고 임계값 및 실시간 클라우드 DB 관리</p>
+                <h1><i class="fa-solid fa-user-gear" style="color: #fbbf24;"></i> 🔐 시스템 종합 관리 센터</h1>
+                <p>시스템 권한 설정, 팀원 편집 락(Lock), 안전재고 임계값 및 실시간 클라우드 DB 관리</p>
             </div>
             <div class="header-actions">
                 <button class="btn btn-danger" onclick="resetAllData()"><i class="fa-solid fa-rotate-left"></i> 데이터 초기화 (Reset)</button>
@@ -1003,8 +1005,8 @@
     <!-- 모달 -->
     <div id="uploadModal" class="modal-overlay">
         <div class="modal-card">
-            <h3><i class="fa-solid fa-layer-group" style="color: #fbbf24;"></i> 다중 채널 엑셀 일괄 업로드 & 자동 분석</h3>
-            <p>쿠팡, 네이버 엑셀 올리시면 <b>온라인 실적(원본연동), 물류재고(상품명+중량 취합), 쇼핑몰별 TOP3 / WORST10 분석 대시보드</b>가 자동 처리됩니다.</p>
+            <h3><i class="fa-solid fa-layer-group" style="color: #fbbf24;"></i> 다중 채널 엑셀 일괄 업로드 & 자동 필터 분석</h3>
+            <p>엑셀 올리시면 <b>[품절 및 판매중지 상품 자동 제외]</b> 후 실적과 5일치 안전재고 및 쇼핑몰별 BEST/WORST 대시보드가 자동 생성됩니다.</p>
             <div class="file-select-options">
                 <div>
                     <label style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; display: block;">업로드 대상 영역</label>
@@ -1018,7 +1020,7 @@
                 <div>
                     <label style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; display: block;">다중 파일 합산 처리 방식</label>
                     <select id="uploadMode" class="select-box">
-                        <option value="consolidate">스마트 원본 및 중량 취합 (추천)</option>
+                        <option value="consolidate">품절 제외 및 중량 취합 (추천)</option>
                         <option value="replace">기존 데이터 덮어쓰기</option>
                         <option value="append">기존 데이터 뒤에 개별 추가</option>
                     </select>
@@ -1043,7 +1045,7 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- JAVASCRIPT SYSTEM ENGINE (FULL REALTIME DASHBOARD & RANKING ENGINE) -->
+    <!-- JAVASCRIPT SYSTEM ENGINE (AUTOMATIC DISCONTINUED EXCLUSION & FULL CHART SYNC) -->
     <!-- ============================================================================== -->
     <script>
         const CLOUD_STORAGE_KEY = 'hyejin_mini_erp_global_db_v1';
@@ -1065,11 +1067,11 @@
             });
         });
 
-        // Online Data with Full Original Option Names
+        // Online Active Products (Discontinued / Out of stock excluded)
         const defaultOnline = [
-            {"channel":"쿠팡","item":"미미각 마라샹궈 소스 마라맛 볶음소스, 1개, 500g","sales":"140","revenue":"1440000","adSpend":"180000","inventory":"0","issue":"정상 판매중","action":"쿠팡 타임딜 기획","status":"진행중"},
-            {"channel":"쿠팡","item":"[한정수량 특가판매 ] 미미각 마라소스 마라장 업소용, 1kg, 1개","sales":"110","revenue":"1100000","adSpend":"120000","inventory":"0","issue":"인기 품목","action":"추가 생산","status":"완료"},
-            {"channel":"쿠팡","item":"[한정수량 특가판매 ] 미미각 마라소스 마라장 업소용, 1kg, 3개","sales":"30","revenue":"870000","adSpend":"90000","inventory":"0","issue":"묶음상품","action":"프로모션","status":"진행중"},
+            {"channel":"쿠팡","item":"미미각 마라샹궈 소스 마라맛 볶음소스, 1개, 500g","sales":"140","revenue":"1440000","adSpend":"180000","inventory":"250","issue":"정상 판매중","action":"쿠팡 타임딜 기획","status":"진행중"},
+            {"channel":"쿠팡","item":"[한정수량 특가판매 ] 미미각 마라소스 마라장 업소용, 1kg, 1개","sales":"110","revenue":"1100000","adSpend":"120000","inventory":"180","issue":"인기 품목","action":"추가 생산","status":"완료"},
+            {"channel":"쿠팡","item":"[한정수량 특가판매 ] 미미각 마라소스 마라장 업소용, 1kg, 3개","sales":"30","revenue":"870000","adSpend":"90000","inventory":"120","issue":"묶음상품","action":"프로모션","status":"진행중"},
             {"channel":"네이버","item":"호인가 우지 마라훠궈 소스 (200g)","sales":"95","revenue":"950000","adSpend":"100000","inventory":"250","issue":"정상 판매중","action":"네이버 숏클립","status":"진행중"},
             {"channel":"네이버","item":"호인가 마라훠궈 소스 (240g)","sales":"70","revenue":"680000","adSpend":"90000","inventory":"180","issue":"-","action":"스마트스토어 프로모션","status":"완료"},
             {"channel":"자사몰","item":"장어소스 (순한 맛) (50g)","sales":"12","revenue":"96000","adSpend":"10000","inventory":"420","issue":"부진 품목","action":"할인 행사","status":"대기"}
@@ -1077,8 +1079,8 @@
 
         // Inventory Data Grouped by Product Name + Weight/Size
         const defaultInventory = [
-            {"item":"미미각 마라샹궈 소스 (500g)","supplier":"중국","moq":"20박스","safeStock":"100개 (5일치)","currentStock":"0","orderNeed":"🔴 발주필요"},
-            {"item":"미미각 마라소스 마라장 (1kg)","supplier":"중국","moq":"20박스","safeStock":"100개 (5일치)","currentStock":"0","orderNeed":"🔴 발주필요"},
+            {"item":"미미각 마라샹궈 소스 (500g)","supplier":"중국","moq":"20박스","safeStock":"100개 (5일치)","currentStock":"250","orderNeed":"🟢 정상"},
+            {"item":"미미각 마라소스 마라장 (1kg)","supplier":"중국","moq":"20박스","safeStock":"100개 (5일치)","currentStock":"300","orderNeed":"🟢 정상"},
             {"item":"호인가 우지 마라훠궈 (200g)","supplier":"중국","moq":"20박스","safeStock":"70개 (5일치)","currentStock":"250","orderNeed":"🟢 정상"},
             {"item":"호인가 마라훠궈 소스 (240g)","supplier":"중국","moq":"30박스","safeStock":"50개 (5일치)","currentStock":"180","orderNeed":"🟢 정상"},
             {"item":"장어소스 (50g)","supplier":"대한민국","moq":"100박스","safeStock":"10개 (5일치)","currentStock":"420","orderNeed":"🟢 정상"}
@@ -1102,6 +1104,13 @@
         let salesChartInstance = null;
         let channelChartInstance = null;
         let activeRankChannel = 'ALL';
+
+        // Check if an item is sold out or discontinued
+        function isDiscontinuedOrSoldOut(statusStr, nameStr) {
+            const combined = (String(statusStr || '') + ' ' + String(nameStr || '')).toLowerCase();
+            return combined.includes('판매중지') || combined.includes('품절') || combined.includes('일시품절') || 
+                   combined.includes('중단') || combined.includes('discontinued') || combined.includes('out of stock');
+        }
 
         // Extract Weight/Size (e.g. 500g, 1kg, 240g) from Product String
         function extractWeightOrSize(str) {
@@ -1174,6 +1183,7 @@
             if (tableId === 'inventory-table') {
                 const consolidatedMap = new Map();
                 rawData.forEach(r => {
+                    if (isDiscontinuedOrSoldOut(r.issue || r.orderNeed, r.item)) return; // Exclude Discontinued
                     const groupTitle = getItemWithWeightGroupTitle(r.item || '');
                     const key = groupTitle.toLowerCase();
                     const stock = parseInt(String(r.currentStock || '0').replace(/,/g, '')) || 0;
@@ -1465,8 +1475,11 @@
 
             if (!topBox || !worstBox) return;
 
+            // Exclude Discontinued & Sold Out items
+            let activeList = onlineData.filter(r => !isDiscontinuedOrSoldOut(r.issue || r.status, r.item));
+
             // Filter data by selected channel
-            let filtered = onlineData.filter(r => {
+            let filtered = activeList.filter(r => {
                 if (activeRankChannel === 'ALL') return true;
                 const ch = r.channel || '';
                 return ch.includes(activeRankChannel);
@@ -1540,16 +1553,20 @@
             }
         }
 
+        // FULL GRAPH DASHBOARD ENGINE (FIXED & FULLY SYNCED)
         function updateDashboardAnalytics() {
             const onlineData = JSON.parse(localStorage.getItem('erp_online')) || defaultOnline;
             const inventoryData = JSON.parse(localStorage.getItem('erp_inventory')) || defaultInventory;
             const taskData = JSON.parse(localStorage.getItem('erp_task')) || defaultTask;
 
+            // Exclude Sold out / Discontinued
+            const activeOnline = onlineData.filter(r => !isDiscontinuedOrSoldOut(r.issue || r.status, r.item));
+
             let totalRev = 0;
             let totalSales = 0;
             let channelMap = { '쿠팡': 0, '네이버': 0, '기타/자사몰': 0 };
 
-            onlineData.forEach(r => {
+            activeOnline.forEach(r => {
                 const rev = parseInt((r.revenue || '').toString().replace(/,/g, '') || 0) || 0;
                 const qty = parseInt((r.sales || '').toString().replace(/,/g, '') || 0) || 0;
                 totalRev += rev;
@@ -1582,31 +1599,55 @@
 
             renderChannelRankingCards();
 
-            const labels = onlineData.slice(0, 5).map(d => (d.item || '').split(',')[0].slice(0, 10));
-            const revenues = onlineData.slice(0, 5).map(d => parseInt(((d.revenue || '0').toString()).replace(/,/g, '')) / 10000);
+            // FIXED SALES CHART RENDERING
+            const sortedByRevenue = [...activeOnline].sort((a, b) => {
+                const revA = parseInt((a.revenue || '0').toString().replace(/,/g, '')) || 0;
+                const revB = parseInt((b.revenue || '0').toString().replace(/,/g, '')) || 0;
+                return revB - revA;
+            });
+
+            const top5Items = sortedByRevenue.slice(0, 5);
+            const chartLabels = top5Items.map(d => {
+                const clean = cleanBaseTitle(d.item || '');
+                return clean.length > 12 ? clean.substring(0, 12) + '...' : clean;
+            });
+            const chartRevenues = top5Items.map(d => {
+                const val = parseInt(((d.revenue || '0').toString()).replace(/,/g, '')) || 0;
+                return Math.round(val / 10000); // 10,000 KRW unit
+            });
 
             if (salesChartInstance) salesChartInstance.destroy();
             const ctx1 = document.getElementById('salesChart').getContext('2d');
             salesChartInstance = new Chart(ctx1, {
                 type: 'bar',
                 data: {
-                    labels: labels,
+                    labels: chartLabels.length > 0 ? chartLabels : ['데이터 없음'],
                     datasets: [{
                         label: '상위 매출액 (만원)',
-                        data: revenues,
-                        backgroundColor: 'rgba(139, 92, 246, 0.7)',
-                        borderColor: '#8b5cf6',
-                        borderWidth: 1,
-                        borderRadius: 6
+                        data: chartRevenues.length > 0 ? chartRevenues : [0],
+                        backgroundColor: 'rgba(139, 92, 246, 0.85)',
+                        borderColor: '#a78bfa',
+                        borderWidth: 1.5,
+                        borderRadius: 8,
+                        hoverBackgroundColor: '#8b5cf6'
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
+                    plugins: {
+                        legend: { display: true, labels: { color: '#c4b5fd', font: { family: 'Pretendard', weight: 'bold' } } },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ` 매출액: ${context.raw.toLocaleString()} 만원`;
+                                }
+                            }
+                        }
+                    },
                     scales: {
-                        x: { ticks: { color: '#94a3b8' }, grid: { display: false } },
-                        y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+                        x: { ticks: { color: '#e2e8f0', font: { size: 11, family: 'Pretendard' } }, grid: { display: false } },
+                        y: { ticks: { color: '#94a3b8', font: { family: 'Pretendard' } }, grid: { color: 'rgba(255,255,255,0.08)' } }
                     }
                 }
             });
@@ -1626,7 +1667,7 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { position: 'right', labels: { color: '#94a3b8' } } }
+                    plugins: { legend: { position: 'right', labels: { color: '#e2e8f0', font: { family: 'Pretendard' } } } }
                 }
             });
         }
@@ -1743,7 +1784,7 @@
             }
         }
 
-        // Upload Modal & Multi-file Parsing
+        // Upload Modal & Multi-file Parsing with Discontinued Filter
         function openUploadModal(target = 'online') {
             document.getElementById('uploadTarget').value = target;
             document.getElementById('uploadStatus').style.display = 'none';
@@ -1782,7 +1823,7 @@
             const statusEl = document.getElementById('uploadStatus');
 
             statusEl.style.display = 'block';
-            statusEl.innerText = `⏳ 총 ${fileList.length}개 파일 처리 중...`;
+            statusEl.innerText = `⏳ 총 ${fileList.length}개 파일 처리 및 품절 제외 중...`;
 
             const onlineRowsRaw = [];
 
@@ -1832,6 +1873,11 @@
                             const rawItemName = findValue(itemObj, ['상품명', '상품', '제품명', '옵션명', 'vendor_item_name', 'Item Name']);
                             if (!rawItemName) continue;
 
+                            const itemStatus = findValue(itemObj, ['상태', '진행상태', '판매상태', 'Status', 'issue']);
+                            
+                            // AUTOMATICALLY EXCLUDE SOLD OUT / DISCONTINUED
+                            if (isDiscontinuedOrSoldOut(itemStatus, rawItemName)) continue;
+
                             const salesQty = findValue(itemObj, ['총 판매량(개)', '판매량', '수량', '판매수량', 'sales_qty', 'Qty']) || '0';
                             const revenueAmt = findValue(itemObj, ['총 매출(원)', '매출액', '총매출', '결제금액', 'revenue', 'Amount']) || '0';
                             const adSpendAmt = findValue(itemObj, ['총 광고비(원)', '광고비', 'ad_spend', 'Ad Spend']) || '0';
@@ -1844,7 +1890,7 @@
                                 revenue: String(revenueAmt),
                                 adSpend: String(adSpendAmt),
                                 inventory: String(stockQty),
-                                issue: '정상 집계',
+                                issue: itemStatus || '정상 판매중',
                                 action: '프로모션 검토',
                                 status: '진행중'
                             });
@@ -1881,9 +1927,9 @@
                 localStorage.setItem('erp_inventory', JSON.stringify(Array.from(invGroupMap.values())));
                 reloadAllTables();
                 syncToCloud(true);
-                statusEl.innerText = `✅ 대시보드 랭킹 & 엑셀 연동 완료!`;
+                statusEl.innerText = `✅ 품절/판매중지 제외 완료 & 상위 그래프 연동 완료!`;
                 setTimeout(closeUploadModal, 1500);
-                showToast('대시보드 메인에 쇼핑몰별 BEST/WORST 랭킹이 연동되었습니다.');
+                showToast('품절 제외 및 상위 품목 매출 그래프가 실시간 업데이트되었습니다.');
             }
         }
 
