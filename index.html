@@ -550,7 +550,7 @@
             <i class="fa-solid fa-cart-shopping"></i> 온라인 주간 실적 (엑셀 원본연동)
         </a>
         <a class="nav-item" data-target="inventory">
-            <i class="fa-solid fa-boxes-stacked"></i> 물류 재고 & 발주 (상품명+중량)
+            <i class="fa-solid fa-boxes-stacked"></i> 물류 재고 & 발주 (재고표 엑셀연동)
         </a>
         <a class="nav-item" data-target="import">
             <i class="fa-solid fa-ship"></i> 수입 진행 현황
@@ -575,7 +575,7 @@
                 <p>쇼핑몰별 잘 팔리는 베스트 (TOP 3) & 부진 (WORST 10) 제품 실시간 연동 대시보드</p>
             </div>
             <div class="header-actions">
-                <button class="btn btn-upload" onclick="openUploadModal()"><i class="fa-solid fa-cloud-arrow-up"></i> 다중 채널 엑셀 일괄 업로드</button>
+                <button class="btn btn-upload" onclick="openUploadModal('online')"><i class="fa-solid fa-cloud-arrow-up"></i> 다중 채널 엑셀 일괄 업로드</button>
                 <button class="btn btn-outline" onclick="syncFromCloud(true)"><i class="fa-solid fa-arrows-rotate"></i> 실시간 클라우드 동기화</button>
                 <button class="btn btn-emerald" onclick="window.print()"><i class="fa-solid fa-print"></i> 실적 리포트 인쇄/PDF</button>
             </div>
@@ -583,10 +583,10 @@
 
         <div style="background: linear-gradient(90deg, rgba(16, 185, 129, 0.15), rgba(139, 92, 246, 0.15)); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 16px 22px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
             <div style="display: flex; align-items: center; gap: 14px;">
-                <i class="fa-solid fa-check-double" style="font-size: 26px; color: #fbbf24;"></i>
+                <i class="fa-solid fa-boxes-stacked" style="font-size: 26px; color: #fbbf24;"></i>
                 <div>
-                    <strong style="font-size: 0.98rem; color: #ffffff;">⚡ 온라인 주간 실적: [업로드 엑셀 기재 판매 제품명 100% 원본 반영]</strong>
-                    <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">온라인 주간 실적 탭에는 업로드하신 엑셀 파일의 **판매 제품명이 글자 변형 없이 그대로 100% 반영**됩니다.</p>
+                    <strong style="font-size: 0.98rem; color: #ffffff;">⚡ 물류 재고: [재고표 엑셀 업로드 지원 & 실제 7일 판매데이터 연동 5일 안전재고]</strong>
+                    <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">재고표 엑셀을 업로드하시면 **현재재고가 재고표 기준**으로 고정 표시되며, **안전재고는 실제 7일 판매데이터 기준 5일치로 자동 연산**됩니다.</p>
                 </div>
             </div>
             <button class="btn btn-emerald" style="padding: 8px 16px; font-size: 0.85rem;" onclick="syncFromCloud(true)">지금 강제 동기화</button>
@@ -744,7 +744,7 @@
                 <p>업로드하신 엑셀 파일에 기재된 <b>[판매 제품명, 중량, 옵션] 명칭이 100% 원본 그대로 반영</b>됩니다.</p>
             </div>
             <div class="header-actions">
-                <button class="btn btn-upload" onclick="openUploadModal('online')"><i class="fa-solid fa-cloud-arrow-up"></i> 다중 엑셀 일괄 업로드</button>
+                <button class="btn btn-upload" onclick="openUploadModal('online')"><i class="fa-solid fa-cloud-arrow-up"></i> 온라인 엑셀 일괄 업로드</button>
                 <button class="btn btn-outline" onclick="addRow('online-table', onlineHeaders)"><i class="fa-solid fa-plus"></i> 행 추가</button>
                 <button class="btn btn-emerald" onclick="exportTableToCSV('online-table', '온라인통합실적관리.csv')"><i class="fa-solid fa-file-excel"></i> 엑셀 다운로드</button>
                 <button class="btn" onclick="saveTable('online-table', 'erp_online')"><i class="fa-solid fa-floppy-disk"></i> 클라우드 저장</button>
@@ -787,16 +787,16 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- 4. 물류 재고/발주 (상품명 + 중량 취합) -->
+    <!-- 4. 물류 재고/발주 (재고표 엑셀 업로드 지원 & 실제 7일 판매데이터 기준 5일치 연동) -->
     <!-- ============================================================================== -->
     <div id="inventory" class="main-content">
         <div class="header">
             <div>
-                <h1><i class="fa-solid fa-boxes-stacked" style="color: var(--accent-blue);"></i> 물류 재고 & 발주 기준표 (상품명 + 중량 취합)</h1>
-                <p><b>상품명 + 중량(용량)</b> 기준으로 수량을 깔끔하게 취합하여 5일치 동적 안전재고 및 발주 진행 상태를 파악합니다.</p>
+                <h1><i class="fa-solid fa-boxes-stacked" style="color: var(--accent-blue);"></i> 물류 재고 & 발주 기준표 (재고표 엑셀 직접 연동)</h1>
+                <p>물류 창고 <b>재고표 엑셀을 그대로 업로드</b>하시면 현재재고가 반영되며, <b>안전재고는 실제 7일 판매데이터 기준 5일치 수량이 자동 연산</b>됩니다.</p>
             </div>
             <div class="header-actions">
-                <button class="btn btn-upload" onclick="openUploadModal('inventory')"><i class="fa-solid fa-cloud-arrow-up"></i> 재고 엑셀 업로드</button>
+                <button class="btn btn-upload" onclick="openUploadModal('inventory')"><i class="fa-solid fa-file-excel"></i> 📦 재고표 엑셀 업로드</button>
                 <button class="btn btn-outline" onclick="addRow('inventory-table', inventoryHeaders)"><i class="fa-solid fa-plus"></i> 행 추가</button>
                 <button class="btn btn-emerald" onclick="exportTableToCSV('inventory-table', '물류재고발주.csv')"><i class="fa-solid fa-file-excel"></i> 엑셀 다운로드</button>
                 <button class="btn" onclick="saveTable('inventory-table', 'erp_inventory')"><i class="fa-solid fa-floppy-disk"></i> 클라우드 저장</button>
@@ -804,20 +804,20 @@
         </div>
 
         <div class="filter-bar">
-            <input type="text" class="search-input" placeholder="🔍 상품명/중량 검색..." onkeyup="filterTable('inventory-table', this.value)">
-            <span style="font-size: 0.85rem; color: #34d399; font-weight: 600;">* [상품명 + 중량 취합]: 규격 용량별로 깔끔하게 묶어 취합 전체 수량과 5일치 안전재고를 정확히 연산합니다.</span>
+            <input type="text" class="search-input" placeholder="🔍 품목명/중량 검색..." onkeyup="filterTable('inventory-table', this.value)">
+            <span style="font-size: 0.85rem; color: #34d399; font-weight: 600;">* [재고표 엑셀 기준]: 현재재고는 업로드하신 재고표 엑셀을 기준(고정)으로 표시되고, 안전재고는 실제 7일 판매데이터 기준 5일치가 실시간 연동됩니다.</span>
         </div>
 
         <div class="table-container">
             <table id="inventory-table">
                 <thead>
                     <tr>
-                        <th data-key="item">상품명 + 중량 (취합품목)</th>
+                        <th data-key="item">상품명 + 중량 (재고표 품목)</th>
                         <th data-key="supplier">제조국/업체</th>
                         <th data-key="moq">MOQ (박스)</th>
-                        <th data-key="safeStock">동적 안전재고 (5일치 취합수량)</th>
-                        <th data-key="currentStock">현재재고 (취합 전체수량)</th>
-                        <th data-key="orderNeed">발주 경고 상태 (보유일수)</th>
+                        <th data-key="safeStock">동적 안전재고 (실제 7일 판매 기반 5일치)</th>
+                        <th data-key="currentStock">현재재고 (재고표 엑셀 기준 수량)</th>
+                        <th data-key="orderNeed">발주 경고 상태 (보유일수 연산)</th>
                         <th style="width: 60px;">관리</th>
                     </tr>
                 </thead>
@@ -1017,22 +1017,22 @@
     <!-- 모달 -->
     <div id="uploadModal" class="modal-overlay">
         <div class="modal-card">
-            <h3><i class="fa-solid fa-layer-group" style="color: #fbbf24;"></i> 다중 채널 엑셀 일괄 업로드 & 노출0/품절 자동 제외</h3>
-            <p>쿠팡, 네이버, 카카오, G마켓 등 엑셀을 올리시면 <b>[기재된 판매 제품명 100% 그대로 반영]</b> 및 <b>[노출0건/품절 제외 분석]</b>이 실시간 처리됩니다.</p>
+            <h3><i class="fa-solid fa-layer-group" style="color: #fbbf24;"></i> 다중 엑셀 일괄 업로드 & 안전재고 연동</h3>
+            <p>온라인 판매 엑셀 또는 물류 창고 <b>[재고표 엑셀]</b>을 업로드하시면 <b>[7일 판매 기반 5일치 안전재고]</b>가 실시간 자동 연산 연동됩니다.</p>
             <div class="file-select-options">
                 <div>
                     <label style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; display: block;">업로드 대상 영역</label>
                     <select id="uploadTarget" class="select-box">
-                        <option value="online">온라인 주간 실적 (다중채널 자동합산)</option>
-                        <option value="inventory">물류 재고 및 발주</option>
+                        <option value="online">온라인 주간 실적 (다중채널 원본반영)</option>
+                        <option value="inventory">📦 물류 재고표 (창고 재고 엑셀)</option>
                         <option value="import">수입 진행 현황</option>
                         <option value="json">전체 백업 데이터 (.json)</option>
                     </select>
                 </div>
                 <div>
-                    <label style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; display: block;">다중 파일 합산 처리 방식</label>
+                    <label style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; display: block;">데이터 처리 방식</label>
                     <select id="uploadMode" class="select-box">
-                        <option value="consolidate">원본 제품명 유지 & 품절 제외 (추천)</option>
+                        <option value="consolidate">재고표 수량 반영 & 5일 안전재고 (추천)</option>
                         <option value="replace">기존 데이터 덮어쓰기</option>
                         <option value="append">기존 데이터 뒤에 개별 추가</option>
                     </select>
@@ -1040,8 +1040,8 @@
             </div>
             <div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
                 <i class="fa-solid fa-cloud-arrow-up"></i>
-                <h4>여기에 여러 개의 엑셀 파일들을 동시 드래그하거나 클릭</h4>
-                <span>모든 오픈마켓 엑셀(.xlsx, .csv) 복수 선택 가능</span>
+                <h4>여기에 엑셀 파일(.xlsx, .csv)을 드래그하거나 클릭</h4>
+                <span>온라인 실적 엑셀 또는 창고 재고표 엑셀 복수 선택 가능</span>
                 <input type="file" id="fileInput" accept=".xlsx, .xls, .csv, .json" multiple style="display: none;" onchange="handleFileSelect(event)">
             </div>
             <div id="uploadStatus" style="font-size: 0.88rem; color: #34d399; text-align: center; display: none; margin-bottom: 15px; line-height: 1.5;"></div>
@@ -1057,7 +1057,7 @@
     </div>
 
     <!-- ============================================================================== -->
-    <!-- JAVASCRIPT SYSTEM ENGINE (FULL RAW ORIGINAL PRODUCT NAME ENFORCEMENT) -->
+    <!-- JAVASCRIPT SYSTEM ENGINE (INVENTORY EXCEL SUPPORT & 7-DAY SALES 5-DAY SAFETY) -->
     <!-- ============================================================================== -->
     <script>
         const CLOUD_STORAGE_KEY = 'hyejin_mini_erp_global_db_v1';
@@ -1150,7 +1150,7 @@
             return match ? match[0].toLowerCase() : '';
         }
 
-        // Clean Base Title for Grouping (Used for Inventory consolidation)
+        // Clean Base Title for Grouping
         function cleanBaseTitle(name) {
             let str = String(name || '');
             str = str.replace(/\[.*?\]/g, '').replace(/\{.*?\}/g, '');
@@ -1171,7 +1171,7 @@
             return getItemWithWeightGroupTitle(name).replace(/\s+/g, '').toLowerCase();
         }
 
-        // Dynamic SCM Calculator by Product Name + Weight
+        // DYNAMIC SCM CALCULATOR: BASED ON ACTUAL 7-DAY ONLINE SALES -> COMPUTE 5-DAY SAFETY STOCK
         function calculateDynamicSCM(itemName, currentStockVal) {
             const onlineData = JSON.parse(localStorage.getItem('erp_online')) || defaultOnline;
             const groupTitle = getItemWithWeightGroupTitle(itemName);
@@ -1185,7 +1185,9 @@
                 }
             });
 
+            // Calculate 7-day average daily sales
             const dailySales = totalWeeklySales > 0 ? (totalWeeklySales / 7) : 2.0;
+            // 5-day safety stock
             const safeStock5Days = Math.max(Math.ceil(dailySales * 5), 4);
             const currentStockNum = parseInt(String(currentStockVal || '0').replace(/,/g, '')) || 0;
             const daysRemaining = dailySales > 0 ? (currentStockNum / dailySales).toFixed(1) : (currentStockNum > 0 ? '99.0' : '0.0');
@@ -1203,7 +1205,7 @@
             };
         }
 
-        // Render Table Function - ONLINE TABLE GUARANTEES 100% UNTOUCHED ORIGINAL PRODUCT NAME
+        // Render Table Function
         function renderTable(tableId, storageKey, defaultData, headers) {
             const rawData = JSON.parse(localStorage.getItem(storageKey)) || defaultData;
             const tbody = document.querySelector(`#${tableId} tbody`);
@@ -1211,35 +1213,11 @@
 
             let processedData = rawData;
 
-            if (tableId === 'inventory-table') {
-                const consolidatedMap = new Map();
-                rawData.forEach(r => {
-                    if (isInvalidOrZeroOrSoldOut(r.issue || r.orderNeed, r.item)) return;
-                    const groupTitle = getItemWithWeightGroupTitle(r.item || '');
-                    const key = groupTitle.toLowerCase();
-                    const stock = parseInt(String(r.currentStock || '0').replace(/,/g, '')) || 0;
-
-                    if (consolidatedMap.has(key)) {
-                        const existing = consolidatedMap.get(key);
-                        existing.currentStock = String(parseInt(existing.currentStock) + stock);
-                    } else {
-                        consolidatedMap.set(key, {
-                            item: groupTitle,
-                            supplier: r.supplier || '중국',
-                            moq: r.moq || '20박스',
-                            safeStock: '0',
-                            currentStock: String(stock),
-                            orderNeed: '정상'
-                        });
-                    }
-                });
-                processedData = Array.from(consolidatedMap.values());
-            }
-
             processedData.forEach((row) => {
                 let scmInfo = null;
 
                 if (tableId === 'inventory-table') {
+                    // Current stock is based on uploaded inventory excel or table value
                     scmInfo = calculateDynamicSCM(row.item || '', row.currentStock || '0');
                     row.safeStock = `${scmInfo.safeStock5Days}개 (5일치)`;
                     row.orderNeed = scmInfo.statusText;
@@ -1265,7 +1243,7 @@
                         td.innerHTML = `<span class="channel-tag ${badgeClass}">${chVal}</span>`;
                     } else if (key === 'safeStock' && tableId === 'inventory-table') {
                         td.setAttribute('contenteditable', 'false');
-                        td.innerHTML = `<b style="color:#c4b5fd; font-size: 1.02rem;">${scmInfo.safeStock5Days} 개</b> <span style="font-size:0.75rem; color:var(--text-muted);">(7일 판매 기준 5일치)</span>`;
+                        td.innerHTML = `<b style="color:#c4b5fd; font-size: 1.02rem;">${scmInfo.safeStock5Days} 개</b> <span style="font-size:0.75rem; color:var(--text-muted);">(실제 7일 판매 기반 5일치)</span>`;
                     } else if (key === 'orderNeed' && tableId === 'inventory-table') {
                         td.setAttribute('contenteditable', 'false');
                         if (scmInfo.isSufficient) {
@@ -1274,7 +1252,6 @@
                             td.innerHTML = `<span class="status-badge badge-red">🔴 발주필요 (보유 ${scmInfo.daysRemaining}일치)</span>`;
                         }
                     } else {
-                        // FOR ONLINE TABLE: 100% UNTOUCHED ORIGINAL PRODUCT NAME FROM EXCEL
                         td.innerText = row[key] || '';
                     }
 
@@ -1323,7 +1300,7 @@
 
             const scmInfo = calculateDynamicSCM(itemName, curText);
 
-            cells[3].innerHTML = `<b style="color:#c4b5fd; font-size: 1.02rem;">${scmInfo.safeStock5Days} 개</b> <span style="font-size:0.75rem; color:var(--text-muted);">(7일 판매 기준 5일치)</span>`;
+            cells[3].innerHTML = `<b style="color:#c4b5fd; font-size: 1.02rem;">${scmInfo.safeStock5Days} 개</b> <span style="font-size:0.75rem; color:var(--text-muted);">(실제 7일 판매 기반 5일치)</span>`;
 
             const orderTd = cells[5];
             if (scmInfo.isSufficient) {
@@ -1340,7 +1317,7 @@
                 const td = document.createElement('td');
                 if (key === 'safeStock' && tableId === 'inventory-table') {
                     td.setAttribute('contenteditable', 'false');
-                    td.innerHTML = `<b style="color:#c4b5fd;">10 개</b> <span style="font-size:0.75rem; color:var(--text-muted);">(7일 판매 기준 5일치)</span>`;
+                    td.innerHTML = `<b style="color:#c4b5fd;">10 개</b> <span style="font-size:0.75rem; color:var(--text-muted);">(실제 7일 판매 기반 5일치)</span>`;
                 } else if (key === 'orderNeed' && tableId === 'inventory-table') {
                     td.setAttribute('contenteditable', 'false');
                     td.innerHTML = `<span class="status-badge badge-red">🔴 발주필요 (보유 0.0일치)</span>`;
@@ -1415,9 +1392,7 @@
             }
         }
 
-        // ==============================================================================
         // REALTIME CLOUD DB SYNC ENGINE
-        // ==============================================================================
         async function syncToCloud(showNotice = false) {
             const payload = {
                 online: JSON.parse(localStorage.getItem('erp_online')) || defaultOnline,
@@ -1495,9 +1470,7 @@
             }
         }
 
-        // ==============================================================================
-        // MAIN DASHBOARD RANKING RENDERER (FILTERING IMPRESSION ZERO & SOLD OUT)
-        // ==============================================================================
+        // MAIN DASHBOARD RANKING RENDERER
         function switchChannelRank(channelFilter, btnEl) {
             document.querySelectorAll('.rank-btn').forEach(b => b.classList.remove('active'));
             btnEl.classList.add('active');
@@ -1823,7 +1796,7 @@
             }
         }
 
-        // Upload Modal Engine (ONLINE SHEET STORES FULL 100% UNTOUCHED RAW EXCEL STRING)
+        // Upload Modal Engine: SEPARATE HANDLERS FOR ONLINE & INVENTORY EXCEL FILES
         function openUploadModal(target = 'online') {
             document.getElementById('uploadTarget').value = target;
             document.getElementById('uploadStatus').style.display = 'none';
@@ -1860,11 +1833,13 @@
 
         async function processUploadedFiles(fileList) {
             const statusEl = document.getElementById('uploadStatus');
+            const targetMode = document.getElementById('uploadTarget').value;
 
             statusEl.style.display = 'block';
-            statusEl.innerText = `⏳ 총 ${fileList.length}개 파일 처리 중... (판매 제품명 100% 원본 반영)`;
+            statusEl.innerText = `⏳ 총 ${fileList.length}개 파일 처리 중... (${targetMode === 'inventory' ? '재고표 엑셀 업로드' : '온라인 실적 원본'})`;
 
             const onlineRowsRaw = [];
+            const inventoryUploadedRows = [];
 
             for (let file of fileList) {
                 const fileName = file.name.toLowerCase();
@@ -1919,78 +1894,108 @@
                                 itemObj[h] = row[idx] !== undefined ? String(row[idx]).trim() : '';
                             });
 
-                            // STRICT PRIORITY ORDER FOR RAW EXCEL PRODUCT TITLE
-                            const rawItemName = findValue(itemObj, [
-                                'vendor_item_name', '등록상품명', '옵션명', '판매 제품명', '판매제품명', 
-                                '상품명', '제품명', 'Item Name', 'Product Name'
-                            ]);
-                            if (!rawItemName) continue;
+                            if (targetMode === 'inventory' || fileName.includes('재고') || fileName.includes('stock') || fileName.includes('inventory')) {
+                                // INVENTORY EXCEL PARSING
+                                const rawItemName = findValue(itemObj, ['상품명', '제품명', '품목명', '품목', 'Item Name', 'Product Name']);
+                                if (!rawItemName) continue;
 
-                            const itemStatus = findValue(itemObj, ['상태', '진행상태', '판매상태', 'Status', 'issue']);
-                            const impressionVal = findValue(itemObj, ['노출수', '노출 수', '노출량', '노출', 'impression', 'impressions', 'view_count']);
-                            const salesQty = findValue(itemObj, ['총 판매량(개)', '판매량', '수량', '판매수량', 'sales_qty', 'Qty']) || '0';
-                            const revenueAmt = findValue(itemObj, ['총 매출(원)', '매출액', '총매출', '결제금액', 'revenue', 'Amount']) || '0';
-                            const adSpendAmt = findValue(itemObj, ['총 광고비(원)', '광고비', 'ad_spend', 'Ad Spend']) || '0';
-                            const stockQty = findValue(itemObj, ['재고 현황', '현재재고', '재고', 'stock', 'Stock']) || '0';
+                                const currentStockQty = findValue(itemObj, ['현재재고', '재고수량', '재고량', '재고', '수량', 'stock', 'Stock']) || '0';
+                                const supplierVal = findValue(itemObj, ['제조국', '제조사', '공장', '업체', 'supplier', 'Supplier']) || '중국';
+                                const moqVal = findValue(itemObj, ['MOQ', 'moq', '최소발주량']) || '20박스';
 
-                            // EXCLUDE IMPRESSION ZERO & SOLD OUT
-                            if (isInvalidOrZeroOrSoldOut(itemStatus, rawItemName, impressionVal, salesQty, revenueAmt)) {
-                                continue;
+                                const scmInfo = calculateDynamicSCM(rawItemName, currentStockQty);
+
+                                inventoryUploadedRows.push({
+                                    item: rawItemName,
+                                    supplier: supplierVal,
+                                    moq: moqVal,
+                                    safeStock: `${scmInfo.safeStock5Days}개 (5일치)`,
+                                    currentStock: String(currentStockQty),
+                                    orderNeed: scmInfo.statusText
+                                });
+                            } else {
+                                // ONLINE EXCEL PARSING
+                                const rawItemName = findValue(itemObj, [
+                                    'vendor_item_name', '등록상품명', '옵션명', '판매 제품명', '판매제품명', 
+                                    '상품명', '제품명', 'Item Name', 'Product Name'
+                                ]);
+                                if (!rawItemName) continue;
+
+                                const itemStatus = findValue(itemObj, ['상태', '진행상태', '판매상태', 'Status', 'issue']);
+                                const impressionVal = findValue(itemObj, ['노출수', '노출 수', '노출량', '노출', 'impression', 'impressions', 'view_count']);
+                                const salesQty = findValue(itemObj, ['총 판매량(개)', '판매량', '수량', '판매수량', 'sales_qty', 'Qty']) || '0';
+                                const revenueAmt = findValue(itemObj, ['총 매출(원)', '매출액', '총매출', '결제금액', 'revenue', 'Amount']) || '0';
+                                const adSpendAmt = findValue(itemObj, ['총 광고비(원)', '광고비', 'ad_spend', 'Ad Spend']) || '0';
+                                const stockQty = findValue(itemObj, ['재고 현황', '현재재고', '재고', 'stock', 'Stock']) || '0';
+
+                                if (isInvalidOrZeroOrSoldOut(itemStatus, rawItemName, impressionVal, salesQty, revenueAmt)) {
+                                    continue;
+                                }
+
+                                const parsedChannel = findValue(itemObj, ['판매채널', '채널', '쇼핑몰', 'Channel']) || fileChannel;
+
+                                onlineRowsRaw.push({
+                                    channel: parsedChannel,
+                                    item: rawItemName,
+                                    sales: String(salesQty),
+                                    revenue: String(revenueAmt),
+                                    adSpend: String(adSpendAmt),
+                                    inventory: String(stockQty),
+                                    impression: String(impressionVal || ''),
+                                    issue: itemStatus || '정상 노출/판매중',
+                                    action: '프로모션 검토',
+                                    status: '진행중'
+                                });
                             }
-
-                            const parsedChannel = findValue(itemObj, ['판매채널', '채널', '쇼핑몰', 'Channel']) || fileChannel;
-
-                            // ONLINE SHEET STORES 100% UNTOUCHED EXACT RAW PRODUCT TITLE FROM EXCEL
-                            onlineRowsRaw.push({
-                                channel: parsedChannel,
-                                item: rawItemName, // Exact raw product title, weight & options
-                                sales: String(salesQty),
-                                revenue: String(revenueAmt),
-                                adSpend: String(adSpendAmt),
-                                inventory: String(stockQty),
-                                impression: String(impressionVal || ''),
-                                issue: itemStatus || '정상 노출/판매중',
-                                action: '프로모션 검토',
-                                status: '진행중'
-                            });
                         }
                     } catch (err) { console.error(err); }
                 }
             }
 
-            if (onlineRowsRaw.length > 0) {
-                // Online Sheet stores 100% exact raw product title from excel
-                localStorage.setItem('erp_online', JSON.stringify(onlineRowsRaw));
-
-                // Inventory Sheet receives grouped items (Product Name + Weight)
-                const invGroupMap = new Map();
-                onlineRowsRaw.forEach(r => {
-                    const groupTitle = getItemWithWeightGroupTitle(r.item);
-                    const key = groupTitle.toLowerCase();
-                    const stock = parseInt(String(r.inventory || '0').replace(/,/g, '')) || 0;
-
-                    if (invGroupMap.has(key)) {
-                        const existing = invGroupMap.get(key);
-                        existing.currentStock = String(parseInt(existing.currentStock) + stock);
-                    } else {
-                        const scmInfo = calculateDynamicSCM(groupTitle, stock);
-                        invGroupMap.set(key, {
-                            item: groupTitle,
-                            supplier: '중국',
-                            moq: '20박스',
-                            safeStock: `${scmInfo.safeStock5Days}개 (5일치)`,
-                            currentStock: String(stock),
-                            orderNeed: scmInfo.statusText
-                        });
-                    }
-                });
-
-                localStorage.setItem('erp_inventory', JSON.stringify(Array.from(invGroupMap.values())));
+            // UPDATE DATA BASED ON TARGET MODE
+            if (targetMode === 'inventory' && inventoryUploadedRows.length > 0) {
+                // In inventory mode, stock list is fixed to uploaded inventory excel, with safe stock calculated from 7-day online sales
+                localStorage.setItem('erp_inventory', JSON.stringify(inventoryUploadedRows));
                 reloadAllTables();
                 syncToCloud(true);
-                statusEl.innerText = `✅ [엑셀 기재 판매 제품명 100% 반영] 완료!`;
+                statusEl.innerText = `✅ [재고표 엑셀 업로드 & 5일 안전재고 계산] 완료!`;
                 setTimeout(closeUploadModal, 1500);
-                showToast('온라인 주간 실적에 엑셀 기재 판매 제품명이 그대로 반영되었습니다.');
+                showToast('재고표 엑셀 수량이 최우선 반영되고 5일치 안전재고가 실시간 계산되었습니다.');
+            } else if (onlineRowsRaw.length > 0) {
+                localStorage.setItem('erp_online', JSON.stringify(onlineRowsRaw));
+
+                // If no separate inventory excel was uploaded yet, synthesize grouped inventory items from online excel
+                const currentInv = JSON.parse(localStorage.getItem('erp_inventory')) || [];
+                if (currentInv.length === 0 || targetMode === 'online') {
+                    const invGroupMap = new Map();
+                    onlineRowsRaw.forEach(r => {
+                        const groupTitle = getItemWithWeightGroupTitle(r.item);
+                        const key = groupTitle.toLowerCase();
+                        const stock = parseInt(String(r.inventory || '0').replace(/,/g, '')) || 0;
+
+                        if (invGroupMap.has(key)) {
+                            const existing = invGroupMap.get(key);
+                            existing.currentStock = String(parseInt(existing.currentStock) + stock);
+                        } else {
+                            const scmInfo = calculateDynamicSCM(groupTitle, stock);
+                            invGroupMap.set(key, {
+                                item: groupTitle,
+                                supplier: '중국',
+                                moq: '20박스',
+                                safeStock: `${scmInfo.safeStock5Days}개 (5일치)`,
+                                currentStock: String(stock),
+                                orderNeed: scmInfo.statusText
+                            });
+                        }
+                    });
+                    localStorage.setItem('erp_inventory', JSON.stringify(Array.from(invGroupMap.values())));
+                }
+
+                reloadAllTables();
+                syncToCloud(true);
+                statusEl.innerText = `✅ [온라인 실적 엑셀 및 5일 안전재고] 반영 완료!`;
+                setTimeout(closeUploadModal, 1500);
+                showToast('온라인 주간 실적 및 5일 안전재고 수량이 업데이트되었습니다.');
             }
         }
 
